@@ -1,0 +1,4752 @@
+\documentclass{beamer}
+%\usecolortheme[RGB={170,0,173}]{structure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usefonttheme[onlymath]{serif}
+\usetheme{Warsaw}
+%\usetheme{Copenhagen}
+%\setbeamertemplate{navigation symbols}{}
+%\logo{\includegraphics[height=1cm]{Pannon_Egyetem_korvonalas_cimer.png}}
+%\setbeamertemplate{background canvas}{\includegraphics[height=\paperheight]{pictures/MIK_cimer_szines.jpg}}
+%\setbeamertemplate{background canvas}[vertical shading][bottom=blue!0,top=blue!15]
+%\setbeamertemplate{background}[grid][step=2.5mm,,color=blue!5]
+%\setbeamercolor{alerted text}{fg=blue!80!black}
+\useoutertheme{infolines}
+\setbeamertemplate{footline}
+
+
+
+%\usepackage{pdfsync}
+\usepackage[magyar,english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+%\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{media9}
+\usepackage[latin2]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{subfig}
+\usepackage{wasysym}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgfpages}
+\usetikzlibrary{decorations.markings}
+
+%\setbeameroption{show notes on second screen=right}
+%\setbeameroption{show notes}
+
+\setbeamertemplate{qed symbol}{\vrule width1.5ex height1.5ex depth0pt}
+\setbeamertemplate{note page}{%
+  \insertnote%
+  }
+
+\includeonlylecture{week 1}
+
+\pgfplotsset{width=7cm,compat=1.7}
+
+\AtBeginLecture{\begin{frame}[plain]
+\begin{center}
+\begin{beamercolorbox}[center,rounded=true,sep=3mm]{title}
+\usebeamerfont{subtitle}
+Robottechnika:\\
+\usebeamerfont{title}
+\insertlecture
+\end{beamercolorbox}
+\smallskip
+%\today
+2015. szeptember 
+%\vspace*{3cm}
+%\includegraphics[height=2cm]{pictures/MIK_cimer_szines.jpg}
+\end{center}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}}
+
+\AtBeginSection[]
+{
+  \begin{frame}{Áttekintés}
+\tableofcontents[currentsection,hideothersubsections]
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+  \end{frame}
+}
+
+%\pgfplotsset{width=7cm,compat=1.5.1}
+%
+\newenvironment{gmatrix}[1]{\left[\begin{array}[c]{#1}}{\end{array}\right]}
+%
+%\newtheorem{tetel}{Tétel}
+%\newtheorem{biz}{Bizonyítás}
+%\newtheorem{kov}{Következmény}
+\newtheorem{lema}{Lemma}
+\newtheorem{torv}{}
+\definecolor{zold}{RGB}{202,218,169}
+\definecolor{kek}{RGB}{200,214,230}
+\definecolor{piros}{RGB}{237,205,203}
+\definecolor{szold}{rgb}{0,0.5,0}
+
+\uselanguage{magyar}
+\languagepath{magyar}
+\deftranslation[to=magyar]{Example}{Példa}
+\deftranslation[to=magyar]{example}{példa}
+\deftranslation[to=magyar]{Definition}{Definíció}
+\deftranslation[to=magyar]{definition}{definíció}
+
+
+\newcommand*\mycirc[1]{%
+    \begin{tikzpicture}
+        \node[draw,circle,inner sep=1pt] {#1};
+    \end{tikzpicture}}
+\selectlanguage{magyar}
+
+\title[Robotika]{Robottechnika}
+\author[Magyar Attila]{Magyar Attila}
+\titlegraphic{\includegraphics[height=2.5cm]{pictures/MIK_cimer_szines.jpg}}
+\institute[PE]{Pannon Egyetem\\
+  Mûszaki Informatikai Kar\\
+  Villamosmérnöki és Információs Rendszerek Tanszék\\[1ex]
+  \texttt{magyar.attila@virt.uni-pannon.hu}
+}
+\date{}
+%\date{\today}
+\begin{document}
+%--- the titlepage frame -------------------------%
+
+
+\begin{frame}[plain]
+  \titlepage
+  \note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+
+
+\part{Alapfogalmak}
+\lecture{Alapfogalmak}{week 1}
+%
+%
+\begin{frame}\frametitle{Általános információk}
+\begin{itemize}
+\item Tárgykód: VEMKVI3144Y
+\item \alert{MIK Moodle} alapú kurzus (oktatas.mik.uni-pannon.hu)
+\begin{columns}
+\begin{column}{0.35\textwidth}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/sitemap.png}
+\end{center}
+\end{column}
+\begin{column}{0.65\textwidth}
+\begin{itemize}
+\item Gyakorló feladatok
+\item Beadandó feladatok
+\item Moodle alapú zh
+\end{itemize}
+\end{column}
+\end{columns}
+\end{itemize}
+\note{
+\begin{itemize}
+\item Tematika:
+\begin{itemize}
+\item Általános ismeretek (elméleti, kicsit száraz)
+\begin{itemize}
+\item koordináta geometria
+\end{itemize}
+\item Robotmanipullátorok
+\begin{itemize}
+\item kinematika
+\item dinamika
+\end{itemize}
+\item Mobil robotika
+\begin{itemize}
+\item navigácó
+\item lokalizáció
+\end{itemize}
+\item Robotmanipulátorok
+\begin{itemize}
+\item kinematiksi összefüggések
+\item sebességek
+\item dinamika és szabályozás
+\end{itemize}
+\item Gépi látás
+\end{itemize}
+\end{itemize}
+}
+\end{frame}
+%
+\begin{frame}\frametitle{A tárgy Moodle oldala}
+\begin{center}
+\includegraphics[scale=0.5]{pictures/MIK_moodle.png}
+\end{center}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+%
+\begin{frame}\frametitle{Aláírásfeltételek}
+\begin{itemize}
+\item Elõadás látogatása nem kötelezõ
+\item Félévközi beadandók, kis zárthelyik, beszámolók lehetnek
+\item Egy zárthelyi ($100\,\%$)
+\item Évközi munka ($100\,\%$)
+\item Vizsgára bocsátás feltétele ($50\,\%$)
+\end{itemize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\section{Pozíció és orientáció}
+%
+\subsection{Bevezetés}
+%
+\begin{frame}\frametitle{Bevezetés}
+\begin{columns}
+\begin{column}{0.3\textwidth}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/point_in_axes.png}
+\end{center}
+\end{column}
+\begin{column}{0.7\textwidth}
+\begin{itemize}
+\item Testek \alert{pozíció}jának és \alert{orientáció}jának leírása egy adott környezetben.
+\begin{itemize}
+\item Robot
+\item Kamera
+\item Munkadarab
+\item Akadály
+\end{itemize}
+\item Egy pont matematikai leírása
+\begin{itemize}
+\item Koordinátarendszer (descartes)
+\item Helyvektor
+\end{itemize}
+\item De a testek több pontból állnak
+\begin{itemize}
+\item \alert{Merev test}: pontjainak egymáshoz képesti pozíciója állandó
+\item Testhez rendelt $\textcolor{red}{\{B\}}$ koordináta rendszer
+\item \alert{Merev test transzformációk}: eltolás, elforgatás
+\end{itemize}
+\end{itemize}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}\frametitle{Pozíció és orientáció}
+\begin{columns}
+\begin{column}{0.3\textwidth}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/rel_pos.png}
+\end{center}
+\end{column}
+\begin{column}{0.7\textwidth}
+\begin{itemize}
+\item A robot koordinátarendszer jellemzõi: \alert{pozíció} és \alert{orientáció}
+\item Más koordináta rendszerben való reprezentáció: referencia koordinátarendszerhez képesti pozíció és orientáció: \alert{$\xi$}
+\item Ahol: $^A\xi_B$ egy \alert{koordinátatranszformáció}
+\item ${^A\boldsymbol{p}}$ referencia rendszerben definiált ${\bf p}$ pont leírható egy másik ${^B\boldsymbol{p}}$ koordinátarendszerrel.
+$$
+{^A\boldsymbol{p}}={^A\xi_B}\cdot{^B\boldsymbol{p}}
+$$
+\end{itemize}
+\end{column}
+\end{columns}
+\note{
+\begin{itemize}
+\item ${^B\boldsymbol{p}}=(3,3)$
+\item ${^A\xi_B}=(2,5)$
+\item ${^A\boldsymbol{p}}={^A\xi_B}\cdot{^B\boldsymbol{p}}=(2,5)+(3,3)$\bigskip
+\item ${^A\xi_B}$ egy koordinátatranszformáció
+\begin{itemize}
+\item $A$: honnan
+\item $B$: hova
+\end{itemize}
+\item konkrét alakjait majd késõbb megnézzük!
+\end{itemize}
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Összetett koordinátatranszformációk}
+\begin{columns}
+\begin{column}{0.4\textwidth}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/comp_coord.png}
+\end{center}
+\end{column}
+\begin{column}{0.6\textwidth}
+\begin{itemize}
+\item Koord. transzformációk közti mûvelet: \alert{kompozíció} ($\oplus$)
+$$
+^A\xi_C={^A\xi_B} \oplus{^B\xi_C}
+$$
+\item Tehát, az ${\bf\{A\}}$ rendszerben definiált $p$ pont leírása a ${\bf\{C\}}$ rendszerrel:
+$$
+{^A\boldsymbol{p}}=\left({^A\xi_B}\oplus{^B\xi_C}\right)\cdot{^C\boldsymbol{p}}
+$$
+\end{itemize}
+\end{column}
+\end{columns}
+\begin{beamerboxesrounded}{Általánosan}
+A transzformációk összevonhatók:
+$$
+{\textcolor{blue}{^A}\xi\textcolor{red}{_Z}}={\textcolor{blue}{^A}\xi_B}\oplus {^B\xi_C}\oplus\dots\oplus{^Y\xi\textcolor{red}{_Z}}
+$$
+\end{beamerboxesrounded}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}\frametitle{Háromdimenziós koordinátatranszformációk}
+Példa: robot munkahely koordinátarendszereinek kapcsolata
+\begin{center}
+\includegraphics[scale=0.45]{pictures/3d_coord.png}
+\end{center}
+\begin{itemize}
+\item Tárgy (\textcolor{szold}{B}) képe: ${\xi_F}\oplus{^F\xi_B}={\xi_R}\oplus{^R\xi_C}\oplus{^C\xi_B}$
+\item Robot (\textcolor{red}{R}) képe: ${\xi_F}\oplus{^F\xi_R}={\xi_R}$
+\end{itemize}
+\note{
+\begin{itemize}
+\item Itt látszik, mi értelme van az összetett koordinátatranszformációnak
+\item Szeretnénk leírni egy objektum koordinátáit, de azt egy mozgó robotra erõsített kamerán keresztül nézzük
+\end{itemize}}
+\end{frame}
+%
+\begin{frame}\frametitle{Háromdimenziós koordinátatranszformációk}
+Alternatív leírás: \alert{irányított gráfokkal}
+\begin{columns}
+\begin{column}{0.45\textwidth}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/3d_coord_digraph.png}
+\end{center}
+\end{column}
+\begin{column}{0.55\textwidth}
+\begin{description}
+\item[Csomópont:] pozíció és orientáció
+\item[Él:] relatív pozíció és orientáció
+\item[Hurok:] egyenlet
+\begin{align*}
+{\xi_F}\oplus{^F\xi_B}&={\xi_R}\oplus{^R\xi_C}\oplus{^C\xi_B}\\
+{\xi_F}\oplus{^F\xi_R}&={\xi_R}
+\end{align*}
+\end{description}
+\end{column}
+\end{columns}
+\begin{itemize}
+\item A robot relatív pozíciója és orientációja a rögzített kamerához képest
+\begin{align*}
+\ominus{\xi_F}\oplus{\xi_F}\oplus{^F\xi_R}&=\ominus{\xi_F}\oplus{\xi_R}\\
+{^F\xi_R}&=\ominus{\xi_F}\oplus{\xi_R}
+\end{align*}
+\item $\xi_F$ kiejthetõ az egyenletekbõl, az inverze segítségével ($\ominus\xi_F$)
+\end{itemize}
+\note{
+\begin{itemize}
+\item A gráf minden egyes csomópontja egy pozíció-orientációt, minden egyes\\ éle pedig egy relatív pózt reprezentál.
+\item Egy $X$-bõl $Y$-ba mutató nyíl ($^X\xi_Y$) leírja az $Y$ pózt $X$-hoz képest.\\ A relatív pózok összekombinálhatók a
+$\oplus$ operátorral, így leírhatók az\\ alábbi térbeli kapcsolatok:
+\begin{description}
+\item[${\xi_F}\oplus{^F\xi_B}={\xi_R}\oplus{^R\xi_C}\oplus{^C\xi_B}$]
+A rögzített kamerából nézve a tárgy\\ pozíciója megegyezik a roboton levõ kamerán keresztül\\ látott tárgy pozíciójával.
+\item[${\xi_F}\oplus{^F\xi_R}={\xi_R}$]
+A rögzített kamerából nézve határozható meg\\ legkönnyebben a robot pozíciója.
+\end{description}
+\item $\ominus\xi_F$ az inverz transzformáció, az, amivel összekombinálva $\xi_F$-et az\\ identitást kapjuk meg: a világ koordinátarendszer origója a rögzített kamerához képest
+\end{itemize}
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Koordinátatranszformációk algebrai leírása}
+\begin{beamerboxesrounded}{Tulajdonságok:}
+\begin{small}
+\begin{enumerate}
+\item Algebrai szabályok:\vspace*{-3mm}
+\begin{align*}\vspace*{-3mm}
+\xi\oplus0&=\xi,&\xi\ominus 0&=\xi\\
+\xi\ominus\xi&=0,&\ominus\xi\oplus\xi&=0
+\end{align*}
+ahol $0$ a nulla koordináta transzformációt jelenti
+\item Minden koordináta transzfomációnak van inverze:\vspace*{-2mm}
+$$\vspace*{-2mm}
+\ominus{^X\xi_Y}={^Y\xi_X}
+$$
+\item Koordináta transzformációk kompozíciója\vspace*{-2mm}
+$$\vspace*{-2mm}
+{^X\xi_Y}\oplus{^Y\xi_Z}={^X\xi_Z}
+$$
+\item A kompozíció nem kommutatív\vspace*{-2mm}
+$$\vspace*{-2mm}
+\xi_1\oplus\xi_2\neq\xi_2\oplus\xi_1
+$$
+\item A koordináta transzformáció segítségével egy adott vektor kifejezhetõ különbözõ koordinátarendszerekhez képest\vspace*{-2mm}
+$$
+{^X\boldsymbol{p}}={^X\xi_Y}\cdot {^Y\boldsymbol{p}}
+$$
+\end{enumerate}
+\end{small}
+\end{beamerboxesrounded}
+\note{
+$\xi$ aktuális alakja bármilyen matematikai objektum lehet, ami eleget tesz az alábbi csoport-tulajdonságoknak. Függ az aktuális problémától, vagy hogy 2, vagy 3 dimenziós világban gondolkodunk. Lehet vektor, homogén transzformáció, ortogonális forgatás, vagy kvaternió.
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Összefoglalva}
+\begin{enumerate}
+\item Egy pont leírható egy vektorral, ami megadja a pont egy referencia koordinátarendszerhez képesti eltolását
+\item \alert{Merev test}et alkotó ponthalmaz leírható egy koordinátarendszerrel. A testet alkotó pontok jellemezhetõk a testet leíró kordinátarendszerbeli eltolással
+\item A \alert{koordináta transzformáció} leírja az egyik koordinátarendszer másikhoz képesti pozícióját és orientációját, jele $\xi$
+\item Egy pont leírható \alert{másik koordinátarendszer}ben is, ha a koordináta transzformáció operátorral hatunk a vektorra ($\cdot$)
+\end{enumerate}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{2D reprezentációk}
+%
+\begin{frame}\frametitle{$\xi$ kétdimenziós reprezentációi}
+\begin{columns}
+\begin{column}{0.3\textwidth}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/2d_coord.png}
+\end{center}
+\end{column}
+\begin{column}{0.7\textwidth}
+\begin{itemize}
+\item ${\bf p}$ pont leírása a Descartes-rendszerben:\vspace*{-2mm}
+$$\vspace*{-2mm}
+{\boldsymbol{p}}={x} {\boldsymbol{\hat{x}}}+{y} {\boldsymbol{\hat{y}}}=(x,y)
+$$
+,ahol ${\bf\hat{x}}$, és ${\bf\hat{y}}$ a koord. tengelyekkel párhuzamos egységvektorok.
+\item Referencia koordinátarendszerhez képesti relatív pozíció és orientáció megadása:
+\begin{itemize}
+\item Eltolással ${\boldsymbol{t}}=(x,y)$
+\item Forgatással \emph{pozitív irányban} $\theta$ szöggel
+\end{itemize}
+\item Reprezentáció: ${^A\xi_B}\sim(x,y,\theta)$
+\item \alert{DE}, a kompozíció nem kényelmes ebben a repzentációban, más megoldás kell.
+$$
+(x_1,y_1,\theta_1)\oplus(x_2,y_2,\theta_2)\quad\rightarrow\quad\textnormal{\frownie}
+$$
+\end{itemize}
+\end{column}
+\end{columns}
+
+\begin{center}
+\textcolor{blue}{Ötlet:} kezeljük külön a \alert{forgatást} és az \alert{eltolást}!
+\end{center}
+\note{
+A derékszögû koordinátarendszer \textbf{René Descartes} francia filozófus, matematikus és félállású zsoldoskatona volt.\\
+Híres mondása a "Cogito, ergo sum" azaz "Gondolkozom, tehát vagyok". Mivel gyermekkorában nagyon beteges volt, szokása volt nagyon késõn kelni, és ezt a szokást felnõttkorában is megtartotta.\\ A legenda szerint egy ilyen reggeli lustálkodás során egy plafonon mászkáló legyet nézegetve született meg a derékszögû koordinátarendszer ötlete: a légy pozíciója leírható a két faltól mért távolságokkal.\\ Ezen a koordinátarendszeren alapul a modern geometria, illetve a kalkulus (analízis)\\ Állítólag abba halt bele, hogy korán kellett kelnie, ugyanis amikor Svédországban vendégeskedett, a királynõ arra kötelezte, hogy reggel 5-kor keljen. Tüdõgyulladást kapott, és belehalt
+}
+\end{frame}
+%
+\begin{frame}\frametitle{2D Forgatás}
+\begin{columns}
+\begin{column}{0.3\textwidth}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/2d_coord_rot.png}
+\end{center}
+\end{column}
+\begin{column}{0.7\textwidth}
+\begin{itemize}
+\item A $\mathbf{P}$ pont leírható egy elforgatott $\textcolor{blue}{\{V\}}$ koordinátarendszerben:\vspace*{-2mm}
+\begin{align*}
+{^V{\boldsymbol{p}}}&={^Vx}{\boldsymbol{\hat{x}}}_V+{^Vy}{\boldsymbol{\hat{y}}}_V\\
+&=\left(\begin{array}{cc}{\boldsymbol{\hat{x}}}_V&{\boldsymbol{\hat{y}}}_V\end{array}\right)\left(\begin{array}{c}{^Vx}\\{^Vy}\end{array}\right)
+\end{align*}
+\end{itemize}
+\end{column}
+\end{columns}
+\begin{itemize}
+\item $\textcolor{red}{\{B\}}$ felírható $\textcolor{blue}{\{V\}}$-ben az egységvektoraival:\vspace*{-2mm}
+$$\vspace*{-2mm}
+\left(\begin{array}{cc}{\boldsymbol{\hat{x}}}_B&{\boldsymbol{\hat{y}}}_B\end{array}\right)=\left(\begin{array}{cc}{\boldsymbol{\hat{x}}}_V&{\boldsymbol{\hat{y}}}_V\end{array}\right)\left(\begin{array}{cc}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{array}\right)
+$$
+\item A $\bf{P}$ pont képe a $\textcolor{red}{\{B\}}$ koordinátarendszerben:
+\begin{align*}
+{^B{\boldsymbol{p}}}&={^Bx}{\boldsymbol{\hat{x}}}_B+{^By}{\boldsymbol{\hat{y}}}_B\\
+&=\left(\begin{array}{cc}{\boldsymbol{\hat{x}}}_B&{\boldsymbol{\hat{y}}}_B\end{array}\right)\left(\begin{array}{c}{^Bx}\\{^By}\end{array}\right)
+\end{align*}
+\end{itemize}
+\note{
+\begin{itemize}
+\item $\textcolor{red}{\{B\}}$ felírható $\textcolor{blue}{\{V\}}$-ben az egységvektoraival:\vspace*{-2mm}
+$$
+\begin{array}{rcl}
+{\boldsymbol{\hat{x}}}_B&=&\cos\theta{\boldsymbol{\hat{x}}}_V+\sin\theta{\boldsymbol{\hat{y}}}_V\\
+{\boldsymbol{\hat{y}}}_B&=&-\sin\theta{\boldsymbol{\hat{x}}}_V+\cos\theta{\boldsymbol{\hat{y}}}_V
+\end{array}
+\quad\textnormal{azaz}
+$$
+$$
+\left(\begin{array}{cc}{\boldsymbol{\hat{x}}}_B&{\boldsymbol{\hat{y}}}_B\end{array}\right)=\left(\begin{array}{cc}{\boldsymbol{\hat{x}}}_V&{\boldsymbol{\hat{y}}}_V\end{array}\right)\left(\begin{array}{cc}\cos\theta & \sin\theta\\-\sin\theta & \cos\theta\end{array}\right)
+$$
+\end{itemize}
+}
+\end{frame}
+%
+\begin{frame}\frametitle{2D Forgatás folyt.}
+\begin{columns}
+\begin{column}{0.3\textwidth}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/2d_coord_rot.png}
+\end{center}
+\end{column}
+\begin{column}{0.7\textwidth}
+\begin{itemize}
+\item Behelyettesítve:\vspace*{-2mm}
+$$\vspace*{-2mm}
+{^B{\boldsymbol{p}}}=\left(\begin{array}{cc}{\boldsymbol{\hat{x}}}_V&{\boldsymbol{\hat{y}}}_V\end{array}\right)\left(\begin{array}{cc}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{array}\right)\left(\begin{array}{c}{^Bx}\\{^By}\end{array}\right)
+$$
+\end{itemize}
+\end{column}
+\end{columns}
+\begin{itemize}
+\item Azaz:\vspace*{-2mm}
+$$\vspace*{-2mm}
+\left(\begin{array}{c}{^Vx}\\{^Vy}\end{array}\right)=\left(\begin{array}{cc}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{array}\right)\left(\begin{array}{c}{^Bx}\\{^By}\end{array}\right)=\alert{^V\boldsymbol{R}_B}\left(\begin{array}{c}{^Bx}\\{^By}\end{array}\right)
+$$
+\item \alert{Tehát ${^V\boldsymbol{R}_B}$ a forgatási mátrix.}
+\end{itemize}
+\note{
+$$\vspace*{-2mm}
+{^B{\boldsymbol{p}}}=\left(\begin{array}{cc}{\boldsymbol{\hat{x}}}_V&{\boldsymbol{\hat{y}}}_V\end{array}\right)\left(\begin{array}{cc}\cos\theta & \sin\theta\\-\sin\theta & \cos\theta\end{array}\right)\left(\begin{array}{c}{^Bx}\\{^By}\end{array}\right)
+$$
+nem más, mint a $\bf{P}$ pont leírása a $\{V\}$ koordinátarendszerben a $\{B\}$-beli koordinátái és $\theta$ ismeretében
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Forgatási mátrix}
+\begin{itemize}
+\item Az $\boldsymbol{R}$ forgatási mátrix tulajdonságai:
+\begin{itemize}
+\item \alert{Ortonormált mátrix} (oszlopai egységnyi hosszú, egymásra merõleges vektorok)
+\item Ortonormált $\boldsymbol{R}$ mátrixokra $\boldsymbol{R}^{-1}=\boldsymbol{R}^T$, azaz\vspace*{-2mm}
+$$\vspace*{-2mm}
+\left(\begin{array}{c}{^Bx}\\{^By}\end{array}\right)=\left({^V\boldsymbol{R}_B}\right)^{-1}\left(\begin{array}{c}{^Vx}\\{^Vy}\end{array}\right)=\left({^V\boldsymbol{R}_B}\right)^T\left(\begin{array}{c}{^Vx}\\{^Vy}\end{array}\right)={^B\boldsymbol{R}_V}\left(\begin{array}{c}{^Vx}\\{^Vy}\end{array}\right)
+$$
+\item \alert{$\det\boldsymbol{R}=+1$}, azaz a forgatás nem változtatja meg a vektor hosszát
+\item $\boldsymbol{R}(-\theta)=\boldsymbol{R}(\theta)^T=\boldsymbol{R}(\theta)^{-1}$
+\end{itemize}
+\item Egy skalár helyett négy paraméterrel írjuk le a forgatást, de a szabadsági fok továbbra is egy
+\item Nem-minimális reprezentáció
+\end{itemize}
+\note{négy paraméter, de van 3 korlátozás:
+\begin{itemize}
+\item $\boldsymbol{R}$ oszlopainak hossza egy
+\item $\boldsymbol{R}$ oszlopai merõlegesek egymásra
+\end{itemize}}
+\end{frame}
+%
+\begin{frame}\frametitle{$\xi$ kétdimenziós reprezentációi folyt.}
+\begin{itemize}
+\item Az \alert{eltolást} is elvégezve megkapjuk az $\textcolor{blue}{\{A\}}$ és $\textcolor{red}{\{B\}}$ koordinátarendszerek közti transzformációt\vspace*{-2mm}
+$$\vspace*{-2mm}\hspace*{-5mm}
+\left(\begin{array}{c}^Ax\\^Ay\end{array}\right)=\left(\begin{array}{c}{^Vx}\\{^Vy}\end{array}\right)+\left(\begin{array}{c}x\\y\end{array}\right)=\left(\begin{array}{cc}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{array}\right)\left(\begin{array}{c}{^Bx}\\{^By}\end{array}\right)+\left(\begin{array}{c}x\\y\end{array}\right)=
+$$
+$$
+=\left(\begin{array}{ccc}\cos\theta & -\sin\theta & x\\ \sin\theta & \cos\theta & y\end{array}\right)\left(\begin{array}{c}{^Bx}\\{^By}\\1\end{array}\right)
+$$
+\end{itemize}
+\begin{columns}
+\begin{column}{0.3\textwidth}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/2d_coord.png}
+\end{center}
+\end{column}
+\begin{column}{0.7\textwidth}
+\begin{itemize}
+\item Kompakt alak: \alert{homogén transzformáció}\vspace*{-2mm}
+$$
+\left(\begin{array}{c}^Ax\\^Ay\\ \hline 1\end{array}\right)=\alert{\left(\begin{array}{c|c}{^A\boldsymbol{R}_B} & \boldsymbol{t}\\ \hline \boldsymbol{0}_{1\times 2} & 1\end{array}\right)}\left(\begin{array}{c}{^Bx}\\{^By}\\ \hline 1\end{array}\right)
+$$
+\end{itemize}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}\frametitle{Homogén transzformáció}
+\begin{beamerboxesrounded}{Algebrai tulajdonságok:}
+\begin{small}
+\begin{itemize}
+\item Homogén transzformációs mátrix\vspace*{-2mm}
+$$\vspace*{-2mm}
+\xi(x,y,\theta)\sim {^A\boldsymbol{T}_B}=\left(\begin{array}{cc}{^A\boldsymbol{R}_B} & \boldsymbol{t}\\ \boldsymbol{0}_{1\times 2} & 1\end{array}\right)=\left(\begin{array}{ccc}\cos\theta & -\sin\theta & x\\ \sin\theta & \cos\theta & y\\0&0&1\end{array}\right)
+$$
+\item Kompozíció a homogén transzformáció reprezentációban\vspace*{-2mm}
+$$\vspace*{-2mm}\hspace*{-10mm}
+\boldsymbol{T}_1\oplus\boldsymbol{T}_2=\boldsymbol{T}_1\boldsymbol{T}_2=\left(\begin{array}{cc}{\boldsymbol{R}_1} & \boldsymbol{t}_1\\ \boldsymbol{0}_{1\times 2} & 1\end{array}\right)\left(\begin{array}{cc}{\boldsymbol{R}_2} & \boldsymbol{t}_2\\ \boldsymbol{0}_{1\times 2} & 1\end{array}\right)=\left(\begin{array}{cc}{\boldsymbol{R}_1}{\boldsymbol{R}_2} & \boldsymbol{t}_1+{\boldsymbol{R}_1}\boldsymbol{t}_2\\ \boldsymbol{0}_{1\times 2} & 1\end{array}\right)
+$$
+\item $\xi\oplus0=\xi$ a mátrixalgebrában $\boldsymbol{TI}=\boldsymbol{T}$-nak felel meg, azaz $0\mapsto\boldsymbol{I}$
+\item $\xi\ominus\xi=0~\mapsto~\boldsymbol{TT}^{-1}=\boldsymbol{I}$, azaz $\ominus\xi~\mapsto~\boldsymbol{T}^{-1}$
+$$
+\boldsymbol{T}^{-1}=\left(\begin{array}{cc}{\boldsymbol{R}} & \boldsymbol{t}\\ \boldsymbol{0}_{1\times 2} & 1\end{array}\right)^{-1}=\left(\begin{array}{cc}{\boldsymbol{R}^T} & -{\boldsymbol{R}^T}\boldsymbol{t}\\ \boldsymbol{0}_{1\times 2} & 1\end{array}\right)
+$$
+\end{itemize}
+\end{small}
+\end{beamerboxesrounded}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{3D reprezentációk}
+\begin{frame}\frametitle{$\xi$ háromdimenziós reprezentációi}
+\begin{columns}
+\begin{column}{0.32\textwidth}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/3d_coord_sys.png}
+\end{center}
+\end{column}
+\begin{column}{0.68\textwidth}
+\begin{itemize}
+\item Adott $\bf{p}$ pont leírása a kétdimenziós esetre vezethetõ vissza:\vspace*{-2mm}
+$$\vspace*{-2mm}
+\boldsymbol{p}=x\boldsymbol{\hat{x}}+y\boldsymbol{\hat{y}}+z\boldsymbol{\hat{z}}=(x,y,z)
+$$
+\item Ahol a referencia koordinátarendszerhez képesti relatív pozíció és orientáció:
+\begin{itemize}
+\item Eltolás ${\boldsymbol{t}}=(x,y,z)$ (mint eddig)
+\item A forgatás az elõbbi módszerrel nehézkes
+\item \alert{Euler forgatási tétele:} Tetszõleges forgatás felbontható koordinátatengelyek körüli elemi forgatások sorozataként.
+\end{itemize}
+\end{itemize}
+\end{column}
+\end{columns}
+\begin{beamerboxesrounded}{Jobbkéz szabály}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/right_hand.png}
+\end{center}
+\end{beamerboxesrounded}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}\frametitle{Forgatás három dimenzióban}
+\begin{example}[Elemi forgatások sorozata]
+\begin{center}
+\includegraphics[scale=0.45]{pictures/3d_rot_ex.png}
+\end{center}
+\end{example}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}\frametitle{Forgatás három dimenzióban}
+\begin{example}[A forgatás nem kommutatív]
+\begin{center}
+\includegraphics[scale=0.45]{pictures/3d_rot_comm_ex.png}
+\end{center}
+\end{example}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}\frametitle{Ortonormált forgatási mátrixok}
+\begin{itemize}
+\item Elemi forgatási mátrix a kétdimenziós eset általánosításaként
+$$
+\left(\begin{array}{c}{^Ax}\\{^Ay}\\{^Az}\end{array}\right)={^A\boldsymbol{R}_B}\left(\begin{array}{c}{^Bx}\\{^By}\\{^Bz}\end{array}\right),\quad {^A\boldsymbol{R}_B}\in\mathbb{R}^{3\times 3} \textnormal{ forgatási mátrix}
+$$
+\item Tulajdonságok: $\boldsymbol{R}^T=\boldsymbol{R}^{-1}$ és $\det\boldsymbol{R}=1$
+\item Koordinátatengelyek körüli \alert{elemi forgatások}
+\begin{align*}
+\boldsymbol{R}_x(\theta)=\left(\begin{array}{ccc}1 & 0 & 0\\0 & \cos\theta & -\sin\theta\\ 0 & \sin\theta & \cos\theta\end{array}\right)\\
+\boldsymbol{R}_y(\theta)=\left(\begin{array}{ccc}\cos\theta & 0 & \sin\theta\\0 & 1 & 0\\ -\sin\theta & 0 & \cos\theta\end{array}\right)\\
+\boldsymbol{R}_z(\theta)=\left(\begin{array}{ccc} \cos\theta & -\sin\theta & 0\\ \sin\theta & \cos\theta & 0\\ 0 & 0 & 1\end{array}\right)
+\end{align*}
+\end{itemize}
+\note{
+Reading the columns of an orthonormal rotation matrix from left to right tells us the directions
+of the new frame's axes in terms of the current coordinate frame. For example if
+$$
+\boldsymbol{R} =\left(\begin{array}{ccc}
+1& 0 & 0\\
+0& 0& -1\\
+0& 1& 0
+\end{array}\right)
+$$
+the new frame has its x-axis in the old $x$-direction $(1, 0, 0)$, its $y$-axis in the old z-direction $(0, 0, 1)$,
+and the new $z$-axis in the old negative $y$-direction $(0,-1, 0)$. In this case the $x$-axis was unchanged
+since this is the axis around which the rotation occurred.\medskip
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Összetett forgatások}
+\begin{itemize}
+\item Euler forgatási tétele: Tetszõleges forgatás a háromdimenziós térben leírható \emph{legfeljebb három} elemi forgatás kompozíciójaként.
+\item $3\times 3$-as forgatási mátrix
+\begin{itemize}
+\item 9 paraméter
+\item 3 korlátozás (oszlopok egységnyi hosszúak)
+\item 3 korlátozás (oszlopok derékszögûek)
+\item \alert{3 szabadsági fok}
+\end{itemize}
+\end{itemize}
+\begin{example}[Összetett forgatás]
+$$
+\boldsymbol{R}_y(\frac{\pi}{2})\boldsymbol{R}_x(\frac{\pi}{2})=\left(\begin{array}{ccc}
+0& 1 & 0\\
+0& 0& -1\\
+-1& 0& 0
+\end{array}\right)
+$$
+\end{example}
+\note{A második 3 korlátozás az alábbi három egyenletbõl jön ki, ha az oszlopokat $c_i$-vel jelöljük
+\begin{align*}
+\boldsymbol{c}_1\cdot\boldsymbol{c}_2&=0\\
+\boldsymbol{c}_2\cdot\boldsymbol{c}_3&=0\\
+\boldsymbol{c}_3\cdot\boldsymbol{c}_1&=0
+\end{align*}
+}
+\end{frame}
+\begin{frame}\frametitle{Forgatások leírása Euler szögekkel}
+\begin{itemize}
+\item Euler: Tetszõleges forgatás elõáll három egymásutáni elemi forgatás kompozíciójaként (az egymást követõ forgatások nem történhetnek ugyanazon a tengely körül)\quad$\rightarrow\quad 3\cdot2\cdot 2=12$ kombináció
+\item Euler-féle forgatási sorozatok: van ismétlõdés\\
+${XYX},{XZX},{YXY},{YZY},{ZXZ},{ZYZ}$
+\item Cardan-féle forgatási sorozatok: nincs ismétlõdés\\
+$XYZ,XZY,YZX,YXZ,ZXY,ZYX$
+\item Általánosan használt Euler szögek
+\begin{itemize}
+\item \alert{$ZYZ$}
+$$
+\boldsymbol{R}=\boldsymbol{R}_z(\phi)\boldsymbol{R}_y(\theta)\boldsymbol{R}_z(\psi)\quad\textnormal{jelölés:}\quad \boldsymbol{\Gamma}=(\phi,\theta,\psi)
+$$
+\item \alert{$XYZ$}, azaz roll-pitch-yaw, fordulás-bólintás-billenés
+$$
+\boldsymbol{R}=\boldsymbol{R}_x(\phi_r)\boldsymbol{R}_y(\theta_p)\boldsymbol{R}_z(\psi_y)
+$$
+\end{itemize}
+\end{itemize}
+\end{frame}
+%
+%\begin{frame}\frametitle{Euler szögek}
+%\begin{example}[Gimbal lock]
+%{}
+%\end{example}
+%\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+%\end{frame}
+%
+\begin{frame}\frametitle{Az orientáció leírása két vektorral}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/end_eff_coord.png}
+\end{center}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+\item Robotmanipulátorok esetén használatos
+\item A $z$-tengely irányába mutat a szerszám (approach)\vspace*{-2mm}
+$$\vspace*{-2mm}
+\boldsymbol{\hat{a}}=(a_x,a_y,a_z)
+$$
+\item Az $y$-tengely orientációs vektor \vspace*{-2mm}
+$$\vspace*{-2mm}
+\boldsymbol{\hat{o}}=(o_x,o_y,o_z)
+$$
+\end{itemize}
+\end{column}
+\end{columns}
+\begin{itemize}
+\item A fenti kettõ vektoriális szorzata a harmadik irányvektor\vspace*{-2mm}
+$$\vspace*{-2mm}
+\boldsymbol{\hat{n}}=\boldsymbol{\hat{o}}\times \boldsymbol{\hat{a}}
+$$
+$$
+\boldsymbol{R}=\left(\begin{array}{ccc}n_x & o_x & a_x\\n_y & o_y & a_y\\n_z & o_z & a_z\end{array}\right)
+$$
+\end{itemize}
+\note{Feltétel persze, hogy $\boldsymbol{\hat{a}}$ és $\boldsymbol{\hat{o}}$ nem párhuzamos vektorok.\bigskip
+Tetszõleges két merõleges vektor meghatároz egy háromdimenziós koordinátarendszert, például egy kamera esetén $z$ az optikai tengely iránya, egy mobil robot esetén $z$ a gravitációs erõ iránya, $x$ a haladási irány, stb..
+}
+\end{frame}
+%
+\begin{frame}
+\begin{itemize}\frametitle{Tetszõleges vektor körüli forgatás}
+\item Tetszõleges összetett forgatás (orientáció) leírható valamely tengely körüli elforgatásként
+\item Paraméterek (látszólag négy)
+\begin{itemize}
+\item Tengely iránya: $\boldsymbol{v}=(v_1,v_2,v_3)$
+\item Forgatási szög: $\theta$
+\end{itemize}
+\item $\boldsymbol{R}$-bõl kinyerhetõk: sajátérték, sajátvektor
+\end{itemize}
+\begin{beamerboxesrounded}{Sajátérték, sajátvektor}
+$\boldsymbol{A}$ sajátértéke $\lambda_i$ a hozzátartozó $\boldsymbol{v}_i$ sajátvektorral ($i=1,2,3$):
+$$
+\boldsymbol{Av}_i=\lambda_i\boldsymbol{v}_i
+$$
+Geometriai jelentés: $\boldsymbol{v}_i$ irányban $\lambda_i$ mértékben nyújt.
+\end{beamerboxesrounded}
+\begin{itemize}
+\item $\boldsymbol{R}$ forgatási mátrix esetén a sajátértékek
+$$
+\lambda_1=1,\quad\lambda_{2,3}=\cos\theta\pm\boldsymbol{i}\sin\theta
+$$
+\end{itemize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}\frametitle{Tetszõleges vektor körüli forgatás folyt.}
+\begin{itemize}
+\item A forgatás tengelyére ($\boldsymbol{v}$) nem hat $\boldsymbol{R}$
+$$
+\boldsymbol{Rv}=\boldsymbol{v}=\lambda_1\boldsymbol{v}_1\quad\rightarrow\quad \alert{\boldsymbol{v}=\boldsymbol{v}_1}
+$$
+\item Vektor és szög ismeretében felírható a forgatási mátrix a \alert{Rodrigues képlet} segítségével
+\end{itemize}
+\begin{beamerboxesrounded}{Rodrigues képlet}
+Adott $\boldsymbol{v}$ a forgatás tengelyének irányvektora, és $\theta$ pedig a forgatási szög, ekkor a forgatás mátrixa:
+$$
+\boldsymbol{R}=\boldsymbol{I}_{3\times 3}+\sin\theta \boldsymbol{S(v)}+(1-\cos\theta)(\boldsymbol{vv}^T-\boldsymbol{I}_{3\times 3})
+$$
+,ahol $\boldsymbol{S(v)}$ ferdén szimmetrikus mátrix: ($\boldsymbol{S(v)}^T=-\boldsymbol{S(v)}$)
+$$
+\boldsymbol{S(v)}=\left(\begin{array}{ccc}0&-v_3 & v_2\\v_3 & 0 & -v_1\\-v_2 & v_1 & 0\end{array}\right).
+$$
+\end{beamerboxesrounded}
+\note{Látszólag négy paraméterrel megadott reprezentáció ($\theta,v_1,v_2,v_3$), de az egységnyi vektornorma miatt
+$$
+v_3=\sqrt{1-v_1^2-v_2^2}
+$$
+Felhívni a figyelmet, hogy $v_i\neq\boldsymbol{v}_i,i=1,2,3$!
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Egységkvaterniók}
+\begin{itemize}
+\item Kvaternió = hiperkomplex szám
+$$
+\mathring{q}=s+\boldsymbol{v}=s+v_1\boldsymbol{i}+v_2\boldsymbol{j}+v_3\boldsymbol{k}
+$$
+ahol $\boldsymbol{i}, \boldsymbol{j}$ és $\boldsymbol{k}$ egymásra merõleges komplex egységvektorok, melyekre
+$$
+\boldsymbol{i}^2=\boldsymbol{j}^2=\boldsymbol{k}^2=\boldsymbol{ijk}=-1
+$$
+\item Jelölés: $\mathring{q}=s,<v_1,~v_2,~v_3>$
+\item \alert{Egységkvaternió}: $|\mathring{q}|=s^2+v_1^2+v_2^2+v_3^2=1$
+\item $\mathring{q}$ egy $\boldsymbol{\hat{n}}$ irányú tengely körüli $\theta$ szöggel való forgatást ír le, ahol
+$$
+s=\cos\frac{\theta}{2},\quad\boldsymbol{v}=\sin\frac{\theta}{2}\boldsymbol{\hat{n}}
+$$
+\end{itemize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}\frametitle{Egységkvaterniók folyt.}
+\begin{beamerboxesrounded}{Algebrai tulajdonságai:}
+\begin{small}
+\begin{itemize}
+\item Kvaternió $\sim$ koordináta transzformáció ($\mathring{q}\sim\xi$)
+\item Kompozíció:
+$$
+\mathring{q}_1\oplus\mathring{q}_2\mapsto s_1s_2-\boldsymbol{v}_1\cdot\boldsymbol{v}_2,<s_1\boldsymbol{v}_2+s_2\boldsymbol{v}_1+\boldsymbol{v}_1\times\boldsymbol{v}_2>
+$$
+\item Inverz(= konjugálás):
+$$
+\ominus\mathring{q}\mapsto \mathring{q}^{-1}=s,<-\boldsymbol{v}>
+$$
+\item Inverzelem: $0\mapsto 1,<0,0,0>$
+\end{itemize}
+\end{small}
+\end{beamerboxesrounded}
+Példa: Egy $\boldsymbol{v}\in\mathbb{R}^3$ vektor forgatása
+$$
+\mathring{q}\cdot\boldsymbol{v}\mapsto \mathring{q}\oplus\mathring{q}(\boldsymbol{v})\oplus\mathring{q}^{-1}
+$$
+,ahol $\mathring{q}(\boldsymbol{v})=0,<\boldsymbol{v}>$ egy ún. tiszta kvaternió.
+\note{
+Ha felírjuk a kvaterniót egy négydimenziós $(s,v_1,v_2,v_2)$ vektorként, akkor a
+kompozíció felírható az alábbi mátrix-vektor szorzatként
+$$
+\mathring{q}\oplus\mathring{q}'=\left[\begin{array}{cccc}s & v_1 & v_2 & v_3\\-v_1 & s & -v_3 & v_2\\ -v_2 & v_3 & s &-v_1\\ -v_3 & -v_2 & -v_1 & s\end{array}\right]\left[\begin{array}{c}s'\\v_1'\\v_2'\\v_3'\end{array}\right]
+$$
+
+\bigskip
+
+\begin{itemize}
+\item Két ortonormált forgatási mátrix kompozíciója (szorzata) 27 szorzást és\\ 18 összeadást igényel.
+\item Kvaternió alakban ez 16 szorzást és 12 összeadást jelent.
+\end{itemize}
+Ez különösen beágyazott rendszerek esetében nagyon fontos megtakarítás.
+}
+\end{frame}
+%
+%\begin{frame}\frametitle{Kvaterniók}
+%\begin{example}[Vektor forgatása kvaternióval]
+%{}
+%\end{example}
+%\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+%\end{frame}
+%
+\begin{frame}\frametitle{Eltolás és forgatás három dimenzióban}
+\begin{columns}
+\begin{column}{0.32\textwidth}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/3d_coord_sys.png}
+\end{center}
+\end{column}
+\begin{column}{0.68\textwidth}
+\begin{itemize}
+\item Orientáció (forgatás) és pozíció (eltolás) együtt
+\item Leggyakrabban használt reprezentációk
+\begin{itemize}
+\item Egységkvaterniók ($\xi\sim(\boldsymbol{t}, \mathring{q})$)
+\item $4\times 4$ -es homogén transzformációs mátrix ($\xi\sim\boldsymbol{T}$)
+\end{itemize}
+\end{itemize}
+\end{column}
+\end{columns}
+\begin{beamerboxesrounded}{Összefoglalva:}
+\begin{small}
+\begin{itemize}
+\item Egységkvaternió: $\xi\sim(\boldsymbol{t}, \mathring{q})$, ahol $\boldsymbol{t}\in\mathbb{R}^3$ eltolás és $\mathring{q}\in\mathbb{Q}$ forgatás
+    \begin{itemize}
+    \item Kompozíció: $\xi_1\oplus\xi_2=(\boldsymbol{t}_1+\mathring{q}_1\cdot\boldsymbol{t}_2,\mathring{q}_1\oplus\mathring{q}_2)$\vspace*{2mm}
+        \item Invertálás: $\ominus\xi=(-\mathring{q}^{-1}\cdot\boldsymbol{t},\mathring{q}^{-1})$\vspace*{2mm}
+        \item Koordináta transzformáció: ${^A\boldsymbol{p}}={^A\xi_{B}}\cdot {^B\boldsymbol{p}}=\mathring{q}\cdot{^B\boldsymbol{p}}+\boldsymbol{t}$\vspace*{2mm}
+    \end{itemize}
+\end{itemize}
+\end{small}
+\end{beamerboxesrounded}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}\frametitle{Eltolás és forgatás három dimenzióban}
+\begin{columns}
+\begin{column}{0.32\textwidth}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/3d_coord_sys.png}
+\end{center}
+\end{column}
+\begin{column}{0.68\textwidth}
+\begin{itemize}
+\item Homogén transzformációs mátrix (${^A\boldsymbol{T}_B}$) háromdimenziós esetben
+$$
+\left(\begin{array}{c}{^Ax}\\{^Ay}\\{^Az}\\1\end{array}\right)=\left(\begin{array}{cc}{^A\boldsymbol{R}_B} & \boldsymbol{t}\\ \boldsymbol{0}_{1\times 3} & 1\end{array}\right)\left(\begin{array}{c}{^Bx}\\{^By}\\{^Bz}\\1\end{array}\right)
+$$
+\end{itemize}
+\end{column}
+\end{columns}
+\begin{itemize}
+\item Kompozíció $\boldsymbol{T}_1\oplus\boldsymbol{T}_2\mapsto \boldsymbol{T}_1\boldsymbol{T}_2$
+$$\vspace*{-2mm}
+\boldsymbol{T}_1\boldsymbol{T}_2=\left(\begin{array}{cc}{\boldsymbol{R}_1} & \boldsymbol{t}_1\\ \boldsymbol{0}_{1\times 3} & 1\end{array}\right)\left(\begin{array}{cc}{\boldsymbol{R}_2} & \boldsymbol{t}_2\\ \boldsymbol{0}_{1\times 3} & 1\end{array}\right)=
+\left(\begin{array}{cc}{\boldsymbol{R}_1\boldsymbol{R}_2} & \boldsymbol{t}_1+\boldsymbol{R}_1\boldsymbol{t}_2\\ \boldsymbol{0}_{1\times 3} & 1\end{array}\right)
+$$
+
+\end{itemize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}\frametitle{Eltolás és forgatás három dimenzióban}
+\begin{columns}
+\begin{column}{0.32\textwidth}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/3d_coord_sys.png}
+\end{center}
+\end{column}
+\begin{column}{0.68\textwidth}
+\begin{itemize}
+\item Egységelem:
+$$
+\xi\oplus 0=\xi\mapsto\boldsymbol{TI}=\boldsymbol{T},\quad\textnormal{ így }0\mapsto\boldsymbol{I}
+$$
+\end{itemize}
+\end{column}
+\end{columns}
+\begin{itemize}
+\item Inverz $\xi\ominus\xi=0\mapsto\boldsymbol{TT}^{-1}=\boldsymbol{I}$, azaz $\ominus\boldsymbol{T}\mapsto\boldsymbol{T}^{-1}$
+$$
+\boldsymbol{T}^{-1}=\left(\begin{array}{cc}{\boldsymbol{R}} & \boldsymbol{t}\\ \boldsymbol{0}_{1\times 3} & 1\end{array}\right)^{-1}=\left(\begin{array}{cc}{\boldsymbol{R}^T} & -\boldsymbol{R}^T\boldsymbol{t}\\ \boldsymbol{0}_{1\times 3} & 1\end{array}\right)
+$$
+\end{itemize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Összefoglalás}
+\begin{frame}\frametitle{Összefoglalás}
+\begin{itemize}
+\item Pozíció és orientáció leírása
+\begin{itemize}
+\item Pozíció - eltolás
+\item Orientáció - forgatás $\rightarrow$ háromdimenziós esetben bonyolult
+\item Sokféle matematikai objektum használható
+\end{itemize}
+\end{itemize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+
+\begin{frame}\frametitle{Ajánlott irodalom}
+  \begin{thebibliography}{10}
+
+\beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{Corke2011}
+    P.~Corke.
+    \newblock {\em Robotics, Vision and Control - Fundamental Algorithms in MATLAB}.
+    \newblock Springer, 2011.
+  \bibitem{Siegwart2004}
+    R.~Siegwart and I.~R.~Nourbakhsh.
+    \newblock {\em Introduction to Autonomous Mobile Robots}.
+    \newblock MIT Press, 2004.
+
+%  \beamertemplatearticlebibitems
+%  % Followed by interesting articles. Keep the list short.
+%
+%\bibitem{Gorbe2012}
+%    P.~Görbe, A.~Magyar and K.M.~Hangos.
+%    \newblock Reduction of power losses with smart grids fueled with renewable
+%	sources and applying EV batteries.
+%    \newblock {\em Journal of Cleaner Production}, in press, \href{http://www.scopus.com/inward/record.url?eid=2-s2.0-84855717950&partnerID=40&md5=b44a2195012f811358b850bc89c8aa4b}{available online},
+%    2012.
+%\bibitem{Gollei2012}
+%    A.~Göllei, P.~Görbe and A.~Magyar.
+%    \newblock Modeling and optimization of electrical vehicle batteries in complex clean energy systems.
+%    \newblock {\em Journal of Cleaner Production}, in press, \href{http://www.scopus.com/inward/record.url?eid=2-s2.0-84855472286&partnerID=40&md5=28429be50243b55646e41bb5cb51b224}{available online},
+%    2012.
+  \end{thebibliography}
+  \note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\lecture{Alapfogalmak}{week 1b}
+\section{Idõ és mozgás}
+\subsection{Trajektória}
+\begin{frame}\frametitle{Trajektória}
+\begin{itemize}
+\item Út vs. trajektória
+\begin{description}
+\item[Út:] térbeli görbe\\ (\emph{elsétálok A-ból B-be})
+\item[Trajektória:] térbeli görbe \alert{idõzítéssel}\\ (\emph{elsétálok A-ból B-be egy nap alatt})
+\end{description}
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.25]{pictures/trajectory.jpg}
+\end{center}
+\note{
+Az elõzõekben megnéztük, hogyan lehet leírni objektumokat két-, illetve háromdimenziós térben pozíciójukkal, illetve orientációjukkal
+Most az következik, hogy az objektumok mozognak, azaz a pozíció, illetve orientáció az idõ függvényeként írható le.
+
+\medskip
+
+Robotok esetetén jogos elvárás, hogy egy adott pozíció-orientáció idõfüggvényt követni tudjanak (manipulátorok, pl.).
+\begin{itemize}
+\item Elõször megnézzük, hogyan tudunk pozíciók-orientációk idõbeli sorozatát generálni, (\textbf{trajektória}), ami folytonosan megy át a kezdeti állapotból a végállapotba.
+\item Azután megvizsgáljuk a pozíció-orientáció megváltozását, idõ szerinti deriváltját. A cél az inverz probléma megoldása, azaz sebesség és szögsebesség mérésekbõl határozzuk meg a mozgó objektum aktuális pozícióját-orientációját. Eaz \textbf{inerciális navigáció} alapja.
+\end{itemize}
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Sima egydimenziós trajektóriák}
+\begin{itemize}
+\item Trajektória - idõfüggvényként adott pozíció
+\begin{description}
+\item[Sima trajektória:] az elsõ néhány (idõ szerinti) deriváltja folytonos
+\end{description}
+\item Polinomiális trajektória - kézenfekvõ jelölt
+\begin{align*}
+s(t)&=At^5+Bt^4+Ct^3+Dt^2+Et+F&&\\
+\dot{s}(t)&=5At^4+4Bt^3+3Ct^2+2Dt+E&&t\in[0,~T]\\
+\ddot{s}(t)&=20At^3+12Bt^2+6Ct+2D&&
+\end{align*}
+\item Peremfeltételek
+\begin{center}
+\begin{tabular}{r|ccc}
+idõ & $s$ & $\dot{s}$ & $\ddot{s}$\\
+\hline
+$t=0$ & $s_0$ & $\dot{s}_0$ & $\ddot{s}_0$\\
+$t=T$ & $s_T$ & $\dot{s}_T$ & $\ddot{s}_T$
+\end{tabular}
+\end{center}
+\item Lineáris egyenletrendszer megoldására vezet!
+\end{itemize}
+\end{frame}
+%
+\begin{frame}\frametitle{Sima egydimenziós trajektóriák}
+\begin{itemize}
+\item Lineáris egyenletrendszer
+$$
+\left(\begin{array}{c}s_0\\s_T\\ \dot{s}_0\\ \dot{s}_T \\ \ddot{s}_0 \\ \ddot{s}_T\end{array}\right)=
+\left(\begin{array}{cccccc}0 & 0 & 0 & 0 & 0 & 0\\
+T^5 & T^4 & T^3 & T^2 & T & 1\\
+0 & 0 & 0 & 0 & 1 & 0\\
+5T^4 & 4T^3 & 3T^2 & 2T & 1 & 0\\
+0 & 0 & 0 & 2 & 0 & 0\\
+20T^3 & 12T^2 & 6T & 2 & 0 & 0
+\end{array}\right)
+\left(\begin{array}{c}A\\B\\ C\\ D \\ E \\ F\end{array}\right)
+$$
+\end{itemize}
+\end{frame}
+%
+%
+\begin{frame}\frametitle{Sima egydimenziós trajektóriák}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/smooth_trajectory.png}
+\end{center}
+\note{A kék esetben nulla piros esetben nem nulla kezdeti sebesség mellett rajzoltuk fel
+\begin{itemize}
+\item A nem nulla esetben $s(t)$ túllövést produkál (piros)
+\item A sebesség szinte mindig a maximum alatt van\dots (kék)
+\end{itemize}
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Alternatíva: trapéz alakú sebességprofil}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/trap_trajectory.png}
+\end{center}
+\note{A trapezoid trajektória folytonos sebességet ad, de a gyorsulás nem lesz az!
+\bigskip
+
+Látható, hogy amint a lineáris szakasz sebessége növekszik, csökken az idõtartama, és határesetben nullává válik. Valójában a sebesség nem választható meg akármekkorára, túl kicsi, vagy túl nagy sebesség kivitelezhetetlen trajektóriához vezet. \\
+A rendszer túlhatározott (biztos ez???), öt korlátozó egyenlet van (teljes idõ, kezdeti és végsõ pozíció és sebesség), de hat szabad paraméter van (görbületi idõ, három parabolikus és két lineáris együttható).
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Többdimenziós eset}
+\begin{itemize}
+\item A robotok több tengellyel/szabadsági fokkal rendelkeznek, $\boldsymbol{x}\in\mathbb{R}^M$
+\begin{itemize}
+\item Kétdimenziós eset: $(x,y,\theta)$
+\item Háromdimenziós eset: $(x,y,z,\theta_r,\theta_p,\theta_y)$
+\end{itemize}
+\item Ötlet: $M$ db skalár trajektória...
+\item ...az orientációnál nem ilyen egyszerû (ortogonalitás)
+\end{itemize}
+%\includemedia[]{example}{pictures/flyingsnail1.swf}
+\end{frame}
+%
+\begin{frame}\frametitle{Összetett trajektóriák}
+\begin{itemize}
+\item  Útpontok definiálják $\boldsymbol{x}_k,~k\in[1,N],~\boldsymbol{x}_k\in\mathbb{R}^M$
+\item Köztük elemi trajektória szakaszok ($N-1$)
+\begin{itemize}
+\item Akadály elkerülése
+\item Feladatvégzés (megmunkálás, hegesztés, festés, stb.)
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/multi_dim_trajectory.png}
+\end{center}
+\item Folytonos sebesség - az útpontok nem lesznek érintve
+\item Az egyenes szakaszokon állandó sebesség, köztük a gyorsulás:
+$$
+\ddot{\boldsymbol{x}}=\frac{\dot{\boldsymbol{x}}_{k+1}-\dot{\boldsymbol{x}}_{k}}{t_{acc}}
+$$
+\end{itemize}
+\note{$t_{acc}$ egy paraméter, ami a mi kezünkben van. Ha a beavatkozók em képesek bizonyos gyorsulásnál nagyobbat produkálni, akkor ezt az idõt meg kell növelni.\\
+Több tengely/csukló esetén, ha van olyan, amelyik lassabb, mint a többi, akkor ennek a maximális sebességéhez kell meghatározni a több tengely megengedett legnagyobb sebességét. Így az összes tengely egyszerre éri el $\boldsymbol{x}_k$-t.
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Összetett trajektóriák}
+\begin{center}
+\includegraphics[scale=0.45]{pictures/t_acc.png}
+\end{center}
+\begin{itemize}
+\item $t_{acc}=0\,\textnormal{s}$, illetve $t_{acc}=1\,\textnormal{s}$
+\end{itemize}
+\note{
+\begin{description}
+\item[\textbf{körök}]diszkrét idõpontok
+\item[\textbf{fekete pontok}] útpontok (\emph{via} pontok)
+\end{description}
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Orientáció interpolációja}
+\begin{itemize}
+\item Pl. a végszerszám változtassa meg az orientációját $\xi_0$-ról $\xi_1$-re
+\item Általános megközelítés $\xi(s)=\sigma(\xi_0,\xi_1,s)$ folytonos függvény,$s\in[0,1]$
+$$
+\sigma(\xi_0,\xi_1,0)=\xi_0,\quad\quad\sigma(\xi_0,\xi_1,1)=\xi_1
+$$
+\begin{itemize}
+\item Forgatási mátrix reprezentációban ($\xi\sim\boldsymbol{R}$)
+$$
+\sigma(\boldsymbol{R}_0,\boldsymbol{R}_1,s)=(1-s)\boldsymbol{R}_0+s\boldsymbol{R}_1\quad\rightarrow\quad\textnormal{nem mindig ortonormált}
+$$
+\item Az Euler szög reprezentáció ($\xi\sim\boldsymbol{\Gamma}$)
+$$
+\sigma(\boldsymbol{\Gamma}_0,\boldsymbol{\Gamma}_1,s)=(1-s)\boldsymbol{\Gamma}_0+s\boldsymbol{\Gamma}_1\quad\rightarrow\quad\textnormal{változik a forgatás tengelye}
+$$
+\item Egységkvaternió leírásban ($\xi\sim\mathring{q}$) egy adott tengely körüli forgatásként valósítható meg az interpoláció
+\end{itemize}
+\end{itemize}
+\end{frame}
+%
+\begin{frame}\frametitle{Descartes mozgás}
+\begin{itemize}
+\item Descartes mozgás: Két adott pozíció, ill. orientáció közti folytonos út
+\item Gyakorlatilag a kezdeti és a végpontbeli $\boldsymbol{T}$ homogén transzformációs mátrixot interpolálja
+\end{itemize}
+\begin{center}
+\includegraphics[scale= .45]{pictures/descartes_mozgas.png}
+\end{center}
+\note{
+Együtt kezeli az orientáció és a pozíció interpolációját, minden interpolációs pontban egy homogén transzformációs mátrix írja le a pozíciót-orientációt.
+
+\bigskip
+
+Látható, hogy a pozíció folytonos és lineáris függvénye az idõnek, az orientáció (RPY koordináták) pedig folytonos függvénye az idõnek. Annyi baj van vele, hogy a kezdeti és a végsõ sebesség nem nulla.
+
+\bigskip
+
+Az orientáció elején azértvan ugrás, mert körbeér a $[-\pi,~\pi]$ intervallumon, a végén meg egy szingularitásba megy az RPY reprezentáció ($\sim$ Gimbal lock)
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Descartes mozgás}
+\begin{itemize}
+\item Descartes mozgás: Két adott pozíció, ill. orientáció közti folytonos út
+\item Trapéz alakú sebességprofil mellett folytonos  függvény lesz a kezdeti és a végpontban is
+\end{itemize}
+\begin{center}
+\includegraphics[scale= .45]{pictures/descartes_mozgas_trap.png}
+\end{center}
+\end{frame}
+%
+\subsection{Idõfüggõ koordinátarendszerek}
+\begin{frame}\frametitle{Forgó koordinátarendszerek}
+\begin{itemize}
+\item 3 dimenziós térben mozgó test sebessége az \alert{origó sebessége}
+\item 3 dimenziós térben forgó test szögsebessége \alert{vektormennyiség}
+\begin{itemize}
+\item $\boldsymbol{\omega}=(\omega_x,\omega_y,\omega_z)$
+\item $\boldsymbol{\omega}$ - pillanatnyi forgatási tengely
+\item $|\boldsymbol{\omega}|$ - forgási sebesség
+\end{itemize}
+\item Idõfüggõ forgatási mátrix deriváltja
+$$
+\dot{\boldsymbol{R}}(t)=\boldsymbol{S}(\boldsymbol{\omega})\boldsymbol{R}(t)
+$$
+ahol $\boldsymbol{S(\omega)}$ ferdén szimmetrikus mátrix ($\boldsymbol{S(\omega)}^T=-\boldsymbol{S(\omega)}$)
+$$
+\boldsymbol{S(\omega)}=\left(\begin{array}{ccc}0&-\omega_z & \omega_y\\ \omega_z & 0 & -\omega_x\\-\omega_y & \omega_x & 0\end{array}\right)
+$$
+\item Inverzmûvelet jelölése: $\boldsymbol{\omega}=\textrm{vex}(\boldsymbol{S})$
+\end{itemize}
+\note{Az eddigiekben lineáris és forgó komponensbõl álló koordinátarenszer mozgatásokat írtunk le. A transzlációs sebesség nem más, mint a koordinátarendszer origójának a sebessége, a forgási sebesség egy kicsivel bonyolultabb dolog\dots
+
+\bigskip
+A tengely-szög leírással van szoros kapcsolatban}
+\end{frame}
+%
+\begin{frame}\frametitle{Forgó koordinátarendszerek}
+\begin{itemize}
+\item Jó, jó, de mit jelent $\dot{\boldsymbol{R}}(t)$?
+\item Közelítés elõremutató differenciával
+$$
+\dot{\boldsymbol{R}}(t)\approx\frac{\boldsymbol{R}(t+\delta_t)-\boldsymbol{R}(t)}{\delta_t}
+$$
+\item Rendezve
+$$
+\boldsymbol{R}(t+\delta_t)\approx \delta_t\dot{\boldsymbol{R}}(t)+\boldsymbol{R}(t)
+$$
+\item Behelyettesítve $\dot{\boldsymbol{R}}(t)=\boldsymbol{S(\omega)R}(t)$-t
+$$
+\boldsymbol{R}(t+\delta_t)\approx \delta_t\boldsymbol{S(\omega)R}(t)+\boldsymbol{R}(t)=\left(\delta_t\boldsymbol{S(\omega)}+\boldsymbol{I}_{3\times 3}\right)\boldsymbol{R}(t)
+$$
+\item Megmutatja, hogy változik a forgatási mátrix a szögsebesség függvényében
+\end{itemize}
+\end{frame}
+%
+%\begin{frame}\frametitle{Inkrementális mozgás}
+%\begin{itemize}
+%\item Pl. egy koordinátarendszer kis mértékben elfordul $\boldsymbol{R}_0$-ból $\boldsymbol{R}_1$-be
+%$$
+%\boldsymbol{R}_1=\left(\delta_t\boldsymbol{S(\omega)}+\boldsymbol{I}_{3\times 3}\right)\boldsymbol{R}_0 \quad\Rightarrow\quad \delta_t\boldsymbol{S(\omega)}=\boldsymbol{R}_1\boldsymbol{R}_0^T-\boldsymbol{I}_{3\times 3}
+%$$
+%\end{itemize}
+%\end{frame}
+%
+%
+\begin{frame}\frametitle{Inerciális navigációs rendszerek}
+\begin{definition}[Inerciális navigációs rendszer]
+Olyan eszköz, ami egy referencia inerciarendszerhez (Univerzum) képesti pozíció, orientáció és sebesség becslését adja meg külsõ bemenet nélkül.
+\end{definition}
+\begin{itemize}
+\item Gyorsulás- és szögsebesség mérések numerikus integrálása
+\item Diszkrét idejû formula
+$$
+\boldsymbol{R}(k+1)=\delta_t\boldsymbol{S(\omega)R}(k)+\boldsymbol{R}(k)
+$$
+\item A mért gyorsulást átszámolva az inerciális koordinátarendszerbe
+$$
+^{0}\boldsymbol{a}=^{0}\boldsymbol{R}_{B}\,^{B}\boldsymbol{a}
+$$
+\item Nagy mintavételi frekvencia $\rightarrow$ $\delta_t$ kicsi, és $\boldsymbol{R}$ nem torzul el nagyon
+\end{itemize}
+\note{
+\begin{small}In
+$$
+\boldsymbol{R}(k+1)=\delta_t\boldsymbol{S(\omega)R}(k)+\boldsymbol{R}(k)
+$$
+we added the matrix $\delta_t\boldsymbol{S(\omega)R}(k)$ to an orthonormal rotation matrix and this is not quite proper - the result will not be an orthonormal matrix. However if the added term is small (Which is why inertial navigation systems operate at a high sample rate and $\delta_t$ is small.) the result will be close to orthonormal and we can straighten it up. This process is called normalization and enforces the constraints on the elements of an orthonormal matrix.
+\end{small}}
+\end{frame}
+%
+\begin{frame}\frametitle{Inerciális navigációs rendszerek}
+\begin{center}
+\includegraphics[scale= .45]{pictures/gimbal.png}
+\end{center}
+\note{A képen az Apollo Holdkomp inerciális mérõegysége (IMU) látható.\\ A jármû koordinátarendszerének x tengelye felfelé mutat, a z tengely elõre, sz y tengely pedig jobbra.\medskip
+A stabil platformtól $\{S\}$ kifelé haladva a forgatási sorozat YZX.
+\begin{description}
+\item[$X_g,~X_a$:] x irányú giroszkóp, illetve x irányú gyorsulásmérõ
+\item[$Y_g,~Y_a$:] y irányú giroszkóp, illetve y irányú gyorsulásmérõ
+\item[$Z_g,~Z_a$:] z irányú giroszkóp, illetve z irányú gyorsulásmérõ
+\end{description}
+}
+\end{frame}
+%
+\subsection{Összefoglalás}
+\begin{frame}\frametitle{Összefoglalás}
+\begin{itemize}
+\item Pozíció és orientáció idõbeli változása
+\begin{itemize}
+\item Pozíciók és orientációk folytonos sorozatával (trajektória)
+\item Forgatási mátrix deriváltja -> forgási sebesség
+\end{itemize}
+\item A forgatások interpolációja kvaterniókkal hatékonyabban kezekhetõ
+\end{itemize}
+\end{frame}
+
+\part{Manipulátorok}
+\lecture{Direkt kinematika}{week 2}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Direkt kinematika}
+%
+\begin{frame}
+  \frametitle{Direkt kinematika}
+\begin{torv}[Manipulátor]
+ Merev testek (szegmensek) sorozata, amelyek ízületekkel (forgó, vagy csúszó) vannak összekötve. A teljes struktúra egy kinematikai láncot alkot, melynek egyik vége egy bázishoz, a másik pedig egy végszerszámhoz kapcsolódik.
+\end{torv}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{pictures/izuletek.png}
+\end{center}
+\begin{torv}[Nyílt kinematikai lánc]
+A kinematikai lánc nyílt, ha a két végét csak egy szegmens-sorozat köti össze. Ha a szegmensek hurkot alkotnak, zárt a kinematikai lánc.
+\end{torv}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+  \frametitle{Direkt kinematika}
+\begin{columns}
+\begin{column}{0.45\textwidth}
+\begin{itemize}
+\item Cél: a végszerszám pozíciójának ($\textcolor{red}{\boldsymbol{p}_e^b}$) és orientációjának ($\textcolor{blue}{\boldsymbol{n}_e^b},\textcolor{blue}{\boldsymbol{s}_e^b},\textcolor{blue}{\boldsymbol{a}_e^b}$) felírása az $O_b-x_by_bz_b$ koordinátarendszerben
+\item Csuklóváltozók vektora $\boldsymbol{q}=[\begin{array}{ccc}\vartheta_1&\ldots&\vartheta_n\end{array}]^T$
+\item Csuklóváltozó-függõ homogén transzformációs mátrix
+\end{itemize}
+\end{column}
+\begin{column}{0.55\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/kinematikai_lanc.png}
+\end{center}
+\end{column}
+\end{columns}
+$$
+\boldsymbol{T}_e^b(\boldsymbol{q})=\left[\begin{array}{cccc}\textcolor{blue}{\boldsymbol{n}_e^b(\boldsymbol{q})}&\textcolor{blue}{\boldsymbol{s}_e^b(\boldsymbol{q})}&\textcolor{blue}{\boldsymbol{a}_e^b(\boldsymbol{q})}&\textcolor{red}{\boldsymbol{p}_e^b(\boldsymbol{q})}\\0&0&0&1\end{array}\right]
+$$
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Példa - kétszegmensû síkbeli kar}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+\item Csuklóváltozók vektora: $\boldsymbol{q}=[\begin{array}{cc}\vartheta_1&\vartheta_2\end{array}]^T$
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/2link_planar.png}
+\end{center}
+\end{column}
+\end{columns}
+$$\hspace*{-3mm}
+\boldsymbol{\boldsymbol{T}}_e^b(\boldsymbol{q})=\left[\begin{array}{cccc}\boldsymbol{n}_e^b(q)&\boldsymbol{s}_e^b(q)&\boldsymbol{a}_e^b(q)&\boldsymbol{p}_e^b(q)\\0&0&0&1\end{array}\right]=
+\left[\begin{array}{cccc}0&s_{12}&c_{12}&a_1c_1+a_2c_{12}\\0&-c_{12}&s_{12}&a_1s_1+a_2s_{12}\\1&0&0&0\\0&0&0&1\end{array}\right]
+$$
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Nyílt kinematikai lánc}
+\begin{frame}
+\frametitle{Nyílt kinematikai lánc}
+\begin{itemize}
+\item A lánc $n+1$ szegmensbõl és $n$ ízületbõl áll
+\item A $0.$ és az $n.$ koordinátarendszer közti homogén transzformáció: $\boldsymbol{\boldsymbol{T}}_n^0(\boldsymbol{q})=\boldsymbol{\boldsymbol{A}}_1^0(q_1)\cdot\boldsymbol{\boldsymbol{A}}_2^1(q_2)\cdots\boldsymbol{\boldsymbol{A}}_{n}^{n-1}(q_n)$
+\item Cél: rekurzív módon felépíteni a teljes kinematikai modellt
+\end{itemize}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{pictures/open_chain.png}
+\end{center}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Denavit-Hartenberg algoritmus}
+\begin{frame}
+\frametitle{Denavit-Hartenberg algoritmus}
+\begin{itemize}
+\item Direkt kinematikai összefüggés felírása
+\item Általános, szisztematikus módszer
+\item Minden szegmenshez koordinátarendszert rögzítünk (tetszõleges módon)
+\item Denavit-Hartenberg konvenció alkalmazása a célszerû
+\end{itemize}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{pictures/denavit_0.png}
+\end{center}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Denavit-Hartenberg konvenció}
+\begin{scriptsize}
+\begin{itemize}
+\item Jelölje $i$ az $i-1$. és az $i$. szegmenseket összekötõ ízület tengelyét
+\item $\textcolor{blue}{z_i}$ essen egybe az $i+1$. ízület tengelyével
+\item $\textcolor{blue}{O_i}$ legyen a $\textcolor{blue}{z_i}$ és $\textcolor{red}{z_{i-1}}$ \emph{közös normálisának} $\textcolor{blue}{z_i}$-vel, $\textcolor{szold}{O_i'}$ pedig a $\textcolor{red}{z_{i-1}}$-el alkotott metszéspontja
+\item $\textcolor{blue}{x_i}$-t úgy válasszuk meg, hogy a közös normális irányában az $i$. ízülettõl az $i+1$.-ig mutat
+\item $\textcolor{blue}{y_i}$-t úgy válasszuk meg, hogy $\textcolor{blue}{x_iy_iz_i}$ egy jobbos koordinátarendszert alkosson
+\end{itemize}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{pictures/denavit.png}
+\end{center}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Denavit-Hartenberg konvenció}
+Nem egyértelmû a jelölés az alábbi esetekben:
+\begin{scriptsize}
+\begin{itemize}
+\item A $0$. koordinátarendszernél csak $z_0$ iránya adott
+\item Az $n$. koordinátarendszernél nincs $n+1$. ízület, $z_n$ nem egyértelmû, $x_n$ viszont az
+\item Ha hét egymást követõ tengely párhuzamos, közös normálisuk nem egyértelmû
+\item Ha két egymást követõ tengely metszi egymást, ilyenkor $\textcolor{blue}{x_i}$ iránya tetszõleges
+\item Ha az $i$. ízület csúszó, ilyenkor $\textcolor{red}{z_{i-1}}$ iránya tetszõleges
+\item \textcolor{blue}{Ilyen esetekben a legegyszerûbb megoldásra kell törekedni}
+\end{itemize}
+\end{scriptsize}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{pictures/denavit.png}
+\end{center}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Denavit-Hartenberg konvenció}
+Az $i$. koordinátarendszernek az $i-1$.-re vonatkozó pozíciója és orientációja megadható 4 paraméter segítségével:
+\begin{scriptsize}
+\begin{itemize}
+\item $\textcolor{magenta}{a_i}$ - geometriából adódó konstans: $\textcolor{blue}{O_i}$ és $\textcolor{szold}{O_i'}$ közti távolság
+\item $\textcolor{magenta}{d_i}$ - csúszó ízület változója: $\textcolor{szold}{O_i'}$-nek a $\textcolor{red}{z_{i-1}}$ irányú koordinátája
+\item $\textcolor{magenta}{\alpha_i}$ - geometriából adódó konstans: a $\textcolor{red}{z_{i-1}}$ és a $\textcolor{blue}{z_i}$ tengelyek által bezárt szög ($\textcolor{blue}{x_i}$ a forgatási tengely)
+\item $\textcolor{magenta}{\vartheta_i}$ - forgó ízület változója: a $\textcolor{red}{x_{i-1}}$ és a $\textcolor{blue}{x_i}$ tengelyek által bezárt szög ($\textcolor{red}{z_{i-1}}$ a forgatási tengely)
+\end{itemize}\vspace*{-3mm}
+\end{scriptsize}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{pictures/denavit.png}
+\end{center}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+%
+\begin{frame}
+\frametitle{Két ízület közti homogén transzformáció}
+\begin{scriptsize}
+\begin{itemize}
+\item Az $i$. és az $i-1$. ízület közti homogén transzformáció megadható két lépésben
+\item Az $i-1$. rendszer eltolása $d_i$-vel a $z_{i-1}$ mentén, majd forgatás a $z_{i-1}$ körül $\vartheta_i$-vel
+$$
+\boldsymbol{\boldsymbol{A}}_{i'}^{i-1}=\left[\begin{array}{cccc}\cos(\vartheta_i) & -\sin(\vartheta_i) & 0 & 0\\
+\sin(\vartheta_i) & \cos(\vartheta_i) & 0 & 0\\
+0 & 0 & 1 & d_i\\
+0 & 0 & 0 & 1\end{array}\right]
+$$
+\item Az $i'$ rendszer eltolása $a_i$-vel az $x_i'$ mentén, majd forgatás az $x_i'$ körül $\alpha_i$-vel
+$$
+\boldsymbol{\boldsymbol{A}}_{i}^{i'}=\left[\begin{array}{cccc}1 & 0 & 0 & a_i\\
+0 & \cos(\alpha_i) & -\sin(\alpha_i) & 0\\
+0 & \sin(\alpha_i) & \cos(\alpha_i) & 0\\
+0 & 0 & 0 & 1\end{array}\right]
+$$
+\item A teljes transzformáció $i-1$ és $i$ között csak az $i$-edik csuklóváltozó ($q_i$) függvénye: $\textcolor{blue}{\vartheta_i}$ ha forgó az ízület, $\textcolor{szold}{d_i}$ ha csúszó
+$$
+\boldsymbol{\boldsymbol{A}}_{i}^{i-1}(q_i)=\boldsymbol{\boldsymbol{A}}_{i'}^{i-1}\cdot \boldsymbol{\boldsymbol{A}}_{i}^{i'}=\left[\begin{array}{cccc}
+\cos(\textcolor{blue}{\vartheta_i}) & -\sin(\textcolor{blue}{\vartheta_i})\cos(\alpha_i) & \sin(\textcolor{blue}{\vartheta_i})\sin(\alpha_i) & a_i\cos(\textcolor{blue}{\vartheta_i})\\
+\sin(\textcolor{blue}{\vartheta_i}) & \cos(\textcolor{blue}{\vartheta_i})\cos(\alpha_i) & -\cos(\textcolor{blue}{\vartheta_i})\sin(\alpha_i) & a_i\sin(\textcolor{blue}{\vartheta_i})\\
+0 & \sin(\alpha_i) & \cos(\alpha_i) & \textcolor{szold}{d_i}\\
+0 & 0 & 0 & 1\end{array}\right]
+$$
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Denavit-Hartenberg algoritmus}
+\begin{scriptsize}
+\begin{enumerate}
+\item[1:] Ízületek tengelyeinek megszámozása, $z_0,\ldots,z_n$ tengelyek felvétele
+\item[2:] A $0$. koordinátarendszer felvétele: $O_0$ kijelölése $z_0$-n, $x_0, y_0$ tengelyek felvétele úgy, hogy jobbos rendszert kapjunk
+\end{enumerate}
+\textcolor{blue}{for $i=1,\cdots,n-1$}
+\begin{enumerate}
+\item[3:] Az $O_i$ pont legyen a $z_i$, és a $z_i$-nek a $z_{i-1}$-el közös normálisának metszéspontja. Ha $z_i$ és $z_{i-0}$ párhuzamos és az $i$. ízület forgó, akkor $O_i$ olyan legyen, hogy $d_i=0$; ha az ízület prizmatikus, akkor $O_i$ legyen valamilyen referenciapozícióban
+\item[4:] $x_i$ essen a közös normális irányába, és mutasson az $i$. ízülettõl az $i+1$. felé.
+\item[5:] $y_i$-t úgy válasszuk meg, hogy jobbos rendszert kapjunk.
+\end{enumerate}
+\textcolor{blue}{Befejezésül:}
+\begin{enumerate}
+\item[6:] Az $n$. koordinátarendszer felvétele: ha az $n$. ízület forgó, akkor $z_n$ essen $z_{n-1}$ irányába; ha csúszó, akkor $z_n$ tetszõlegesen megválasztható. $x_n$ megválasztása \textcolor{blue}{4} alapján.
+\item[7:] Az $a_i, d_i, \alpha_i,\vartheta_i$ paraméterek meghatározása, $i=1,\ldots,n$.
+\item[8:] Az $\boldsymbol{\boldsymbol{A}}_i^{i-1}(q_i)$ homogén transzformációs mátrixok meghatározása a \textcolor{blue}{7} pontbeli paraméterekkel.
+\item[9:] A $\boldsymbol{\boldsymbol{T}}_n^0(\boldsymbol{q})=\boldsymbol{\boldsymbol{A}}_1^{0}\cdots \boldsymbol{\boldsymbol{A}}_n^{n-1}$ homogén transzformációs mátrix kiszámítása.
+\item[10:] A bázis-, illetve a végszerszám koordináta transzformácijának figyelembe vétele: $\boldsymbol{\boldsymbol{T}}_e^b(\boldsymbol{q})=\boldsymbol{\boldsymbol{T}}_0^b\boldsymbol{\boldsymbol{T}}_n^0\boldsymbol{\boldsymbol{T}}_e^n$
+\end{enumerate}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Zárt kinematikai lánc}
+\begin{frame}
+\frametitle{Zárt kinematikai lánc}
+\begin{itemize}
+\item Stabilabb manipulátorstruktúra elérése érdekében alkalmazzák
+\item Az egyik meg nem hajtott ízületnél felbontjuk a kinematikai láncot (fa)
+\item A nyílt láncra kiszámítható a homogén transzformáció (Denavit-Hartenberg)
+\item Egyenlõség típusú korlátozások a megoldása
+\end{itemize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+
+\section{Tipikus manipulátor struktúrák}
+%
+\subsection{3 szegmensû síkbeli kar}
+\begin{frame}
+\frametitle{3 szegmensû síkbeli kar}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{scriptsize}
+\begin{itemize}
+\item Mivel az összes ízület tengelye párhuzamos, $x_i$ essen az $i$. szegmens irányába ($x_0$ tetszõleges)
+\item $d_i=0,\quad \forall i$
+\item A csuklóváltozók az egymás utáni $x_i$ tengelyek által bezárt szögek, azaz: $\boldsymbol{q}=\left[\begin{array}{ccc}\textcolor{red}{\vartheta_1}&\textcolor{zold}{\vartheta_2}&\textcolor{blue}{\vartheta_3}\end{array}\right]^T$
+
+\item Denavit-Hartenberg paraméterek
+\begin{center}
+\begin{tabular}{c||c|c|c|c}
+  \hline
+  Szegmens & $a_i$ & $\alpha_i$ & $d_i$ & $\vartheta_i$ \\
+  \hline\hline
+  % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ..
+  1. & $\textcolor{red}{a_1}$ & $0$ & $0$ & $\textcolor{red}{\vartheta_1}$ \\
+  2. & $\textcolor{zold}{a_2}$ & $0$ & $0$ & $\textcolor{zold}{\vartheta_2}$ \\
+  3. & $\textcolor{blue}{a_3}$ & $0$ & $0$ & $\textcolor{blue}{\vartheta_3}$ \\
+  \hline
+\end{tabular}
+\end{center}
+\end{itemize}
+\end{scriptsize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/3link_planar_col.png}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{3 szegmensû síkbeli kar}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{scriptsize}
+\begin{itemize}
+\item Mivel az összes ízület forgó, a homogén transzformációs mátrixok struktúrája azonos ($i=1,2,3$)\vspace*{-2mm}
+$$\vspace*{-2mm}
+\boldsymbol{\boldsymbol{A}}_i^{i-1}(\vartheta_i)=\left[\begin{array}{cccc}
+c_i & -s_i & 0 & a_ic_i\\
+s_i & c_i & 0 & a_is_i\\
+0&0&1&0\\
+0&0&0&1
+\end{array}\right]
+$$
+\item Direkt kinematikai összefüggés $\boldsymbol{\boldsymbol{T}}_3^0(\boldsymbol{q})=\boldsymbol{\boldsymbol{A}}_1^0\cdot\boldsymbol{\boldsymbol{A}}_2^1\cdot\boldsymbol{\boldsymbol{A}}_3^2=$\vspace*{-2mm}
+$$\hspace*{-10mm}\vspace*{-2mm}
+=\left[\begin{array}{cccc}
+c_{123} & -s_{123} & 0 & a_1c_1+a_2c_{12}+a_3c_{123}\\
+s_{123} & c_{123} & 0 & a_1s_1+a_2s_{12}+a_3s_{123}\\
+0&0&1&0\\
+0&0&0&1
+\end{array}\right]
+$$
+\item A $3$. koordinátarendszer nem esik egybe a szerszám koordinátarendszerrel ($z_3$!), ezért\vspace*{-2mm}
+$$
+\boldsymbol{\boldsymbol{T}}_e^3=\left[\begin{array}{cccc}
+0&0&1&0\\
+0&-1&0&0\\
+1&0&0&0\\
+0&0&0&1
+\end{array}\right]
+$$
+\end{itemize}
+\end{scriptsize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/3link_planar.png}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Gömbi manipulátor}
+\begin{frame}
+\frametitle{Gömbi manipulátor}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{scriptsize}
+\begin{itemize}
+\item A $0$. koordinátarendszer origója $z_0$ és $z_1$ metszéspontja, így $d_1=0$
+\item Hasonlóan a $2$. koordinátarendszer origója $z_1$ és $z_2$ metszéspontja
+\item A csuklóváltozók az egymás utáni $x_i$ tengelyek által bezárt szögek, azaz: $\boldsymbol{q}=\left[\begin{array}{ccc}\textcolor{red}{\vartheta_1}&\textcolor{zold}{\vartheta_2}&\textcolor{blue}{d_3}\end{array}\right]^T$
+\item Denavit-Hartenberg paraméterek
+\begin{center}
+\begin{tabular}{c||c|c|c|c}
+  \hline
+  Szegmens & $a_i$ & $\alpha_i$ & $d_i$ & $\vartheta_i$ \\
+  \hline\hline
+  % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ..
+  1. & $0$ & $-\pi/2$ & $0$ & $\textcolor{red}{\vartheta_1}$ \\
+  2. & $0$ & $\pi/2$ & $\textcolor{zold}{d_2}$ & $\textcolor{zold}{\vartheta_2}$ \\
+  3. & $0$ & $0$ & $\textcolor{blue}{d_3}$ & $0$ \\
+  \hline
+\end{tabular}
+\end{center}
+\end{itemize}
+\end{scriptsize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/spherical_arm_col.png}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Gömbi manipulátor}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{scriptsize}
+\begin{itemize}
+\item Az egyes ízületekhez tartozó homogén transzformációs mátrixok:\vspace*{-2mm}
+$$\vspace*{-2mm}
+\boldsymbol{\boldsymbol{A}}_1^0(\vartheta_1)=\left[\begin{array}{cccc}c_1&0&-s_1&0\\s_1&0&c_1&0\\0&-1&0&0\\0&0&0&1\end{array}\right]
+$$
+$$\vspace*{-2mm}
+\boldsymbol{\boldsymbol{A}}_2^1(\vartheta_2)=\left[\begin{array}{cccc}c_2&0&s_2&0\\s_2&0&-c_2&0\\0&1&0&d_2\\0&0&0&1\end{array}\right]
+$$
+$$\vspace*{-2mm}
+\boldsymbol{\boldsymbol{A}}_3^2(d_3)=\left[\begin{array}{cccc}1&0&0&0\\0&1&0&0\\0&0&1&d_3\\0&0&0&1\end{array}\right]
+$$
+\item Direkt kinematikai összefüggés: $\boldsymbol{\boldsymbol{T}}_3^0(\boldsymbol{q})=\boldsymbol{\boldsymbol{A}}_1^0\cdot \boldsymbol{\boldsymbol{A}}_2^1\cdot \boldsymbol{\boldsymbol{A}}_3^2=$\vspace*{-2mm}
+$$\vspace*{-2mm}
+=\left[\begin{array}{cccc}
+c_1c_2&-s_1&c_1s_2&c_1s_2d_3-s_1d_2\\
+s_1c_2&c_1&s_1s_2&s_1s_2d_3+c_1d_2\\
+-s_2&0&c_2&c_2d_3\\
+0&0&0&1
+\end{array}\right]
+$$
+\end{itemize}
+\end{scriptsize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/spherical_arm.png}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Antropomorf kar}
+\begin{frame}
+  \frametitle{Antropomorf kar}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{scriptsize}
+\begin{itemize}
+\item Kétszegmensû síkbeli kar plusz egy forgástengely
+\item A $0$. koordinátarendszer origója $z_0$ és $z_1$ metszéspontja, így $d_1=0$
+\item $z_1$ és $z_2$ párhuzamosak, ezért $x_1$ és $x_2$ úgy vannak megválasztva, mint a kétszegmensû síkbeli kar esetében
+\item A csuklóváltozók: $\boldsymbol{q}=\left[\begin{array}{ccc}\textcolor{red}{\vartheta_1}&\textcolor{zold}{\vartheta_2}&\textcolor{blue}{\vartheta_3}\end{array}\right]^T$
+\item Denavit-Hartenberg paraméterek
+\begin{center}
+\begin{tabular}{c||c|c|c|c}
+  \hline
+  Szegmens & $a_i$ & $\alpha_i$ & $d_i$ & $\vartheta_i$ \\
+  \hline\hline
+  % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ..
+  1. & $0$ & $\pi/2$ & $0$ & $\textcolor{red}{\vartheta_1}$ \\
+  2. & $\textcolor{zold}{a_2}$ & $0$ & $0$ & $\textcolor{zold}{\vartheta_2}$ \\
+  3. & $\textcolor{blue}{a_3}$ & $0$ & $0$ & $\textcolor{blue}{\vartheta_3}$ \\
+  \hline
+\end{tabular}
+\end{center}
+\end{itemize}
+\end{scriptsize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/antropomorf_col.png}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Antropomorf kar}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{scriptsize}
+\begin{itemize}
+\item Az egyes ízületekhez tartozó homogén transzformációs mátrixok:\vspace*{-2mm}
+$$\vspace*{-2mm}\hspace*{-15mm}
+\boldsymbol{\boldsymbol{A}}_1^0(\vartheta_1)=\left[\begin{array}{cccc}c_1&0&s_1&0\\s_1&0&-c_1&0\\0&1&0&0\\0&0&0&1\end{array}\right]
+$$
+$$\vspace*{-2mm}\hspace*{-5mm}
+\boldsymbol{\boldsymbol{A}}_2^1(\vartheta_i)=\left[\begin{array}{cccc}c_i&-s_i&0&a_ic_i\\s_i&c_i&0&a_is_i\\0&0&1&0\\0&0&0&1\end{array}\right],~i=2,3
+$$
+\item Direkt kinematikai összefüggés: $\boldsymbol{\boldsymbol{T}}_3^0(\boldsymbol{q})=\boldsymbol{\boldsymbol{A}}_1^0\cdot \boldsymbol{\boldsymbol{A}}_2^1\cdot \boldsymbol{\boldsymbol{A}}_3^2=$\vspace*{-2mm}
+$$\vspace*{-2mm}\hspace*{-9mm}
+=\left[\begin{array}{cccc}
+c_1c_{23}&-c_1s_{23}&s_1&c_1(a_2c_2+a_3c_{23})\\
+s_1c_{23}&-s_1s_{23}&-c_1&s_1(a_2c_2+a_3c_{23})\\
+s_{23}&c_{23}&0&a_2s_2+a_3s_{23}\\
+0&0&0&1
+\end{array}\right]
+$$
+\item A $3$. koordinátarendszer nem esik egybe a szerszám koordinátarendszerrel, további transzformáció szükséges
+\end{itemize}
+\end{scriptsize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/antropomorf.png}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Gömbcsukló}
+\begin{frame}
+  \frametitle{Gömbcsukló}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{scriptsize}
+\begin{itemize}
+\item Mindhárom forgástengely egy pontban metszi egymást
+\item Rendszerint robotkarok végén helyezkedik el
+\item $\textcolor{red}{x_4}$ és $\textcolor{zold}{x_5}$ választása nem egyértelmû (?)
+\item A csuklóváltozók: $\boldsymbol{q}=\left[\begin{array}{ccc}\textcolor{red}{\vartheta_4}&\textcolor{zold}{\vartheta_5}&\textcolor{blue}{\vartheta_6}\end{array}\right]^T$
+\item Denavit-Hartenberg paraméterek
+\begin{center}
+\begin{tabular}{c||c|c|c|c}
+  \hline
+  Szegmens & $a_i$ & $\alpha_i$ & $d_i$ & $\vartheta_i$ \\
+  \hline\hline
+  % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ..
+  1. & $0$ & $-\pi/2$ & $0$ & $\textcolor{red}{\vartheta_4}$ \\
+  2. & $0$ & $\pi/2$ & $0$ & $\textcolor{zold}{\vartheta_5}$ \\
+  3. & $0$ & $0$ & $\textcolor{blue}{d_6}$ & $\textcolor{blue}{\vartheta_6}$ \\
+  \hline
+\end{tabular}
+\end{center}
+\end{itemize}
+\end{scriptsize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/spherical_wrist_col.png}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Gömbcsukló}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{scriptsize}
+\begin{itemize}
+\item Az egyes ízületekhez tartozó homogén transzformációs mátrixok:\vspace*{-2mm}
+$$\vspace*{-2mm}
+\boldsymbol{\boldsymbol{A}}_4^3(\vartheta_4)=\left[\begin{array}{cccc}c_4&0&-s_4&0\\s_4&0&c_4&0\\0&-1&0&0\\0&0&0&1\end{array}\right]
+$$
+$$\vspace*{-2mm}
+\boldsymbol{\boldsymbol{A}}_5^4(\vartheta_5)=\left[\begin{array}{cccc}c_5&0&s_5&0\\s_5&0&-c_5&0\\0&1&0&0\\0&0&0&1\end{array}\right]
+$$
+$$\vspace*{-2mm}
+\boldsymbol{\boldsymbol{A}}_6^5(\vartheta_6)=\left[\begin{array}{cccc}c_6&-s_6&0&0\\s_6&c_6&0&0\\0&0&1&d_6\\0&0&0&1\end{array}\right]
+$$
+\item Direkt kinematikai összefüggés:\vspace*{-2mm}
+$$\vspace*{-2mm}
+\boldsymbol{\boldsymbol{T}}_3^0(\boldsymbol{q})=\boldsymbol{\boldsymbol{A}}_4^3\cdot \boldsymbol{\boldsymbol{A}}_5^4\cdot \boldsymbol{\boldsymbol{A}}_6^5=\left[\begin{array}{cccc}
+c_4c_5c_6-s_4s_6&-c_4c_5s_6-s_4c_6&c_4s_5&c_4s_5d_6\\
+s_4c_5c_6+c_4s_6&-s_4c_5s_6+c_4c_6&s_4s_5&s_4s_5d_6\\
+-s_5c_6&s_5s_6&c_5&c_5d_6\\
+0&0&0&1
+\end{array}\right]
+$$
+\end{itemize}
+\end{scriptsize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/spherical_wrist.png}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Stanford manipulátor}
+\begin{frame}
+  \frametitle{Stanford manipulátor}
+\begin{columns}
+\begin{column}{0.35\textwidth}
+\begin{scriptsize}
+\begin{itemize}
+\item Gömbi manipulátor + gömbcsukló
+\item Direkt kinematikai összefüggés: $\boldsymbol{\boldsymbol{T}}_6^0=\boldsymbol{\boldsymbol{T}}_3^0\cdot \boldsymbol{\boldsymbol{T}}_6^3=$
+$$\hspace*{-10mm}
+=\left[\begin{array}{cccc}\boldsymbol{n}^0&\boldsymbol{s}^0&\boldsymbol{a}^0&\boldsymbol{p}^0\\0&0&0&1\end{array}\right]
+$$
+\item hasonlóan az antropomorf robotkarra is szerelhetõ gömbcsukló
+\end{itemize}
+\end{scriptsize}
+\end{column}
+\begin{column}{0.65\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/stanford.png}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\lecture{Inverz kinematika}{week 2a}
+\section{Csuklóváltozók tere és a mûködési tér}
+%
+\begin{frame}
+\frametitle{Csuklóváltozók tere és a mûködési tér}
+\begin{itemize}
+\item Direkt kinematika: a csuklóváltozók függvényeként kifejezhetõ a végszerszám pozíciója és orientációja
+\item Feladat kijelölése a végszerszámnak
+\begin{itemize}
+\item egy idõfüggvényként elõírjuk a pozíciót és az orientációt (trajektória)
+\item pozíciónál egyszerû ($\boldsymbol{p}(t)$)
+\item orientációnál bonyolult ($[\boldsymbol{n}(t),\boldsymbol{s}(t),\boldsymbol{a}(t)]$)
+\item valamilyen minimális reprezentációt kellene használni (Euler szögek)
+\end{itemize}
+\item A manipulátor által felvett póz leírható egy $m<n$ elemû vektorral:
+\begin{scriptsize}
+$$
+\boldsymbol{x}=\left[\begin{array}{c}\boldsymbol{p}\\\\ \boldsymbol{\phi}\end{array}\right]\in\textcolor{zold}{\mathbb{X}}\subset\mathbb{R}^m,\quad \boldsymbol{q}=\left[\begin{array}{c}q_1\\ \vdots\\ q_n\end{array}\right]\in\textcolor{blue}{\mathbb{Q}}\subset\mathbb{R}^n
+$$
+\end{scriptsize}
+\item $\textcolor{zold}{\mathbb{X}}$-ben határozzuk meg a manipulátor feladatát (\emph{\textcolor{zold}{mûködési tér}})
+\item $\textcolor{blue}{\mathbb{Q}}$ a \emph{\textcolor{blue}{csuklóváltozók tere}}
+\end{itemize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Munkatér}
+\begin{frame}
+\frametitle{Munkatér}
+\begin{itemize}
+\item \textcolor{blue}{Munkatér}: az a véges, zárt, összefüggõ halmaz (térrész), amit a végszerszámhoz rögzített koordinátarendszer origója bejár, mialatt az öszes csuklóváltozó felveszi az összes lehetséges értékét\vspace*{-3mm}
+    $$\vspace*{-2mm}
+    \boldsymbol{p}=\boldsymbol{p}(\boldsymbol{q}),~~q_{i,min}\leq q_i\leq q_{i,max},~~i=1,\ldots,n
+    $$
+    Az ízületek két típusa a forgó és csúszó, ezért a munkatér határoló felületei sík-, gömb-, tórusz-, és hengerfelület-elemek.
+\begin{itemize}
+\item \textcolor{blue}{Elérhetõ munkatér}: az a térrész, amit a végszerszám legalább egyféle orientációban elér
+\item \textcolor{blue}{Ügyes munkatér}: az a térrész, amit a végszerszám különbözõ orientációban elér (részhalmaza az elérhetõ munkatérnek)
+\end{itemize}
+\item A manipulátor teljesítményét jellemzi munkaterének nagysága
+\item Pontosság: a valóságos és a direkt kinematikai modellbõl számított pozíció/orientáció közti eltérés (a munkatér különbözõ pontjaiban különbözõ lehet)
+\item Ismételhetõség: milyen pontosan tud felvenni egy korábbi pózt (átalában kisebb, mint a pontosság)
+\end{itemize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Kétszegmensû síkbeli manipulátor munkatere}
+\begin{scriptsize}
+\begin{itemize}
+\item Csuklóváltozók:\vspace*{-2mm}
+$$\vspace*{-2mm}
+\boldsymbol{q}=\left[\begin{array}{c}\vartheta_1\\ \vartheta_2\end{array}\right]
+$$
+\item Értékhatárok:\vspace*{-2mm}
+$$\vspace*{-2mm}
+\begin{array}{rcccl}
+0&\leq&\vartheta_1&\leq&\frac{9}{10}\pi \\
+-\pi&\leq&\vartheta_2&\leq&\pi
+\end{array}
+$$
+\item Végszerszám pozíciója
+$$
+\boldsymbol{p}(\boldsymbol{q})=\left[\begin{array}{c}
+a_1\cos(\vartheta_1)+a_2\cos(\vartheta_1+\vartheta_2)\\
+a_1\sin(\vartheta_1)+a_2\sin(\vartheta_1+\vartheta_2)
+\end{array}\right]
+$$
+\end{itemize}
+\end{scriptsize}
+\begin{center}
+\includegraphics[width=0.5\textwidth]{pictures/2link_planar_pl.png}
+\end{center}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Kétszegmensû síkbeli manipulátor munkatere}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+Csuklóváltozók tere:
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/2link_csukloter.png}
+\end{center}
+\end{column}
+\begin{column}{0.5\textwidth}
+Munkatér:
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/2link_munkater.png}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%%
+%\subsection{Kinematikai redundancia}
+%\begin{frame}
+%  \frametitle{Kinematikai redundancia}
+%\end{frame}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section{Inverz kinematikai probléma}
+
+\begin{frame}
+\frametitle{Inverz kinematikai probléma}
+\begin{itemize}
+\item Direkt kinematika
+\begin{itemize}
+\item csuklóváltozók $\Rightarrow$ végszerszám pozíció és orientáció
+\item csuklóváltozók ismeretében egyértelmû a modell
+\end{itemize}
+\item Inverz kinematika
+\begin{itemize}
+\item végszerszám pozíció és orientáció $\Rightarrow$ csuklóváltozók
+\item nemlineáris egyenletrendszer megoldására vezet
+\item nem mindig található zárt megoldás
+\item nem mindig egyértelmû a megoldás
+\item végtelen számú megoldás létezhet
+\end{itemize}
+\end{itemize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{3 szegmensû síkbeli kar}
+\begin{frame}
+\frametitle{3 szegmensû síkbeli kar}
+\begin{columns}
+\begin{column}{0.55\textwidth}
+\begin{scriptsize}
+\begin{itemize}
+\item Pozíció és orientáció minimális reprezentációja: $p_x, p_y, \phi$, ahol $\phi=\vartheta_1+\vartheta_2+\vartheta_3$
+\item \textcolor{blue}{Adott $p_x, p_y, \phi$, keressük $\vartheta_1, \vartheta_2, \vartheta_3$-t!}
+\item A $W$ pont koordinátái
+$$\hspace*{-9mm}
+\begin{array}{l}
+p_{Wx}=p_x-a_3\cos(\phi)=a_1\cos(\vartheta_1)+a_2\cos(\vartheta_1+\vartheta_2)\\
+p_{Wy}=p_y-a_3\sin(\phi)=a_1\sin(\vartheta_1)+a_2\sin(\vartheta_1+\vartheta_2)
+\end{array}
+$$
+\item A két egyenlet négyzetösszege
+$$
+p_{Wx}^2+p_{Wy}^2=a_1^2+a_2^2+2a_1a_2\cos(\vartheta_2),\quad\textnormal{ebbõl}
+$$
+$$
+\cos(\vartheta_2)=\frac{p_{Wx}^2+p_{Wy}^2-a_1^2-a_2^2}{2a_1a_2}
+$$
+\item Kihasználva, hogy $\sin(\vartheta_2)=\sqrt{1-\cos^2(\vartheta_2)}$
+$$
+\textcolor{blue}{\vartheta_2=\textnormal{atan2}(\sin(\vartheta_2),\cos(\vartheta_2))}
+$$
+\end{itemize}
+\end{scriptsize}
+\end{column}
+\begin{column}{0.45\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/3link_planar.png}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{3 szegmensû síkbeli kar}
+\begin{columns}
+\begin{column}{0.55\textwidth}
+\begin{scriptsize}
+\begin{itemize}
+\item Ha $\vartheta_2$ ismert, $\vartheta_1$ meghatározható (behelyettesítve a $W$ koordinátáiba, és megoldva)
+$$\vspace*{-2mm}\hspace*{-2mm}
+\sin(\vartheta_1)=\frac{(a_1+a_2\cos(\vartheta_2))p_{Wy}-a_2\sin(\vartheta_2)p_{Wx}}{p_{Wx}^2+p_{Wy}^2}
+$$
+$$\hspace*{-2mm}
+\cos(\vartheta_1)=\frac{(a_1+a_2\cos(\vartheta_2))p_{Wx}+a_2\sin(\vartheta_2)p_{Wy}}{p_{Wx}^2+p_{Wy}^2}
+$$
+\item Ebbõl $\vartheta_1$:
+$$
+\textcolor{blue}{\vartheta_1=\textnormal{atan2}(\sin(\vartheta_1),\cos(\vartheta_1))}
+$$
+\item Végül pedig $\vartheta_3$ is meghatározható
+$$
+\textcolor{blue}{\vartheta_3=\phi-\vartheta_1-\vartheta_2}
+$$
+\end{itemize}
+\end{scriptsize}
+\end{column}
+\begin{column}{0.45\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/3link_planar.png}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Gömbi manipulátor}
+\begin{frame}
+\frametitle{Gömbi manipulátor}
+\begin{columns}
+\begin{column}{0.55\textwidth}
+\begin{scriptsize}
+\begin{itemize}
+\item Csuklóváltozók. $\vartheta_1, \vartheta_2, d_3$
+\item Végszerszám pozícióját jelölje $\boldsymbol{p}_W$
+\item Felírva a végszerszám pozícióját az $1$. koordinátarendszerhez képest
+$$
+(\boldsymbol{\boldsymbol{A}}_1^0)^{-1}\cdot\boldsymbol{\boldsymbol{T}}_3^0=\boldsymbol{\boldsymbol{A}}_2^1\cdot \boldsymbol{\boldsymbol{A}}^2_3
+$$
+\item Ebbõl
+$$\hspace*{-10mm}
+\left[\begin{array}{c}p_{Wx}\cos(\vartheta_1)+p_{Wy}\sin(\vartheta_1)\\-p_{Wz}\\-p_{Wx}\sin(\vartheta_1)+p_{Wy}\cos(\vartheta_1)\end{array}\right]=
+\left[\begin{array}{c}d_3\sin(\vartheta_2)\\-d_3\cos(\vartheta_2)\\d_2\end{array}\right]
+$$
+\item Legyen $t=\tan(\frac{\vartheta_1}{2})$, és így
+$$
+\cos(\vartheta_1)=\frac{1-t^2}{1+t^2},\quad\sin(\vartheta_1)=\frac{2t}{1+t^2}
+$$
+\item A harmadik komponensbe helyettesítve\vspace*{-5mm}
+$$
+(d_2+p_{Wy})t^2+2p_{Wx}t+d_2-p_{Wy}=0\qquad\Rightarrow\qquad t=\frac{-p_{Wx}\pm\sqrt{p_{Wx}^2+p_{Wy}^2-d_2^2}}{d_2+p_{Wy}}
+$$
+\end{itemize}
+\end{scriptsize}
+\end{column}
+\begin{column}{0.45\textwidth}
+\begin{center}\vspace*{-20mm}
+\includegraphics[width=\textwidth]{pictures/spherical_arm.png}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Gömbi manipulátor}
+\begin{columns}
+\begin{column}{0.55\textwidth}
+\begin{scriptsize}
+\begin{itemize}
+\item A két megoldás két különbözõ pozitúrának felel meg
+$$\hspace*{-9.5mm}
+\textcolor{blue}{\vartheta_1=2\cdot\textnormal{atan2}\left(-p_{Wx}\pm\sqrt{p_{Wx}^2+p_{Wy}^2-d_2^2},d_2+p_{Wy}\right)}
+$$
+\item A végszerszám pozíciójának elsõ két komponensére
+$$
+\frac{p_{Wx}\cos(\vartheta_1)+p_{Wy}\sin(\vartheta_1)}{-p_{Wz}}=\frac{d_3\sin(\vartheta_2)}{-d_3\cos(\vartheta_2)}
+$$
+\item Ebbõl
+$$
+\textcolor{blue}{\vartheta_2=2\cdot \textnormal{atan2}(p_{Wx}\cos(\vartheta_1)+p_{Wy}\sin(\vartheta_1),p_{Wz})}
+$$
+\item Az elsõ két komponens négyzetösszegébõl pedig
+$$
+\textcolor{blue}{d_3=\sqrt{(p_{Wx}\cos(\vartheta_1)+p_{Wy}\sin(\vartheta_1))^2+p_{Wz}^2},\quad\quad d_3>0}
+$$
+\end{itemize}
+\end{scriptsize}
+\end{column}
+\begin{column}{0.45\textwidth}
+\begin{center}\vspace*{-20mm}
+\includegraphics[width=\textwidth]{pictures/spherical_arm.png}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Gömbcsukló}
+\begin{frame}
+  \frametitle{Gömbcsukló}
+\begin{columns}
+\begin{column}{0.50\textwidth}
+\begin{scriptsize}
+\begin{itemize}
+\item Egy adott $\boldsymbol{\boldsymbol{R}}_6^3$ végszerszám-orientációhoz tartozó $\vartheta_4, \vartheta_5, \vartheta_6$ csuklóváltozókat keressük
+$$
+\boldsymbol{\boldsymbol{R}}_6^3=\left[\begin{array}{ccc}n_x&s_x&a_x\\n_y&s_y&a_y\\n_z&s_z&a_z\end{array}\right]
+$$
+\item Euler-szögek (ZYZ)
+\item A megoldás ($\vartheta_5\in(0,\pi)$)
+$$
+\textcolor{blue}{\begin{array}{rcl}
+\vartheta_4&=&\textnormal{atan2}(a_y,a_x)\\
+\vartheta_5&=&\textnormal{atan2}(\sqrt{a_x^2+a_y^2},a_z)\\
+\vartheta_6&=&\textnormal{atan2}(s_z,-n_z)\\
+\end{array}}
+$$
+\item A megoldás ($\vartheta_5\in(-\pi,0)$)
+$$
+\textcolor{blue}{\begin{array}{rcl}
+\vartheta_4&=&\textnormal{atan2}(-a_y,-a_x)\\
+\vartheta_5&=&\textnormal{atan2}(-\sqrt{a_x^2+a_y^2},a_z)\\
+\vartheta_6&=&\textnormal{atan2}(-s_z,n_z)\\
+\end{array}}
+$$
+\end{itemize}
+\end{scriptsize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{center}\vspace*{-20mm}
+\includegraphics[width=\textwidth]{pictures/spherical_wrist.png}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+%
+\section{Differenciális kinematika}
+%
+\begin{frame}
+\frametitle{Geometriai Jacobi mátrix}
+\begin{scriptsize}
+\begin{itemize}
+\item Eml: direkt kinematikai modell
+$$
+\boldsymbol{T}(\boldsymbol{q})=\left[\begin{array}{cc}\boldsymbol{R}(\boldsymbol{q})&\boldsymbol{p}(\boldsymbol{q})\\\\ \boldsymbol{0}^T & 1\end{array}\right],\quad\quad \boldsymbol{q}=\left[q_1,~\ldots,~q_n\right]^T
+$$
+\item Cél: a csuklósebességek és a végszerszám sebesség/szögsebesség közti kapcsolat felírása
+\begin{itemize}
+\begin{scriptsize}
+\item a végszerszám egyenes vonalú sebességének ($\dot{\boldsymbol{p}}$) felírása a csuklósebesség ($\dot{\boldsymbol{q}}$) segítségével a következõ alakban\vspace*{-3mm}
+$$\vspace*{-2mm}
+\dot{\boldsymbol{p}}=\boldsymbol{\boldsymbol{J}}_P(\boldsymbol{q})\dot{\boldsymbol{q}}
+$$
+\item a végszerszám szögsebességének ($\boldsymbol{\omega}$) felírása a csuklósebesség ($\dot{\boldsymbol{q}}$) segítségével a következõ alakban\vspace*{-3mm}
+$$\vspace*{-1mm}
+\boldsymbol{\omega}=\boldsymbol{\boldsymbol{J}}_O(\boldsymbol{q})\dot{\boldsymbol{q}}
+$$
+\end{scriptsize}
+\end{itemize}
+\item Kompakt alakban
+$$
+\boldsymbol{v}=\left[\begin{array}{c}\dot{\boldsymbol{p}}\\ \boldsymbol{\omega}\end{array}\right]=\boldsymbol{\boldsymbol{J}}(\boldsymbol{q})\dot{\boldsymbol{q}},\quad \textnormal{ahol}\quad\quad \boldsymbol{\boldsymbol{J}}=\left[\begin{array}{c}\boldsymbol{\boldsymbol{J}}_P\\ \boldsymbol{\boldsymbol{J}}_O\end{array}\right]\in\mathbb{R}^{6\times n}
+$$
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Forgatási mátrix deriváltja}
+\begin{frame}
+\frametitle{Forgatási mátrix deriváltja}
+\begin{scriptsize}
+\begin{itemize}
+\item A direkt kinematiai összefüggés a végszerszám orientációját forgatási mátrixként tartalmazza, és a célunk a szögsebesség felírása
+\item Tekintsünk egy idõfüggõ $\boldsymbol{\boldsymbol{R}}=\boldsymbol{\boldsymbol{R}}(t)$ forgatást
+\begin{itemize}
+\begin{scriptsize}
+\item Ortogonalitás: ~$\boldsymbol{\boldsymbol{R}}(t)\boldsymbol{\boldsymbol{R}}^T(t)=\boldsymbol{\boldsymbol{I}}$
+\item Idõ szerint deriválva: ~$\dot{\boldsymbol{\boldsymbol{R}}}(t)\boldsymbol{\boldsymbol{R}}(t)+\boldsymbol{\boldsymbol{R}}(t)\dot{\boldsymbol{\boldsymbol{R}}}(t)=\boldsymbol{\boldsymbol{0}}$
+    \item Legyen $\boldsymbol{\boldsymbol{S}}(t)=\dot{\boldsymbol{\boldsymbol{R}}}(t)\boldsymbol{\boldsymbol{R}}(t)$
+    \item $\boldsymbol{\boldsymbol{S}}(t)$ ferdén szimmetrikus, azaz $\boldsymbol{\boldsymbol{S}}(t)+\boldsymbol{\boldsymbol{S}}^T(t)=\boldsymbol{\boldsymbol{0}}$
+    \item Jobbról szorozva $\boldsymbol{\boldsymbol{R}}(t)$-vel
+\end{scriptsize}
+\end{itemize}
+\item Tehát ~$\dot{\boldsymbol{\boldsymbol{R}}}(t)=\boldsymbol{\boldsymbol{S}}(t)\boldsymbol{\boldsymbol{R}}(t)$
+\item Legyen $\boldsymbol{p}'$ egy konstans vektor, az elforgatottja ekkor ~$\boldsymbol{p}(t)=\boldsymbol{\boldsymbol{R}}(t)\boldsymbol{p}'$
+\item Deriválva: ~$\dot{\boldsymbol{p}}(t)=\dot{\boldsymbol{\boldsymbol{R}}}(t)\boldsymbol{p}'=\boldsymbol{\boldsymbol{S}}(t)\boldsymbol{\boldsymbol{R}}(t)\boldsymbol{p}'$
+\item Másrészt mechanikából ismert, hogy ha az $\boldsymbol{\boldsymbol{R}}(t)$ forgatás szögsebessége $\boldsymbol{\omega}(t)$, akkor $\dot{\boldsymbol{p}}(t)=\boldsymbol{\omega}(t)\times \boldsymbol{\boldsymbol{R}}(t)\boldsymbol{p}'$
+$$\vspace*{-2mm}
+\textnormal{Ebbõl}\quad\boldsymbol{\boldsymbol{S}}(t)=\boldsymbol{\boldsymbol{S}}(\boldsymbol{\omega}(t))=\left[\begin{array}{ccc}
+0 & -\omega_z & \omega_y\\
+\omega_z & 0 & -\omega_x\\
+-\omega_y & \omega_x & 0
+\end{array}\right]
+$$
+\item Továbbá tetszõleges $\boldsymbol{\boldsymbol{R}}$ forgatási mátrixra teljesül, hogy $\boldsymbol{\boldsymbol{R}}\cdot\boldsymbol{\boldsymbol{S}}(\boldsymbol{\omega})\cdot\boldsymbol{\boldsymbol{R}}^T=\boldsymbol{\boldsymbol{S}}(\boldsymbol{\boldsymbol{R}}\cdot\boldsymbol{\omega})$
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Szegmens sebesség}
+\begin{frame}
+\frametitle{Szegmens sebesség}
+\begin{center}
+\includegraphics[width=0.6\textwidth]{pictures/gen_link.png}
+\end{center}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Jacobi számítása}
+\begin{frame}
+\frametitle{Jacobi számítása}
+\begin{scriptsize}
+\begin{itemize}
+\item A Jacobi mátrix a következõ módon partícionálható:\vspace*{-3mm}
+$$\vspace*{-2mm}
+\boldsymbol{\boldsymbol{J}}=\left[\begin{array}{ccc}\boldsymbol{j}_{P1}&&\boldsymbol{j}_{Pn}\\&\dots&\\ \boldsymbol{j}_{O1}&&\boldsymbol{j}_{On}\end{array}\right]
+$$
+\item Jelölje $\dot{q}_i\boldsymbol{j}_{Pi}$ az $i$. ízület hatását a végszerszám egyenes vonalú sebességére, $\dot{q}_i\boldsymbol{j}_{Oi}$ pedig az $i$. ízület hatását a végszerszám szögsebességére
+\item Szögsebességre gyakorolt hatás
+\begin{itemize}
+\begin{scriptsize}
+\item Ha az $i$. ízület csúszó ($q_i=d_i$):\vspace*{-3mm}
+$$\vspace*{-2mm}
+\dot{q}_i\boldsymbol{j}_{Oi}=\boldsymbol{0}\quad\Rightarrow\quad \boldsymbol{j}_{Oi}=\boldsymbol{0}
+$$
+\item Ha az $i$. ízület forgó ($q_i=\vartheta_i$):\vspace*{-3mm}
+$$\vspace*{-2mm}
+\dot{q}_i\boldsymbol{j}_{Oi}=\dot{\vartheta}_i\boldsymbol{z}_{i-1}\quad\Rightarrow\quad \boldsymbol{j}_{Oi}=\boldsymbol{z}_{i-1}
+$$
+\end{scriptsize}
+\end{itemize}
+\item Egyenes vonalú sebességre gyakorolt hatás
+\begin{itemize}
+\begin{scriptsize}
+\item Ha az $i$. ízület csúszó ($q_i=d_i$):\vspace*{-3mm}
+$$\vspace*{-2mm}
+\dot{q}_i\boldsymbol{j}_{Pi}=\dot{d}_i\boldsymbol{z}_{i-1}\quad\Rightarrow\quad \boldsymbol{j}_{Pi}=\boldsymbol{z}_{i-1}
+$$
+\item Ha az $i$. ízület forgó ($q_i=\vartheta_i$):\vspace*{-3mm}
+$$\vspace*{-2mm}
+\dot{q}_i\boldsymbol{j}_{Pi}=\boldsymbol{\omega}_{i-1,i}\times\boldsymbol{r}_{i-1,n}=\dot{\vartheta}_i\boldsymbol{z}_{i-1}\times(\boldsymbol{p}-\boldsymbol{p}_{i-1})\quad\Rightarrow\quad \boldsymbol{j}_{Pi}=\boldsymbol{z}_{i-1}\times(\boldsymbol{p}-\boldsymbol{p}_{i-1})
+$$
+\end{scriptsize}
+\end{itemize}
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Jacobi számítása}
+\begin{scriptsize}
+\begin{itemize}
+\item Összegezve
+$$
+\left[\begin{array}{c}\boldsymbol{j}_{Pi}\\ \boldsymbol{j}_{Oi}\end{array}\right]=\left\{\begin{array}{lc}
+\left[\begin{array}{c}\boldsymbol{z}_{i-1}\\ \boldsymbol{0}\end{array}\right]&\textnormal{csúszó ízület esetén}\\\\
+\left[\begin{array}{c}\boldsymbol{z}_{i-1}\times(\boldsymbol{p}-\boldsymbol{p}_{i-1})\\ \boldsymbol{z}_{i-1}\end{array}\right]&\textnormal{forgó ízület esetén}
+\end{array}\right.
+$$
+\end{itemize}
+\begin{center}
+\includegraphics[width=0.6\textwidth]{pictures/vectors_needed.png}
+\end{center}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+%
+
+%\lecture{Dinamika}{week 2b}
+\section{Dinamika}
+
+\begin{frame}
+\frametitle{Dinamikus modell}
+\begin{itemize}
+\item Beavatkozó nyomatékok és a manipulátor mozgása közt teremt kapcsolatot
+\item Mozgásszimuláció, irányítási algoritmusok tervezése
+\item Ízületek, átalakítók, beavatkozók méretezése (erõk, nyomatékok kiszámíthatók)
+\item Mozgásegyenletek felírása a csuklóváltozók terében
+\begin{itemize}
+\item Lagrange formalizmus
+\item Newton-Euler formalizmus
+\end{itemize}
+\end{itemize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+
+\begin{frame}
+\frametitle{Lagrange-formalizmus}
+\begin{itemize}
+\item Szisztematikusan vezetjük le a mozgásegyenleteket
+\item Általánosított koordináták: $\lambda_1,\ldots,\lambda_n$
+\item Lagrange függvény ($\mathcal{L}$)
+$$
+\mathcal{L}=\mathcal{T}-\mathcal{U},\quad\textnormal{ahol}~ \begin{array}{l}\mathcal{T}~-~\textnormal{kinetikus energia}\\ \mathcal{U}~-~\textnormal{potenciális energia}\end{array}
+$$
+\item Lagrange egyenletek
+$$
+\frac{d}{dt}\frac{\partial\mathcal{L}}{\partial\dot{\lambda_i}}-\frac{\partial \mathcal{L}}{\partial\lambda_i}=\xi_i,\quad i=1,\ldots,n
+$$
+$\xi_i$ a $\lambda_i$-hez tartozó általánosított erõ (nyomaték)
+\item Nyílt kinematikai lánc esetén az általánosított koordináták legyenek a csuklóváltozók
+$$
+\boldsymbol{\lambda}=\boldsymbol{q}
+$$
+\item Kapcsolatot teremt a manipulátorra ható nyomatékok és a csuklópozíciók, -sebességek, és -gyorsulások között
+\end{itemize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+
+%Háttérkép
+%\usebackgroundtemplate{\includegraphics[width=\paperwidth]{pendulum.png}}
+\begin{frame}
+\frametitle{Példa - Meghajtott inga}
+\begin{center}
+\includegraphics[width=0.6\textwidth]{pictures/pendulum.png}
+\end{center}
+\begin{itemize}
+\item $\tau$ nyomatékkal forgatjuk
+\item viszkózus súrlódás
+\item a nyomatékot egy motor adja, aminek az áttétele $k_r>1$, tehetetlenségi nyomatéka $I_m$
+\item $\vartheta$ szögelfordulás ($\vartheta=0$, ha lefelé áll)
+\end{itemize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+
+%
+%{\usebackgroundtemplate{\includegraphics[width=0.8\paperwidth]{pendulum_gray.png}}
+\begin{frame}
+\frametitle{Példa - Meghajtott inga}
+\begin{itemize}
+\item Általánosított koordináta - $\vartheta$
+\item Mozgási energia
+$$
+\mathcal{T}=\frac12I\dot{\vartheta}^2+\frac12I_mk_r^2\dot{\vartheta}^2
+$$
+\item Helyzeti energia
+$$
+\mathcal{U}=mg\ell(1-\cos(\vartheta))
+$$
+\item Lagrange függvény
+$$
+\mathcal{L}=\frac12I\dot{\vartheta}^2+\frac12I_mk_r^2\dot{\vartheta}^2-mg\ell(1-\cos(\vartheta))
+$$
+\item Behelyettesítve a Lagrange egyenletbe
+$$
+(I+I_mk_r^2)\ddot{\vartheta}+F\dot{\vartheta}+mg\ell\sin(\vartheta)=\tau
+$$
+\end{itemize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Mozgási energia}
+\begin{frame}
+\frametitle{Mozgási (kinetikus) energia}
+\begin{columns}
+\begin{column}{0.45\textwidth}
+\begin{scriptsize}
+\begin{itemize}
+\item $n$ merev szegmensbõl álló manipulátor
+\item Teljes kinetikus energia az egyes szegmensek illetve a rájuk erõsített motorok mozgási energiájából áll össze\vspace*{-5mm}
+$$\vspace*{-3mm}
+\mathcal{T}=\sum_{i=1}^n(\mathcal{T}_{l_i}+\mathcal{T}_{m_i})
+$$
+\item Az $i$. szegmens mozgási energiája\vspace*{-3mm}
+$$\vspace*{-3mm}
+\mathcal{T}_{l_i}=\frac12\int_{V_{l_i}}\dot{\boldsymbol{p}}_i^{*T}\dot{\boldsymbol{p}}_i^*\rho dV
+$$
+$\dot{\boldsymbol{p}}_i$: egyenesvonalú sebesség\\
+$V_{l_i}$: az $i.$ szegmens térfogata
+\item Az $i$. szegmens tömegközéppontja\vspace*{-3mm}
+$$\vspace*{-3mm}
+\boldsymbol{p}_{l_i}=\frac{1}{m_{l_i}}\int_{V_{l_i}}\boldsymbol{p}_i^{*}\rho dV
+$$
+\item A szegmens egy pontjának sebessége\vspace*{-3mm}
+$$\vspace*{-3mm}
+\dot{\boldsymbol{p}}_i^{*}=\dot{\boldsymbol{p}}_{l_i}+\boldsymbol{\omega}_i\times \boldsymbol{r}_i=\dot{\boldsymbol{p}}_{l_i}+\boldsymbol{\boldsymbol{S}}(\boldsymbol{\omega}_i)\cdot\boldsymbol{r}_i
+$$
+\end{itemize}
+\end{scriptsize}
+\end{column}
+\begin{column}{0.55\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/link_kin}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Szegmens mozgási energiája}
+\begin{scriptsize}
+Visszahelyettesítve a kinetikus energiába ($\mathcal{T}_{l_i}$) 3 tag adódik:
+\begin{itemize}
+\item Egyenes vonalú\vspace*{-3mm}
+$$\vspace*{-2mm}
+\frac12\int_{V_{l_i}}\dot{\boldsymbol{p}}_{l_i}^T\dot{\boldsymbol{p}}_{l_i}\rho dV=\frac12m_{l_i}\dot{\boldsymbol{p}}_{l_i}^T\dot{\boldsymbol{p}}_{l_i}
+$$
+\item Kölcsönös\vspace*{-3mm}
+$$\vspace*{-3mm}
+2\left(\frac12\int_{V_{l_i}}\dot{\boldsymbol{p}}_{l_i}^T\boldsymbol{\boldsymbol{S}}(\boldsymbol{\omega}_i)\boldsymbol{r}_i\rho dV\right)=2\left(\frac12\dot{\boldsymbol{p}}_{l_i}^T\boldsymbol{\boldsymbol{S}}(\boldsymbol{\omega}_i)\int_{V_{l_i}}(\boldsymbol{p}_i^*-\boldsymbol{p}_{l_i})\rho dV\right)=0
+$$
+\item Forgási\vspace*{-3mm}
+$$\vspace*{-1mm}
+\frac12\int_{V_{l_i}}\boldsymbol{r}_i^T\boldsymbol{\boldsymbol{S}}^T(\boldsymbol{\omega}_i)\boldsymbol{\boldsymbol{S}}(\boldsymbol{\omega}_i)\boldsymbol{r}_i\rho dV=\frac12\boldsymbol{\omega}_i^T\left(\int_{V_{l_i}}\boldsymbol{\boldsymbol{S}}^T(\boldsymbol{r}_i)\boldsymbol{\boldsymbol{S}}(\boldsymbol{r}_i)\rho dV\right)\boldsymbol{\omega}_i=\frac12\boldsymbol{\omega}_i^T\boldsymbol{\boldsymbol{I}}_{l_i}\boldsymbol{\omega}_i
+$$
+kihasználtuk, hogy $\boldsymbol{\boldsymbol{S}}(\boldsymbol{\omega}_i)\boldsymbol{r}_i=-\boldsymbol{\boldsymbol{S}}(\boldsymbol{r}_i)\boldsymbol{\omega}_i$
+\item Tehetetlenségi nyomaték tenzor:\vspace*{-3mm}
+$$
+I_{l_i}=\left[\begin{array}{ccc}
+\int(r_{iy}^2+r_{iz}^2)\rho dV & -\int r_{ix}r_{iy}\rho dV & -\int r_{ix}r_{iz}\rho dV\\\\
+* & \int(r_{ix}^2+r_{iz}^2)\rho dV & -\int r_{iy}r_{iz}\rho dV\\\\
+* & * & \int(r_{ix}^2+r_{iy}^2)\rho dV
+\end{array}\right]
+$$
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Szegmens mozgási energiája}
+\begin{scriptsize}
+\begin{itemize}
+\item Összegezve, az $i$. szegmens mozgási energiája\vspace*{-3mm}
+$$\vspace*{-3mm}
+\mathcal{T}_{l_i}=\frac12m_{l_i}\dot{\boldsymbol{p}}_{l_i}^T\dot{\boldsymbol{p}}_{l_i}+\frac12\boldsymbol{\omega}_i^T\boldsymbol{\boldsymbol{I}}_{l_i}\boldsymbol{\omega}_i
+$$
+\item A mozgási energiát a csuklóváltozók függvényeként kellene felírni, ehhez a Jacobi formalizmus haszálható\vspace*{-3mm}
+$$\vspace*{-3mm}
+\begin{array}{rcl}
+\dot{\boldsymbol{p}}_{l_i}&=&\boldsymbol{j}_{P1}^{(l_i)}\dot{q}_1+\ldots+\boldsymbol{j}_{Pi}^{(l_i)}\dot{q}_i=\boldsymbol{\boldsymbol{J}}_{P}^{(l_i)}\dot{\boldsymbol{q}}\\
+\boldsymbol{\omega}_{i}&=&\boldsymbol{j}_{O1}^{(l_i)}\dot{q}_1+\ldots+\boldsymbol{j}_{Oi}^{(l_i)}\dot{q}_i=\boldsymbol{\boldsymbol{J}}_{O}^{(l_i)}\dot{\boldsymbol{q}}\\
+\end{array}
+$$
+ahol\vspace*{-2mm}
+$$\vspace*{-3mm}
+\begin{array}{rcl}
+\boldsymbol{\boldsymbol{J}}_{P}^{(l_i)}&=&\left[\boldsymbol{j}_{P1}^{(l_i)}~\dots~\boldsymbol{j}_{Pi}^{(l_i)}~ \boldsymbol{0}~\dots~\boldsymbol{0}\right]\\\\
+\boldsymbol{\boldsymbol{J}}_{O}^{(l_i)}&=&\left[\boldsymbol{j}_{O1}^{(l_i)}~\dots~\boldsymbol{j}_{Oi}^{(l_i)}~ \boldsymbol{0}~\dots~\boldsymbol{0}\right]\
+\end{array}
+$$
+\item Az oszlopvektorok számítása\vspace*{-3mm}
+$$\vspace*{-3mm}
+\boldsymbol{j}_{Pj}^{(l_i)}=\left\{\begin{array}{lc}\boldsymbol{z}_{j-1}&\textnormal{csúszó ízület esetén}\\
+\boldsymbol{z}_{j-1}\times(\boldsymbol{p}_{l_i}-\boldsymbol{p}_{j-1})&\textnormal{forgó ízület esetén}\\
+\end{array}\right.
+$$
+$$\vspace*{-2mm}
+\boldsymbol{j}_{Oj}^{(l_i)}=\left\{\begin{array}{lc}\boldsymbol{0}&\textnormal{csúszó ízület esetén}\\
+\boldsymbol{z}_{j-1}&\textnormal{forgó ízület esetén}\\
+\end{array}\right.
+$$
+\begin{torv}[Az $i$. szegmens kinetikus energiája]$$
+\mathcal{T}_{l_i}=\frac12m_{l_i}\dot{\boldsymbol{q}}^T\boldsymbol{\boldsymbol{J}}_P^{(l_i)T}\boldsymbol{\boldsymbol{J}}_P^{(l_i)}\dot{\boldsymbol{q}}+\frac12\dot{\boldsymbol{q}}^T\boldsymbol{\boldsymbol{J}}_O^{(l_i)T}\boldsymbol{\boldsymbol{I}}_{l_i}\boldsymbol{\boldsymbol{J}}_P^{(l_i)}\dot{\boldsymbol{q}}
+$$
+\end{torv}
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Motor mozgási energiája}
+\begin{columns}
+\begin{column}{0.45\textwidth}
+\begin{scriptsize}
+\begin{itemize}
+\item Szegmenséhez hasonlóan számolható
+\item Forgó elektromos motorokat tételezünk fel (mindkét ízülettípus meghajtására alkalmas)
+\item Az állórész az $i-1.$ szegmenshez van rögzítve, így annak mozgási energiáját már kiszámoltuk
+\item A forgórész mozgási energiája a kérdés
+\item Az $i$. rotor kinetikus energiája\vspace*{-3mm}
+$$\vspace*{-1mm}
+\mathcal{T}_{m_i}=\frac12m_{m_i}\dot{\boldsymbol{p}}_{m_i}^T\dot{\boldsymbol{p}}_{m_i}+\frac12\boldsymbol{\omega}_{m_i}^T\boldsymbol{\boldsymbol{I}}_{m_i}\boldsymbol{\omega}_{m_i}
+$$
+ahol $m_{m_i}$ a rotor tömege\\
+$\dot{\boldsymbol{p}}_{m_i}$ a rotor tömegközéppontjának egyenes vonalú sebessége\\
+$\boldsymbol{\boldsymbol{I}}_{m_i}$ tehetetlenségi nyomaték\\
+$\boldsymbol{\omega}_{m_i}$ a rotor szögsebessége
+\end{itemize}
+\end{scriptsize}
+\end{column}
+\begin{column}{0.55\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/motor_kin.png}
+\end{center}
+\end{column}
+\end{columns}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Motor mozgási energiája}
+\begin{scriptsize}
+\begin{itemize}
+\item Jelölje $\vartheta_{m_i}$ a rotor szögelfordulását. Merev áttételt feltételezve:\vspace*{-3mm}
+$$\vspace*{-3mm}
+k_{ri}\dot{q_i}=\dot{\vartheta}_{m_i}
+$$
+\item Az $i$. edik rotor eredõ szögsebessége\vspace*{-3mm}
+$$\vspace*{-3mm}
+\boldsymbol{\omega}_{m_i}=\boldsymbol{\omega}_{i-1}+k_{ri}\dot{q}_i\boldsymbol{z}_{m_i}
+$$
+ahol $\boldsymbol{\omega}_{i-1}$ az $i-1.$ szegmens szögsebessége, $\boldsymbol{z}_{m_i}$ pedig a rotor tengelyének irányába mutató egységvektor
+\item A kinetikus energiát most is a csuklóváltozók függvényeként kellene felírni. A rotor tömegközéppontjának egyenes vonalú sebessége\vspace*{-3mm}
+$$\vspace*{-2mm}
+\dot{\boldsymbol{p}}_{m_i}=\boldsymbol{\boldsymbol{J}}_P^{(m_i)}\dot{\boldsymbol{q}}
+$$
+\item Jacobi mátrix\vspace*{-2mm}
+$$\vspace*{-2mm}
+\boldsymbol{\boldsymbol{J}}_P^{(m_i)}=\left[\boldsymbol{j}_{P1}^{(m_i)}~\dots~\boldsymbol{j}_{P,i-1}^{(m_i)}~\boldsymbol{0}~\dots~\boldsymbol{0}\right],\textnormal{ ahol}
+$$
+$$\vspace*{-2mm}
+\boldsymbol{j}_{Pj}^{(m_i)}=\left\{\begin{array}{lc}\boldsymbol{z}_{j-1}&\textnormal{csúszó ízület esetén}\\
+\boldsymbol{z}_{j-1}\times(\boldsymbol{p}_{m_i}-\boldsymbol{p}_{j-1})&\textnormal{forgó ízület esetén}\\
+\end{array}\right.
+$$
+$\boldsymbol{p}_{j-1}$ pedig a $j-1.$ koordinátarendszer origójába mutató vektor, $\boldsymbol{j}_{Pi}^{(m_i)}$ pedig azért nullvektor, mert a rotor tömegközéppontja a forgástengelyen helyezkedik el
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Motor mozgási energiája}
+\begin{scriptsize}
+\begin{itemize}
+\item A rotor szögsebessége is kifejezhetõ csuklóváltozókkal\vspace*{-3mm}
+$$\vspace*{-2mm}
+\boldsymbol{\omega}_{m_i}=\boldsymbol{\boldsymbol{J}}_O^{(m_i)}\dot{\boldsymbol{q}}
+$$
+\item Jacobi mátrix\vspace*{-2mm}
+$$\vspace*{-2mm}
+\boldsymbol{\boldsymbol{J}}_O^{(m_i)}=\left[\boldsymbol{j}_{O1}^{(m_i)}~\dots~\boldsymbol{j}_{O,i-1}^{(m_i)}~\boldsymbol{j}_{Oi}^{(m_i)}~\boldsymbol{0}~\dots~\boldsymbol{0}\right],\textnormal{ ahol}
+$$
+$$\vspace*{-2mm}
+\boldsymbol{j}_{Oj}^{(m_i)}=\left\{\begin{array}{lc}\boldsymbol{j}_{Oj}^{(l_i)}&j=1,\ldots,i-1\\
+k_{ri}\boldsymbol{z}_{m_i}&j=i
+\end{array}\right.
+$$
+$\boldsymbol{z}_{m_i}$ a rotor forgástengelyének irányába mutató egységvektor
+\end{itemize}
+\begin{torv}[Az $i$. rotor kinetikus energiája]$$
+\mathcal{T}_{m_i}=\frac12m_{m_i}\dot{\boldsymbol{q}}^T\boldsymbol{\boldsymbol{J}}_P^{(m_i)T}\boldsymbol{\boldsymbol{J}}_P^{(m_i)}\dot{\boldsymbol{q}}+\frac12\dot{\boldsymbol{q}}^T\boldsymbol{\boldsymbol{J}}_O^{(m_i)T}\boldsymbol{\boldsymbol{I}}_{m_i}\boldsymbol{\boldsymbol{J}}_O^{(m_i)}\dot{\boldsymbol{q}}
+$$
+\end{torv}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{A teljes mozgási energia}
+%\begin{scriptsize}
+\begin{itemize}
+\item Összegezve az egyes szegmensek és motorok mozgási energiáit magkapjuk a manipulátor mozgási energiáját:
+$$
+\mathcal{T}(\boldsymbol{q},\dot{\boldsymbol{q}})=\frac12\sum_{i=1}^n\sum_{j=1}^nb_{ij}(\boldsymbol{q})\dot{q}_i\dot{q}_j=\frac12\dot{\boldsymbol{q}}^T\boldsymbol{\boldsymbol{B}}(\boldsymbol{q})\dot{\boldsymbol{q}}
+$$
+\item $\boldsymbol{\boldsymbol{B}}(\boldsymbol{q})$ az $n\times n$-es tehetetlenségi nyomaték mátrix:
+\begin{scriptsize}
+$$\vspace*{-3mm}
+\boldsymbol{\boldsymbol{B}}(\boldsymbol{q})=\sum_{i=1}^n\left(m_{l_i}\boldsymbol{\boldsymbol{J}}_P^{(l_i)T}\boldsymbol{\boldsymbol{J}}_P^{(l_i)}+\boldsymbol{\boldsymbol{J}}_O^{(l_i)T}\boldsymbol{\boldsymbol{I}}_{l_i}\boldsymbol{\boldsymbol{J}}_O^{(l_i)T}+m_{m_i}\boldsymbol{\boldsymbol{J}}_P^{(m_i)T}\boldsymbol{\boldsymbol{J}}_P^{(m_i)}+\boldsymbol{\boldsymbol{J}}_O^{(m_i)T}\boldsymbol{\boldsymbol{I}}_{m_i}\boldsymbol{\boldsymbol{J}}_O^{(m_i)T}\right)
+$$
+\end{scriptsize}
+\begin{itemize}
+\item szimmetrikus
+\item pozitív definit
+\item konfiguráció-függõ
+\end{itemize}
+\end{itemize}
+%\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Helyzeti energia}
+\begin{frame}
+\frametitle{Helyzeti (potenciális) energia}
+\begin{scriptsize}
+\begin{itemize}
+\item A mozgási energiához hasonlóan a helyzeti energiát is az egyes szegmensek és rotorok helyzeti energiájának összegeként írjuk fel\vspace*{-2mm}
+$$\vspace*{-2mm}
+\mathcal{U}=\sum_{i=1}^n(\mathcal{U}_{l_i}+\mathcal{U}_{m_i})
+$$
+\item Merev szegmenseket feltételezve a szegmensek helyzeti energiája a gravitációs erõkbõl származik\vspace*{-2mm}
+$$\vspace*{-2mm}
+\mathcal{U}_{l_i}=-\int_{V_{l_i}}\boldsymbol{g}^T\boldsymbol{p}_i^*\rho dV=-m_{l_i}\boldsymbol{g}^T\boldsymbol{p}_{l_i},\quad\textnormal{ahol}\quad\quad \boldsymbol{g}^T=\left[0,~0,~{}^{{}_-}g\right]
+$$
+\item Az $i.$ rotor helyzeti energiája hasonlóan\vspace*{-2mm}
+$$\vspace*{-2mm}
+\mathcal{U}_{m_i}=-m_{m_i}\boldsymbol{g}^T\boldsymbol{p}_{m_i}
+$$
+\item A teljes potenciális energia\vspace*{-2mm}
+$$\vspace*{-2mm}
+\mathcal{U}(\boldsymbol{q})=-\sum_{i=1}^n\left(m_{l_i}\boldsymbol{g}^T\boldsymbol{p}_{l_i}+m_{m_i}\boldsymbol{g}^T\boldsymbol{p}_{m_i}\right)
+$$
+\item $\boldsymbol{p}_{l_i}$ és $\boldsymbol{p}_{m_i}$ vektorokon keresztül a potenciális energia csak a csuklóváltozóktól függ, azok idõ szerinti derváltjától (sebességétõl) nem
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Mozgásegyenletek}
+\begin{frame}
+\frametitle{Mozgásegyenletek}
+\begin{scriptsize}
+\begin{itemize}
+\item Eml: Lagrange függvény:\vspace*{-3mm}
+$$\vspace*{-2mm}
+\mathcal{L}(\boldsymbol{q},\dot{\boldsymbol{q}})=\mathcal{T}(\boldsymbol{q},\dot{\boldsymbol{q}})-\mathcal{U}(\boldsymbol{q})=\frac12\sum_{i=1}^n\sum_{j=1}^nb_{ij}(\boldsymbol{q})\dot{q}_i\dot{q}_j+\sum_{i=1}^n\left(m_{l_i}\boldsymbol{g}^T\boldsymbol{p}_{l_i}(\boldsymbol{q})+m_{m_i}\boldsymbol{g}^T\boldsymbol{p}_{m_i}(\boldsymbol{q})\right)
+$$
+\item Eml: Lagrange egyenletek:\vspace*{-3mm}
+$$\vspace*{-3mm}
+\frac{d}{dt}\frac{\partial\mathcal{L}}{\partial\dot{q_i}}-\frac{\partial \mathcal{L}}{\partial q_i}=\xi_i,\quad\quad i=1,\ldots,n
+$$
+\item A derivált elemei:
+$$
+\textcolor{blue}{\frac{d}{dt}\left(\frac{\partial\mathcal{L}}{\partial\dot{q_i}}\right)=\frac{d}{dt}\left(\frac{\partial\mathcal{T}}{\partial\dot{q_i}}\right)=}\sum_{j=1}^nb_{ij}(\boldsymbol{q})\ddot{q}_j+\sum_{j=1}^n\frac{d b_{ij}(\boldsymbol{q})}{dt}\dot{q}_j=\sum_{j=1}^nb_{ij}(\boldsymbol{q})\ddot{q}_j+\sum_{j=1}^n\sum_{k=1}^n\frac{\partial b_{ij}(\boldsymbol{q})}{\partial q_k}\dot{q}_k\dot{q}_j
+$$
+$$
+\textcolor{blue}{\frac{\partial\mathcal{T}}{\partial q_i}=}\frac12\sum_{j=1}^n\sum_{k=1}^n\frac{\partial b_{jk}(\boldsymbol{q})}{\partial q_i}\dot{q}_k\dot{q}_j
+$$
+$$\hspace*{-6mm}
+\textcolor{blue}{\frac{\partial\mathcal{U}}{\partial q_i}=}-\sum_{j=1}^n\left(m_{l_j}\boldsymbol{g}^T\frac{\partial\boldsymbol{p}_{l_j}}{\partial q_i}+m_{m_j}\boldsymbol{g}^T\frac{\partial\boldsymbol{p}_{m_j}}{\partial q_i}\right)=-\sum_{j=1}^n\left(m_{l_j}\boldsymbol{g}^T\boldsymbol{j}_{Pi}^{(l_j)}(\boldsymbol{q})+m_{m_j}\boldsymbol{g}^T\boldsymbol{j}_{Pi}^{(m_j)}(\boldsymbol{q})\right)=g_i(\boldsymbol{q})
+$$
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Mozgásegyenletek}
+\begin{scriptsize}
+\begin{torv}[A mozgásegyenletek]
+$$
+\sum_{j=1}^nb_{ij}(\boldsymbol{q})\ddot{q}_j+\sum_{j=1}^n\sum_{k=1}^nh_{ijk}(\boldsymbol{q})\dot{q}_k\dot{q}_j+g_i(\boldsymbol{q})=\xi_i,\quad\quad i=1,\ldots,n
+$$
+\end{torv}\vspace*{-3mm}
+$$\vspace*{-3mm}
+\textnormal{ahol}\quad\quad h_{ijk}=\frac{\partial b_{ij}}{\partial q_k}-\frac12\frac{\partial b_{jk}}{\partial q_i}
+$$
+\begin{itemize}
+\item Gyorsulások
+\begin{itemize}
+\begin{scriptsize}
+\item a $b_{ij}$ együttható adja meg a $j.$ ízület gyorsulásának hatását az $i.$ ízületre
+\end{scriptsize}
+\end{itemize}
+\item Négyzetes sebességek:
+\begin{itemize}
+\begin{scriptsize}
+\item $h_{ijj}\dot{q}_j^2$ reprezentálja a $j.$ ízület sebessége által az $i.$ ízületre gyakorolt \emph{centrifugális} hatást
+\item $h_{ijk}\dot{q}_j\dot{q}_k$ reprezentálja a $j.$ és a $k.$ ízületek sebességei által az $i.$ ízületre gyakorolt \emph{Coriolis} hatást
+\end{scriptsize}
+\end{itemize}
+\item Csuklóváltozó függõ tagok:
+\begin{itemize}
+\begin{scriptsize}
+\item $g_i$ reprezentálja a gravitáció hatására az $i.$ ízületnél ébredõ nyomatékot
+\end{scriptsize}
+\end{itemize}
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Mozgásegyenletek}
+\begin{scriptsize}
+\begin{itemize}
+\item Általánosított erõk, nemkonzervatív erõk
+\item Beavatkozó nyomatékok $\boldsymbol{\tau}$
+\item Súrlódási nyomatékok
+\begin{itemize}
+\begin{scriptsize}
+\item viszkózus súrlódási nyomaték: $\boldsymbol{F}_v\dot{\boldsymbol{q}}$
+\item statikus súrlódási nyomaték: $\boldsymbol{f}_s(\boldsymbol{q},\dot{\boldsymbol{q}})$,\\ vagy egyszerûbben a Coulomb súrlódási nyomaték: $\boldsymbol{F}_s\boldsymbol{\textnormal{sgn}}(\dot{\boldsymbol{q}})$
+\end{scriptsize}
+\end{itemize}
+\item A környezettel való érintkezésbõl (végszerszám) adódó kontakt-erõk: $\boldsymbol{J}^T(\boldsymbol{q})\boldsymbol{h}$
+\item Összegezve, a csuklóváltozókra vonatkozó dinamikus modell:\vspace*{-3mm}
+\begin{torv}
+$$
+\boldsymbol{B}(\boldsymbol{q})\ddot{\boldsymbol{q}}+\boldsymbol{C}(\boldsymbol{q},\dot{\boldsymbol{q}})\dot{\boldsymbol{q}}+\boldsymbol{F}_v\dot{\boldsymbol{q}}+\boldsymbol{F}_s\boldsymbol{\textnormal{sgn}}(\dot{\boldsymbol{q}})+\boldsymbol{g}(\boldsymbol{q})=\boldsymbol{\tau}-\boldsymbol{J}^T(\boldsymbol{q})\boldsymbol{h}
+$$
+\end{torv}
+ahol a $\boldsymbol{C}\in\mathbb{R}^{n\times n}$ mátrix $c_{ij}$ elemei kielégítik a következõ egyenletet:\vspace*{-3mm}
+$$
+\sum_{j=1}^nc_{ij}\dot{q}_j=\sum_{j=1}^n\sum_{k=1}^nh_{ijk}\dot{q}_k\dot{q}_j
+$$
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+%
+\section{Trajektóriatervezés}
+
+\begin{frame}
+\frametitle{Trajektóriatervezés}
+\begin{itemize}
+\item A kinematika és a dinamika a manipulátor matematikai modelljének felírásával foglalkozott
+\item A dimanika a csuklópozíciók, a csuklósebességek, a csuklógyorsulások és a nyomatékok között teremtett kapcsolatot.
+\item Trajektória tervezés: referencia bemeneteket generál az irányító rendszernek, amely biztosítja, hogy a manipulátor a megadott trajektóriát járja be
+\end{itemize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Út és trajektória}
+%
+\begin{frame}
+  \frametitle{Út és trajektória}
+\begin{scriptsize}
+\begin{itemize}
+\item Minimális követelmény: a manipulátor egy kezdeti pózból eljusson egy (általunk megadott) végsõ pózba
+\item Különbség van \emph{út} és \emph{trajektória} között:
+\begin{itemize}
+\begin{scriptsize}
+\item \textcolor{blue}{Út}: a csuklóváltozók terében, vagy a mûveleti térben definiált ponthalmaz (pálya), melyet a manipulátornak érintenie kell a mozgás során - tisztán geometriai mozgásleírás
+\item \textcolor{blue}{Trajektória}: olyan út, amelyhez idõfüggés is tartozik (pl. bizonyos útponthoz meg van adva a sebesség/gyorsulás értéke, vagy a teljes menetidõ, sebesség-, és gyorsuláskorlátok)
+\end{scriptsize}
+\end{itemize}
+\item Trajektóriatervezõ algoritmus bemenetei
+\begin{itemize}
+\begin{scriptsize}
+\item Út leírása
+\item Útpontokhoz rendelt korlátozások, pl. akadályok a munkatérben, stb. - ezek a mûveleti térben jobban kezelhetõek
+\item Manipulátor dinamika
+\end{scriptsize}
+\end{itemize}
+\item Trajektóriatervezõ algoritmus kimenetei
+\begin{itemize}
+\begin{scriptsize}
+\item A csuklóváltozók (vagy a végszerszám) trajektóriája egy idõbeli sorozatként, az egyes idõpontban felvett pozíció, sebesség és gyorsulás értékekkel
+\end{scriptsize}
+\end{itemize}
+\item Ha a mûveleti térben adott a trajektória, akkor valamilyen inverz kinematikai algoritmussal meg kell határozni a csuklóváltozó-trajektóriát
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Csuklóváltozók trajektóriája}
+
+%
+\begin{frame}
+  \frametitle{Csuklóváltozók trajektóriája}
+\begin{itemize}
+\item Ha a trajektóriatervezés a csuklóváltozók terében történik, akkor minden nevezetes végszerszám pozícióhoz-orientációhoz meg kell határozni a megfelelõ csuklóváltozó értékeket ($\boldsymbol{q}_1,\boldsymbol{q}_2,\ldots$)
+\item Inverz kinematikai algoritmus
+\item Az algoritmus egy $\boldsymbol{q}(t)$ függvényt generál, amely az adott csuklótérbeli pontokat interpolálja a korlátozások figyelembevételével
+\item Csuklóváltozók terében történõ trajektóriatervezéssel szembeni elvárások:
+\begin{itemize}
+\item A generált trajektóriák ne legyenek túl számításigényesek
+\item Csuklópozíciók és sebességek idõben folytonos függvények
+\end{itemize}
+\end{itemize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Pont-pont mozgás}
+\begin{scriptsize}
+\begin{itemize}
+\item Feladat: egy kezdeti $q_i$ csuklókonfigurációból $t_f$ idõ alatt kell eljutni egy végsõ $q_f$ csuklókonfigurációba, mindegy milyen úton.
+\item A tervezõ algoritmusok rendszerint valamilyen performancia kritérium szerint optimális megoldást adnak
+\item Például: forgó merev test
+\begin{columns}
+\begin{column}{0.5\textwidth}
+$$
+I\dot{\omega}=\tau,\quad\quad\int_0^{t_f}\omega(t)dt=q_f-q_i,
+$$
+$$
+\int_0^{t_f}\tau^2(t)dt\quad\rightarrow\quad \min
+$$
+\end{column}
+\begin{column}{0.5\textwidth}
+$I$ : tehetetlenségi nyomaték\\~\\
+$\dot{q}=\omega$ : szögsebesség\\~\\
+$\tau$ : motor által szolgáltatott nyomaték
+\end{column}
+\end{columns}
+\item A megoldás alakja:~ $\omega(t)=at^2+bt+c$
+\begin{itemize}
+\begin{scriptsize}
+\item Köbös csuklópozíció:~ $q(t)=\textcolor{blue}{a_3}t^3+\textcolor{blue}{a_2}t^2+\textcolor{blue}{a_1}t+\textcolor{blue}{a_0}$
+\item Négyzetes sebességprofil:~ $\dot{q}(t)=3a_3t^2+2a_2t+a_1$
+\item Lineáris gyorsulásprofil:~ $\ddot{q}(t)=6a_3t+2a_2$
+\end{scriptsize}
+\end{itemize}
+\item Négy \textcolor{blue}{ismeretlen együtthatót} kell meghatározni, négy egyenlet kell hozzá:\vspace*{-2mm}
+$$
+\begin{array}{rcll}
+q_i&=&a_0&\textnormal{kezdeti csuklópozíció}\\
+q_f&=&a_3t_f^3+a_2t_f^2+a_1t_f+a_0&\textnormal{végsõ csuklópozíció}\\
+\dot{q}_i&=&a_1&\textnormal{kezdeti csuklósebesség (általában 0)}\\
+\dot{q}_f&=&3a_3t^2_f+2a_2t_f+a_1&\textnormal{végsõ csuklósebesség (általában 0)}
+\end{array}
+$$
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Pont-pont mozgás - példa}
+\begin{scriptsize}
+\begin{itemize}
+\item Legyenek a kezdeti és végsõ csuklópozíció, és -sebesség adatok:\vspace*{-3mm}
+$$
+\begin{array}{c}
+q_i=0,\quad q_f=\pi,\quad \dot{q}_i=\dot{q}_f=0,\quad t_f=1\\\\ \Downarrow\\\\
+a_0=0,\quad a_1=0,\quad a_2=3\pi,\quad a_3=-2\pi
+\end{array}
+$$
+\end{itemize}
+\begin{center}\hspace*{-4mm}
+\includegraphics[width=0.35\textwidth]{pictures/pos}\includegraphics[width=0.35\textwidth]{pictures/vel}\includegraphics[width=0.35\textwidth]{pictures/acc}
+\end{center}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Pont-pont mozgás}
+\begin{scriptsize}
+\begin{itemize}
+\item Ipari gyakorlatban gyakran \textcolor{blue}{trapéz sebességprofil}t alkalmaznak (gyengébb performancia)
+\item Adottak: $q_i, q_f, t_f$, továbbá $\dot{q}_i=\dot{q}_f=0$, plusz paraméter: $\ddot{q}_c$, vagy $\dot{q}_c$
+\item Szimmetrikus trajektória ($q_m=\frac{q_f+q_i}{2}, t_m=\frac{t_f}{2}$)
+\item A parabolikus szakasz végsebességének meg kell egyeznie a lineáris szakasz sebességével:~ \textcolor{red}{$\ddot{q}_ct_c=\frac{q_m-q_c}{t_m-t_c}$}
+\item Másrészt~ \textcolor{red}{$q_c=q_i+\frac12\ddot{q}_ct_c^2$}\vspace*{-2mm}
+\begin{center}\hspace*{-10mm}
+\includegraphics[width=0.35\textwidth]{pictures/trapez_pos}\includegraphics[width=0.35\textwidth]{pictures/trapez_vel}\includegraphics[width=0.35\textwidth]{pictures/trapez_acc}
+\end{center}
+\item Rendezve:~ $\ddot{q}_ct_c^2-\ddot{q}_ct_ft_c+q_f-q_i=0$
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+%
+\begin{frame}
+\frametitle{Pont-pont mozgás}
+\begin{scriptsize}
+\begin{center}\hspace*{-4mm}
+\includegraphics[width=0.35\textwidth]{pictures/trapez_pos2}\includegraphics[width=0.35\textwidth]{pictures/trapez_vel2}\includegraphics[width=0.35\textwidth]{pictures/trapez_acc}
+\end{center}
+\begin{itemize}
+\item $t_c$-ben másodfokú egyenlet:~ $\ddot{q}_ct_c^2-\ddot{q}_ct_ft_c+q_f-q_i=0$
+\item Megoldás:\vspace*{-3mm}
+$$\vspace*{-1mm}
+t_c=\frac{t_f}{2}-\frac12\sqrt{\frac{t_f^2\ddot{q}_c-4(q_f-q_i)}{\ddot{q}_c}},\quad\textnormal{mivel}\quad t_c\leq\frac{t_f}{2},\quad \textnormal{ezért}\quad \textcolor{blue}{|\ddot{q}_c|\geq\frac{4|q_f-q_i|}{t_f^2}}
+$$
+$$
+\textnormal{továbbá}\quad q(t)=\left\{\begin{array}{ll}
+q_i+\frac12\ddot{q}_ct^2 & 0\leq t\leq t_c\\\\
+q_i+\ddot{q}_ct_c(t-\frac{t_c}{2}) & t_c< t\leq t_f-t_c\\\\
+q_f-\frac12\ddot{q}_c(t_f-t)^2 & t_f-t_c< t\leq t_f\\
+\end{array}\right.
+$$
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Út mozgás}
+\begin{scriptsize}
+\begin{itemize}
+\item Kettõnél több pontból álló pontsorozattal (útpontok) van megadva a manipulátor által bejárandó pálya
+\item $N$ útpontra illeszthetõ egy $N-1$-edfokú polinom, de ez a megoldás nem elõnyös
+\begin{itemize}
+\begin{scriptsize}
+\item Nem lehet megadni a kezdeti és a végsebességeket
+\item Magas fokszám esetén oszcilláló megoldások
+\item Nehezen megoldható, nagy egyenletrendszerek is adódhatnak
+\item Ha egy útpont megváltozik, az egészet újra kell számolni
+\end{scriptsize}
+\end{itemize}
+\item Helyette több alacsonyabb fokú polinomot használatos, az útpontokban folytonos
+\item Harmadfokú interpolációs polinomokkal garantálható a folytonos sebesség
+\end{itemize}
+\begin{columns}
+\begin{column}{0.55\textwidth}
+\begin{itemize}
+\item A csuklópozíció idõfüggvényét $N-1$ harmadfokú polinom sorozatával adjuk meg
+\item Különbözõ változatok
+\begin{itemize}
+\begin{scriptsize}
+\item sebesség korlátozások
+\item folytonos gyorsulás
+\end{scriptsize}
+\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.45\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/interp_poly}
+\end{center}
+\end{column}
+\end{columns}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Interpoláció útpontonként adott sebességgel}
+\begin{scriptsize}
+\begin{itemize}
+\item Tudni kell  a kívánt sebességet minden útpontban
+\item $N$ útpont: $q_1,\ldots,q_N$
+\item Az interpolációs polinom $q_k$ és $q_{k+1}$ között $\Pi_k(t)$, $k=1,\ldots,N-1$
+\item A megoldandó egyenletrendszer ($4(N-1)$ egyenlet, $4(N-1)$ ismeretlen együttható)
+$$
+\begin{array}{rcl}
+\Pi_k(t_k)&=&\textcolor{red}{q_k}\\
+\Pi_k(t_{k+1})&=&\textcolor{red}{q_{k+1}}\\
+\dot{\Pi}_k(t_k)&=&\textcolor{zold}{\dot{q}_k}\\
+\dot{\Pi}_k(t_{k+1})&=&\textcolor{zold}{\dot{q}_{k+1}}
+\end{array},\quad k=1,\ldots,N-1
+$$
+\item Kezdeti- és végsebességek általában nullák ($\textcolor{zold}{\dot{q}_1}=\textcolor{zold}{\dot{q}_N}=0$)
+\item A folytonos sebességre vonatkozó korlátozás: $\dot{\Pi}_k(t_{k+1})=\dot{\Pi}_{k+1}(t_{k+1})$\vspace*{-3mm}
+\begin{center}\hspace*{-8mm}
+\includegraphics[width=\textwidth]{pictures/interp_vel_con}
+\end{center}
+\item Nem folytonos a gyorsulás
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Interpoláció útpontonkban folytonos gyorsulással}
+\begin{scriptsize}
+\begin{itemize}
+\item $N$ útpont: $q_1,\ldots,q_N$
+\item Az interpolációs polinom $q_k$ és $q_{k+1}$ között $\Pi_k(t)$, $k=1,\ldots,N-1$
+\item Az alábbi feltételeknek kell teljesülniük az közbensõ pontokra ($4(N-2)$ egyenlet)\vspace*{-2mm}
+$$\vspace*{-2mm}
+\begin{array}{rcl}
+\Pi_{k-1}(t_k)&=&\textcolor{red}{q_k}\\
+\Pi_{k-1}(t_k)&=&\Pi_k(t_k)\\
+\dot{\Pi}_{k-1}(t_k)&=&\dot{\Pi}_{k}(t_k)\\
+\ddot{\Pi}_{k-1}(t_k)&=&\ddot{\Pi}_{k}(t_k)
+\end{array},\quad k=2,\ldots,N-1
+$$
+\item További feltételek a végpontokra:\vspace*{-2mm}
+$$\vspace*{-2mm}
+\Pi_0(t_1)=q_i,\quad \Pi_N(t_f)=q_f,\quad \dot{\Pi}_0(t_1),\ddot{\Pi}_0(t_1),\dot{\Pi}_N(t_f),\ddot{\Pi}_N(t_f)
+$$
+\item Összesen $4N-2$ egyenlet a $4(N-1)$ ismeretlenre
+\begin{itemize}
+\begin{scriptsize}
+\item Kezdeti és végsõ gyorsulásra vonatkozó feltételek elhegyása
+\item Negyedfokú polinomok használata $\Pi_1$ és $\Pi_{N-1}$ esetében (+2 ismeretlen együttható)
+\item Két virtuális pont bevezetése
+\end{scriptsize}
+\end{itemize}
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Interpoláció útpontonkban folytonos gyorsulással}
+\begin{scriptsize}
+\begin{itemize}
+\item $N+2$ idõpont: $t_2$ és $t_{N+1}$ tartozik a virtuális pontokhoz
+\item A megoldandó egyenletrendszer \vspace*{-2mm}
+$$\vspace*{-1mm}
+\begin{array}{rcl}
+\Pi_{k-1}(t_k)&=&\textcolor{red}{q_k}\\
+\Pi_{k-1}(t_k)&=&\Pi_k(t_k)\\
+\dot{\Pi}_{k-1}(t_k)&=&\dot{\Pi}_{k}(t_k)\\
+\ddot{\Pi}_{k-1}(t_k)&=&\ddot{\Pi}_{k}(t_k)
+\end{array},\quad k=3,\ldots,N
+$$
+$$\hspace*{-8mm}
+\begin{array}{ccc}
+\begin{array}{rcl}
+\Pi_{1}(t_1)&=&\textcolor{red}{q_1}\\
+\dot{\Pi}_{1}(t_1)&=&\textcolor{red}{\dot{q}_1}\\
+\ddot{\Pi}_{1}(t_1)&=&\textcolor{red}{\ddot{q}_1}
+\end{array},
+&
+\begin{array}{rcl}
+\Pi_{N+1}(t_{N+2})&=&\textcolor{red}{q_f}\\
+\dot{\Pi}_{N+1}(t_{N+2})&=&\textcolor{red}{\dot{q}_f}\\
+\ddot{\Pi}_{N+1}(t_{N+2})&=&\textcolor{red}{\ddot{q}_f}
+\end{array},
+&
+\begin{array}{rcl}
+\Pi_{k-1}(t_k)&=&\Pi_{k}(t_k)\\
+\dot{\Pi}_{k-1}(t_k)&=&\dot{\Pi}_{k}(t_k)\\
+\ddot{\Pi}_{k-1}(t_k)&=&\ddot{\Pi}_{k}(t_k)
+\end{array},~~k=2,N+1
+\end{array}
+$$
+\item Egyenletek száma: $4(N+1)$ - ismeretlenek száma: $4(N+1)$
+\begin{center}\hspace*{-8mm}
+\includegraphics[width=\textwidth]{pictures/interp_acc_con}
+\end{center}
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Szakaszonként lineáris interpoláció parabolikus átmenetekkel}
+\begin{scriptsize}
+\begin{itemize}
+\item Egyszerûbb trajektóriatervezési módszer
+\item Az útpontok egyenes szakaszokkal vannak összekötve
+\item A folytonos sebességprofil érdekében a $t_k$ idõpontok körül $q(t)$ egy parabolikus átmenettel köti össze a szakaszokat
+\begin{center}\hspace*{-8mm}
+\includegraphics[width=0.65\textwidth]{pictures/parabolic_blend}
+\end{center}
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Szakaszonként lineáris interpoláció parabolikus átmenetekkel}
+\begin{scriptsize}
+\begin{itemize}
+\item Legyenek:
+\begin{itemize}
+\begin{scriptsize}
+\item $\Delta t_k=t_{k+1}-t_k$: az idõlépés
+\item $\Delta t_{k,k+1}$: az idõintervallum, amelyen a $q_k$ és $q_{k+1}$ közti trajektória egyenes szakasz
+\item $\dot{q}_{k,k+1}$: konstans sebesség az egyenes szakaszokon
+\item $\ddot{q}_k$: konstans gyorsulás a $\Delta t'_k$ ideig tartó átmeneti szakaszokon
+\end{scriptsize}
+\end{itemize}
+\item Adottak: $\textcolor{red}{q_k},\Delta t_k,\Delta t'_k$
+\item A közbensõ pontok sebessége és gyorsulása\vspace*{-2mm}
+$$
+\begin{array}{rcl}
+\dot{q}_{k-1,k}&=&\frac{q_k-q_{k-1}}{\Delta t_{k-1}}\\
+\ddot{q}_{k}&=&\frac{\dot{q}_{k,k+1}-\dot{q}_{k-1,k}}{\Delta t'_{k}}
+\end{array}
+$$
+\item A végpontokban plusz feltétel szükséges a gyorsulások számításához: $\dot{q}_{0,1}=\dot{q}_{N,N+1}=0$  így a trajektória bejárása hosszab idõt vesz igénybe ($t_N-t_1+(\Delta t'_1+\Delta t'_N)/2$)
+\begin{center}\hspace*{-8mm}
+\includegraphics[width=\textwidth]{pictures/interp_parabolic}
+\end{center}
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Mûveleti térbeli trajektória}
+%
+\begin{frame}
+\frametitle{Mûveleti térbeli trajektória}
+\begin{scriptsize}
+\begin{itemize}
+\item A direkt kinematikai modell nemlinearitása miatt egy adott csuklóváltozó trajektóriához tartozó végszerszám trajektóriát nem könnyû megjósolni
+\item Ha a végszerszámnak egy geomatriailag adott nyomvonalat kell követnie a \emph{mûveleti térben}, akkor a trajektóriát közvetlenül ebben a térben kell megtervezni
+\begin{itemize}
+\begin{scriptsize}
+\item Ha nem kell pontosan követni a nyomvonalat, akkor elég megadni $\boldsymbol{x}$ értékét néhány útpontban ($\boldsymbol{x}(t_k),~~k=1,\ldots,N$), és a korábbi interpolációs módszerek valamelyikével megtervezni a trajektóriát (pl. rakodó robot néhány akadállyal a munkatérben)
+\item Amennyiben pontosan kell követnie, analitikusan kell megtervezni (pl. festõ-, gravírozó-, sebészeti robot)
+\end{scriptsize}
+\end{itemize}
+\end{itemize}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{center}\vspace*{-10  mm}
+\includegraphics[width=0.76\textwidth]{pictures/da_vinci}
+\end{center}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{center}\vspace*{-10mm}
+\includegraphics[width=0.47\textwidth]{pictures/robot_arm}
+\end{center}
+\end{column}
+\end{columns}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Út alapelemek}
+\begin{scriptsize}
+\begin{itemize}
+\item Út ($\textcolor{blue}{\Gamma}$) - paraméterezett térbeli görbe: \quad\quad $\boldsymbol{p}=\boldsymbol{f}(\sigma),\quad\quad \sigma\in[\sigma_i,\sigma_f]$
+\item Ha $\boldsymbol{p}(\sigma_f)=\boldsymbol{p}(\sigma_i)$, akkor az út zárt, egyébként nyitott
+\item Áttérés ívhosszparaméterre: a $\boldsymbol{p}$-hez tartozó paraméter $\sigma$ helyett a $\textcolor{blue}{\Gamma}$ út $\boldsymbol{p}_i$ és $\boldsymbol{p}$ pontok közti ívhossza ($s$) lesz:
+$$
+\boldsymbol{p}=\boldsymbol{f}(s)
+$$
+\item Minden $\boldsymbol{p}$ ponthoz tartozik 3 egységvektor (kísérõ triéder)
+\end{itemize}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+\item $\textcolor{red}{\boldsymbol{t}}=\frac{d\boldsymbol{p}}{ds}$ érintõ egységvektor
+\item $\textcolor{red}{\boldsymbol{n}}=\frac{d^2\boldsymbol{p}/ds^2}{||d^2\boldsymbol{p}/ds^2||}$ fõnormális egységvektor
+\item $\textcolor{red}{\boldsymbol{b}}=\boldsymbol{t}\times\boldsymbol{n}$ binormális egységvektor
+\item $\textcolor{zold}{\mathcal{O}}$ pedig a $\boldsymbol{p}$-beli simulósík
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/tergorbe}
+\end{center}
+\end{column}
+\end{columns}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Szakasz és kör paraméterezése}
+\begin{scriptsize}
+\begin{itemize}
+\item $\boldsymbol{p}_i$ és $\boldsymbol{p}_f$ pontokat összekötõ egyenes \textcolor{blue}{szakasz} paraméterezése:\vspace*{-3mm}
+$$\vspace*{-3mm}
+\boldsymbol{p}(s)=\boldsymbol{p}_i+\frac{s}{||\boldsymbol{p}_f-\boldsymbol{p}_i||}(\boldsymbol{p}_f-\boldsymbol{p}_i)
+$$
+\item Kísérõ triéder nem egyértelmû:\vspace*{-3mm}
+$$\vspace*{-3mm}
+\frac{d\boldsymbol{p}}{ds}=\frac{\boldsymbol{p}_f-\boldsymbol{p}_i}{||\boldsymbol{p}_f-\boldsymbol{p}_i||}=\boldsymbol{t}
+$$
+$$\vspace*{-1mm}
+\frac{d^2\boldsymbol{p}}{ds^2}=\boldsymbol{0}\quad\quad\Longrightarrow\quad\quad \boldsymbol{n}=?
+$$
+\item \textcolor{blue}{Kör} paraméterezése a következõ paraméterek alapján
+\begin{itemize}
+\begin{scriptsize}
+\item a tengely irányvektora: \textcolor{red}{$\boldsymbol{r}$}
+\item a tengely egy pontja: \textcolor{zold}{$\boldsymbol{d}$}
+\item a kör egy pontja: \textcolor{magenta}{$\boldsymbol{p}_i$}
+\end{scriptsize}
+\end{itemize}
+\end{itemize}
+\begin{columns}
+\begin{column}{0.6\textwidth}\vspace*{-5mm}
+$$\vspace*{-2mm}
+\begin{array}{rcl}
+\boldsymbol{\delta}&=&\boldsymbol{p}_i-\boldsymbol{d}\\
+\boldsymbol{c}&=&\boldsymbol{d}+(\boldsymbol{\delta}^T\boldsymbol{r})\boldsymbol{r}\\
+\rho&=&||\boldsymbol{p}_i-\boldsymbol{c}||
+\end{array}
+$$
+$$
+\textnormal{a kör paraméterezése }~~\boldsymbol{p}'(s)=\left[\begin{array}{c}\rho\cos(s/\rho)\\ \rho\sin(s/\rho)\\0\end{array}\right]
+$$
+\quad\quad $(\boldsymbol{x},\boldsymbol{y},\boldsymbol{z})$ koordinátarendszerben felírva
+$$
+\boldsymbol{\boldsymbol{p}}(s)=\boldsymbol{c}+\boldsymbol{\boldsymbol{R}}\cdot\boldsymbol{p}'(s),~~ \textnormal{ahol}~~\boldsymbol{\boldsymbol{R}}=[\boldsymbol{x}'~~\boldsymbol{y}'~~\boldsymbol{z}']
+$$
+\end{column}
+\begin{column}{0.4\textwidth}
+\begin{center}\vspace*{-13mm}
+\includegraphics[width=\textwidth]{pictures/kor_param}
+\end{center}
+\end{column}
+\end{columns}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Pozíció}
+\begin{scriptsize}
+\begin{itemize}
+\item Legyen $\boldsymbol{p}=\boldsymbol{f}(s)$ a végszerszámhoz illesztett koorinátarendszer origóga által bejárandó $\Gamma$ útvonal paraméterezése
+\item $\Gamma$ a $\boldsymbol{p}_i$ és a $\boldsymbol{p}_f$ pontokat köti össze, miközben a paraméter $s=0~(t=0)$ és $s=s_f~(t=t_f)$ között változik
+\item $\Gamma$ bejárásának idõbeli lefolyását az $s(t)$ függvény határozza meg (interpolációval meghatározható)
+\item Adott $s(t)$-vel az útvonal bejárásának dinamikája: $\boldsymbol{p}$ sebessége\vspace*{-2mm}
+$$\vspace*{-2mm}
+\boldsymbol{\dot{p}}=\frac{d\boldsymbol{p}}{ds}\frac{ds}{dt}=\dot{s}\boldsymbol{t}
+$$
+\item $p_i$ és $p_f$ pontokat összekötõ szakasz\vspace*{-2mm}
+$$\vspace*{-2mm}
+\begin{array}{rcl}
+\boldsymbol{\dot{p}}&=&\frac{\dot{s}}{||\boldsymbol{p}_f-\boldsymbol{p}_i||}(\boldsymbol{p}_f-\boldsymbol{p}_i)=\dot{s}\boldsymbol{t}\\\\
+\boldsymbol{\ddot{p}}&=&\frac{\ddot{s}}{||\boldsymbol{p}_f-\boldsymbol{p}_i||}(\boldsymbol{p}_f-\boldsymbol{p}_i)=\ddot{s}\boldsymbol{t}
+\end{array}
+$$
+\item Kör esetében a sebesség iránya $\boldsymbol{t}$, a gyorsulás pedig egy $\boldsymbol{n}$ és $\boldsymbol{t}$ irányú komponensbõl áll elõ
+$$\vspace*{-2mm}
+\begin{array}{ccc}
+\boldsymbol{\dot{p}}=\boldsymbol{\boldsymbol{R}}\cdot\left[\begin{array}{c}-\dot{s}\sin(s/\rho)\\ \dot{s}\cos(s/\rho)\\0 \end{array}\right]
+&\quad\quad&
+\boldsymbol{\ddot{p}}=\boldsymbol{\boldsymbol{R}}\cdot\left[\begin{array}{c}-\dot{s}^2\cos(s/\rho)/\rho-\ddot{s}\sin(s/\rho)\\ -\dot{s}^2\sin(s/\rho)/\rho+\ddot{s}\cos(s/\rho)\\0 \end{array}\right]
+\end{array}
+$$
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\begin{frame}
+\frametitle{Orientáció}
+\begin{scriptsize}
+\begin{itemize}
+\item Alapötlet: a végszerszám-koordinátarendszer $\boldsymbol{n},\boldsymbol{s},\boldsymbol{a}$ egységvektorainak lineáris interpolációja:\vspace*{-2mm}
+$$\vspace*{-2mm}
+\boldsymbol{n}(s)=\boldsymbol{n}_i+s\frac{\boldsymbol{n}_f-\boldsymbol{n}_i}{||\boldsymbol{n}_f-\boldsymbol{n}_i||},\quad\quad\boldsymbol{s}(s)=\boldsymbol{s}_i+s\frac{\boldsymbol{s}_f-\boldsymbol{s}_i}{||\boldsymbol{s}_f-\boldsymbol{s}_i||},\quad\quad\boldsymbol{a}(s)=\boldsymbol{a}_i+s\frac{\boldsymbol{a}_f-\boldsymbol{a}_i}{||\boldsymbol{a}_f-\boldsymbol{a}_i||}
+$$
+\item Nem mûködik, mert nem garantált $(\boldsymbol{n}(s),\boldsymbol{s}(s),\boldsymbol{a}(s))$ ortogonalitása minden $s$-re
+\item Helyette Euler szögekkel írjuk le: $\boldsymbol{\phi}=(\varphi,\vartheta,\psi)$
+\item Adott $\boldsymbol{\phi}_i$ kezdeti, és $\boldsymbol{\phi}_f$ végorientáció, valamint $s(t)$ mellett a pozíció (lineáris), sebesség és gyorsulásprofilok:
+$$
+\begin{array}{rcl}
+\boldsymbol{\phi}&=&\boldsymbol{\phi}_i+s\frac{\boldsymbol{\phi}_f-\boldsymbol{\phi}_i}{||\boldsymbol{\phi}_f-\boldsymbol{\phi}_i||}\\
+\boldsymbol{\dot{\phi}}&=&\boldsymbol{\phi}_i+\dot{s}\frac{\boldsymbol{\phi}_f-\boldsymbol{\phi}_i}{||\boldsymbol{\phi}_f-\boldsymbol{\phi}_i||}\\
+\boldsymbol{\ddot{\phi}}&=&\boldsymbol{\phi}_i+\ddot{s}\frac{\boldsymbol{\phi}_f-\boldsymbol{\phi}_i}{||\boldsymbol{\phi}_f-\boldsymbol{\phi}_i||}
+\end{array}
+$$
+\begin{torv} Miután a mûveleti térbeli útvonal és trajektória (azaz $\boldsymbol{p}(s(t))$ és $\boldsymbol{\phi}(s(t))$) megvan, inverz kinematikai algoritmussal határozzuk meg a csuklóváltozók $\boldsymbol{q}(t)$ trajektóriáját
+\end{torv}
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+%
+\subsection{Trajektóriák dinamikus skálázása}
+
+\begin{frame}
+\frametitle{Trajektóriák dinamikus skálázása}
+\begin{scriptsize}
+\begin{itemize}
+\item A megtervezett trajektóriának ki kell elégítenie bizonyos dinamikai feltételeket, hogy azt a robotkar be tudja járni
+\begin{itemize}
+\begin{scriptsize}
+\item a mozgáshoz szükséges $\boldsymbol{\tau}$ nyomatékok nagyobbak, mint amekkorát a motorok képesek leadni
+\item a nem megvalósítható trajektóriát idõben át kell skálázni
+\end{scriptsize}
+\end{itemize}
+\item Adott $\boldsymbol{q}(t)$ csuklóváltozó trajektóriából az \emph{inverz dinamika} segítségével meghatározható  a $\boldsymbol{\tau}(t)$ nyomaték-idõfüggvény
+\item Skálázzuk át a trajektóriát egy $r(t)$ szigorúan monoton függvénnyel, $r(0)=0$ és $r(t_f)=\overline{t}_f$\vspace*{-2mm}
+$$\vspace*{-2mm}
+\begin{array}{rcl}
+\boldsymbol{q}(t)&=&\boldsymbol{\overline{q}}(r(t))\\\\
+\boldsymbol{\dot{q}}(t)&=&\dot{r}\boldsymbol{\overline{q}}'(r)\\\\
+\boldsymbol{\ddot{q}}(t)&=&\dot{r}^2\boldsymbol{\overline{q}}''(r)+\ddot{r}\boldsymbol{\overline{q}}'(r)
+\end{array}\quad\Rightarrow\quad\textnormal{behelyettesíthetõ a dinamikus modellbe}
+$$
+\item Lineáris skálázás esetén $r(t)=c\cdot t$ ~~($c>1$)\vspace*{-2mm}
+$$\vspace*{-2mm}
+\boldsymbol{\tau}(t)=c^2\boldsymbol{\overline{\tau}}(ct)~\quad\Rightarrow\quad\boldsymbol{\overline{\tau}}(ct)=\frac{\boldsymbol{\tau}(t)}{c^2}
+$$
+\item A nyomatékok nagysága $\frac{1}{c^2}$-ed része lett azon az áron, hogy $\overline{t}_f>t_f$
+\end{itemize}
+\end{scriptsize}
+\note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
+\end{frame}
+
+\part{Mobil robotok}
+\lecture{Mobil robotok}{week 3}
+\section{Mobil robotok}
+
+\subsection{Mobilitás}
+\begin{frame}\frametitle{Mobilitás - vonat}
+\begin{center}
+\includegraphics[scale= .4]{pictures/train.jpg}
+\end{center}
+\end{frame}
+%
+\begin{frame}\frametitle{Mobilitás - vonat}
+\begin{itemize}
+\item Konfigurációs tér
+\begin{itemize}
+\item Konfiguráció egy $q$ paraméterrel megadható: vágányon megtett út hossza
+\item Konfigurációs tér $\mathcal{C}\subset\mathbb{R},~q\in\mathcal{C}$
+\item \alert{Egy szabadsági fokú} ($q$ skalár)
+\begin{itemize}
+\item Egy szabadsági fok + egy aktuátor (motor) $\rightarrow$ \textcolor{alert}{teljesen irányított}
+\end{itemize}
+\end{itemize}
+\item Munkatér
+\begin{itemize}
+\item Összes létezõ pozíció-orientáció
+\item Munkatér $\mathcal{T},~\xi\in\mathcal{T}$
+\item Alkalmazásfüggõ
+\begin{itemize}
+\item vágány menti mozgás: $\mathcal{T}\subset\mathbb{R}\quad\rightarrow\quad \textnormal{dim}\,\mathcal{C}=\textnormal{dim}\,\mathcal{T}$
+\item síkbeli mozgás: $\mathcal{T}\subset\mathbb{R}^2\quad\rightarrow\quad \alert{\textnormal{dim}\,\mathcal{C}<\textnormal{dim}\,\mathcal{T}}$
+\item térbeli mozgás: $\mathcal{T}\subset\mathbb{R}^3\quad\rightarrow\quad \alert{\textnormal{dim}\,\mathcal{C}<\textnormal{dim}\,\mathcal{T}}$
+\end{itemize}
+\end{itemize}
+\item Leképezés: $q\mapsto\xi$
+\item Hasonló karakterisztikájú jármûvek: autó, hajó, repülõgép, légpárnás
+\begin{itemize}
+\item Oldalirányú mozgás komplex manõverezés árán
+\end{itemize}
+\end{itemize}
+\note{A két és háromdimenziós esetben a konfigurációs tér dimenziója kisebb, mint a munkatéré, így a vonat nem tud tetszõleges pozíciót, ill. orientációt felvenni.}
+\end{frame}
+%
+\begin{frame}\frametitle{Mobilitás - légpárnás jármû}
+\begin{center}
+\includegraphics[scale= .25]{pictures/hovercraft.jpg}
+\end{center}
+\begin{itemize}
+\item Két propeller párhuzamos tengellyel
+\begin{itemize}
+\item vonóerõk összege: elõre ható erõ
+\item vonóerõk különbsége: függõleges tengely körüli forgatónyomaték
+\end{itemize}
+\item Konfigurációs tér: $\mathcal{C}\subset SE(2)$, azaz $\boldsymbol{q}=(x,y,\theta)\in\mathcal{C}$
+\item Aktuátorok száma < szabadsági fok ($2<3$) $\rightarrow$ alulirányított
+\item Munkatér: $\mathcal{T}\subset SE(2)$, azaz $\mathcal{T}=\mathcal{C}$
+\end{itemize}
+\note{
+\begin{small}The hovercraft has only two actuators, one fewer than it has degrees of freedom, and it is therefore an under-actuated system. This imposes limitations on the way in which it can move. At any point in time we can control the forward (parallel to the thrust vectors) acceleration and the rotational acceleration of the the hovercraft but there is zero sideways (or lateral) acceleration since it does not generate any lateral thrust. Nevertheless with some clever manoeuvring, like with a car, the hovercraft can follow a path that will take it to a place to one side of where it started. The advantage of under-actuation is the reduced number of actuators, in this case two instead of three. The penalty is that the vehicle cannot move directly to an any point in its configuration space, it must follow some path. If we added a third propellor to the hovercraft with its axis normal to the first two then it would be possible to command an arbitrary forward, sideways and rotational acceleration.
+\end{small}}
+\end{frame}
+%
+\begin{frame}\frametitle{Mobilitás - helikopter}
+\begin{center}
+\includegraphics[scale= .35]{pictures/helicopter.jpg}
+\end{center}
+\begin{itemize}
+\item Négy aktuátor
+\begin{itemize}
+\item rotor: vonóerõ vektor nagysága
+\item \textcolor{zold}{menet- és oldalirányú bólintás}: vonóerõ vektor iránya
+\item farokrotor: függõleges tengely körüli forgatónyomaték
+\end{itemize}
+\item Konfigurációs tér: $\mathcal{C}\subset SE(3)$, azaz $\boldsymbol{q}=(x,y,z,\theta_r,\theta_p,\theta_y)\in\mathcal{C}$
+\item Aktuátorok száma < szabadsági fok ($4<6$) $\rightarrow$ alulirányított
+\item Munkatér: $\mathcal{T}\subset SE(3)$, azaz $\mathcal{T}=\mathcal{C}$
+\end{itemize}
+\note{
+\begin{small}
+A helikopter alulirányított rendszer lévén nem tud gyorsulást produkálni a roll és a pitch forgási irányokban, bár ezekre nincs is szükség a helikopter mûködéséhez.\\
+A grevitáció felfogható egy ötödik aktuátorként, ami egy kinstand lefelé ható erõt fejt ki. Ez teszi lehetõvé, hogy a helikopter oldalirányban gyorsuljon a vonóerõ vektor oldalirányú komponensét kihasználva (a függõleges komponensnek a gravitációval vett eredõje zérus). Tehát gravitáció nélkül a helikopter nem tudna oldalra repülni.
+\end{small}}
+\end{frame}
+%
+\begin{frame}\frametitle{Mobilitás - autó}
+\begin{center}
+\includegraphics[scale= .4]{pictures/bmw_m6.jpg}
+\end{center}
+\begin{itemize}
+\item Két aktuátor
+\begin{itemize}
+\item motor: elõre-hátra mozgás
+\item kormány: irányváltoztatás
+\end{itemize}
+\item Konfigurációs tér: $\mathcal{C}\subset SE(2)$, azaz $\boldsymbol{q}=(x,y,\theta)\in\mathcal{C}$
+\item Aktuátorok száma < szabadsági fok ($2<3$) $\rightarrow$ alulirányított
+\item Munkatér: $\mathcal{T}\subset SE(2)$, azaz $\mathcal{T}=\mathcal{C}$
+\end{itemize}
+\note{
+\begin{small}
+Alulirányított jármûvek nem tudnak közvetlenül tetszõleges pontba eljutni a konfigurációs térben, elõfordulhat, hogy valamilyen nemlineáris útvonalat kell bejárniuk.\\ Pl. kocsival nem tudunk oldalirányben haladni, de ismerjük a párhuzamos parkolást. vagy nem tudunk egy helyben megfordulni, de de ismerjük az ipszilonban való megfordulást\dots\\
+A fenti korlátok ellenére az autó az egyik legegyszerûbb és leghatékonyabb módja a síkbeli terepen való mozgásnak.
+\end{small}}
+\end{frame}
+%
+%
+\begin{frame}\frametitle{Példák}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\includemedia[
+width=0.9\textwidth,height=0.675\textwidth, % 16:9
+activate=pageopen,
+flashvars={
+modestbranding=1 % no YT logo in control bar
+&autohide=1 % controlbar autohide
+&showinfo=0 % no title and other info before start
+&rel=0 % no related videos after end
+}
+]{}{http://www.youtube.com/v/IJ2zvSZ80fI}
+\end{column}
+\begin{column}{0.5\textwidth}
+\includemedia[
+width=0.9\textwidth,height=0.675\textwidth, % 16:9
+activate=pageopen,
+flashvars={
+modestbranding=1 % no YT logo in control bar
+&autohide=1 % controlbar autohide
+&showinfo=0 % no title and other info before start
+&rel=0 % no related videos after end
+}
+]{}{http://www.youtube.com/v/IlmKcohyXG0}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}\frametitle{Összefoglalva}
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+ jármû & szabadsági fok & aktuátorok & teljesen irányított? \\
+ \hline\hline
+vonat & 1 & 1 & \textcolor{green!50!black}{\Large\checkmark}\\
+légpárnás & 3 & 2 & \textcolor{red}{\Large $\times$}\\
+helikopter & 6 & $4+g$ & \textcolor{red}{\Large $\times$}\\
+repülõgép & 6 & $4+g$ & \textcolor{red}{\Large $\times$}\\
+6 hajtómûves AUV & 6 & 6 & \textcolor{green!50!black}{\Large\checkmark}\\
+autó & 3 & 2 & \textcolor{red}{\Large $\times$}\\
+ \hline
+\end{tabular}
+\end{center}
+\end{frame}
+%
+\subsection{Autószerû mobil robotok}
+\begin{frame}\frametitle{Autószerû mobil robotok - biciklimodell}
+\begin{center}
+\includegraphics[scale= .45]{pictures/bicycle_model.png}
+\end{center}
+\note{
+Az autó biciklimodellje. Az autó szürke, a bicikli sötét szürke a képen. A jármûhöz rögzített koordinátarendszer piros, a világ-koordinátarendszer kék színû.
+\medskip
+A kormányszök $\gamma$, a hátsó kerék x-irányú sebessége pedig $v$.
+\medskip
+A keréktengelyek meghosszabbításának metszéspontja a Pillanatnyi forgatási középpont (ICR). Az elsõ, ill. hátsó kerék távolsága az ICR-tõl $R_2$ és $R_1$.
+
+{\bf Jármû koordináta rendszer} A jármûveknél elterjedt, hogy az x-tengely mutat a menetirányba (longitudinális, hosszanti mozgás), az y-tengely pedig bal oldalra (oldalirányú, laterális mozgás). A jobbos koordinátarendszer miatt a z-tengely iránya felfelé adódik. Repülés, illetve vízalatti alkalmazásoknál a z-tengely lefelé mutat, az x-tengely pedig elõre.
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Autószerû mobil robotok - biciklimodell}
+\begin{itemize}
+\item Jármûhöz rögzített $\textcolor{red}{\{\boldsymbol{V}\}}$ koordináta rendszer
+\begin{itemize}
+\item x-tengely elõre mutat
+\item Konfigurációs tér $\boldsymbol{q}=(x,y,\theta)\in\mathcal{C}\subset SE(2)$
+\item Oldalirányú sebesség zérus
+$$
+^{V}\dot{x}=v,\quad ^{V}\dot{y}=0
+$$
+\item Szögsebesség
+$$
+\dot{\theta}=\frac{v}{R_1}=\frac{v\tan\gamma}{L}
+$$
+\end{itemize}
+\item Referencia (világ) $\textcolor{blue}{\{\boldsymbol{O}\}}$ koordináta rendszer
+\begin{itemize}
+\item Mozgásegyenletek (kinematikai modell)
+\begin{align*}
+\dot{x}&=v\cos\theta\\
+\dot{y}&=v\sin\theta\\
+\dot{\theta}&=\frac{v}{L}\tan\gamma
+\end{align*}
+%\item Nem holonomikus korlátozás: $\dot{y}\cos\theta-\dot{x}\sin\theta=0$
+\end{itemize}
+\end{itemize}
+\note{
+\begin{scriptsize}
+\begin{itemize}
+\item Kis trigonometriával megkapható (ICR-hátsó kerék-elsõ kerék háromszögbõl), hogy
+$$
+R_1=\frac{L}{\tan\gamma}
+$$
+
+\item Mivel $R_2>R_1$, az elsõ kerék nagyobb utat tesz meg, mint a hátsó, azaz gyorsabban forog.
+Ha egy négykerekû jármû kanyarodik, akkor a két kormányzott kerék különbözõ sugarú körökön halad, azért a $\gamma_L$ és $\gamma_R$ kerékszögeknek kissé különbözniük kell, ezt az Ackermann-féle kormánymechanizmus biztosítja. Másrészt a hajtott kerekeknek különbözõ sebességgel kell forogniuk a külsõ, illetve a belsõ íven, ezt a differenciális hajtómû biztosítja.
+
+\item Azért {\bf kinematikai modell}, mert a jármû sebességét írja le, nem pedig a sebességet létrehozó erõket vagy nyomatékokat. $\dot{\theta}$ a fordulási sebesség (yaw rate), giroszkóppal mérhetõ.
+\item Nem holonomikus, mert nem intergálható ki belõle $x, y, \theta$ közti összefüggés.
+\item Kinematikai modell érdekességei:
+\begin{itemize}
+\item $v=0~~\rightarrow~~\dot{\theta}=0$
+\item $\gamma=\frac{\pi}{2}$ nem tud megmozdulni a jármû
+\end{itemize}
+\end{itemize}
+\end{scriptsize}}
+\end{frame}
+%
+\begin{frame}\frametitle{Biciklimodell - sávváltás}
+\begin{center}
+\includegraphics[scale= .45]{pictures/sl_lanechange.png}
+\end{center}
+\end{frame}
+%
+\begin{frame}\frametitle{Biciklimodell - adott pont elérése}
+\begin{columns}
+\begin{column}{0.45\textwidth}
+\begin{center}
+\includegraphics[scale= .45]{pictures/move_to_point.png}
+\end{center}
+\end{column}
+\begin{column}{0.55\textwidth}
+\begin{itemize}
+\item Cél: adott $(x^*,y^*)$ pont elérése
+\item Arányos (proporcionális) sebességszabályozó
+$$
+v^*=\alert{K_v}\sqrt{(x^*-x)^2+(y^*-y)^2}
+$$
+\item A következõ szög alatt látszik a cél
+$$
+\theta^*=\tan^{-1}\frac{y^*-y}{x^*-x}
+$$
+\item Arányos kormányszög szabályozó
+$$
+\gamma=\alert{K_h}(\theta^*\ominus\theta),~~ K_h>0
+$$
+\end{itemize}
+\end{column}
+\end{columns}
+
+\end{frame}
+%
+\begin{frame}\frametitle{Biciklimodell - vonalkövetés}
+\begin{itemize}
+\item A feladat hasonló, csak a pont egy egyenes ($ax+by+c=0$) mentén mozog\dots
+\end{itemize}
+\begin{columns}
+\begin{column}{0.45\textwidth}
+\begin{center}
+\includegraphics[scale= .45]{pictures/follow_a_line.png}
+\end{center}
+$$
+\theta^*=\tan^{-1}\frac{a}{b}
+$$
+\end{column}
+\begin{column}{0.55\textwidth}
+\begin{itemize}
+\item Az egyenestõl mért távolság\vspace*{-2mm}
+$$\vspace*{-2mm}
+d=\frac{(a,b,c)\cdot (x,y,1)}{\sqrt{a^2+b^2}}
+$$
+\item A távolságot minimalizáló szabályozó\vspace*{-2mm}
+$$\vspace*{-2mm}
+\alpha_d=\alert{K_d}d,~~ K_d>0
+$$
+\item Irány szabályozó\vspace*{-2mm}
+$$\vspace*{-2mm}
+\alpha_h=\alert{K_h}(\theta^*\ominus\theta),~~K_h>0
+$$
+\item Eredõ kormányszög szabályozó\vspace*{-2mm}
+$$
+\gamma=-\alert{K_d}d+\alert{K_h}(\theta^*\ominus\theta)
+$$
+\end{itemize}
+\end{column}
+\end{columns}
+\note{$d$ a követendõ vonaltól mért távolság}
+\end{frame}
+%
+\begin{frame}\frametitle{Biciklimodell - pályakövetés}
+\begin{columns}
+\begin{column}{0.6\textwidth}
+\begin{itemize}
+\item A feladat hasonló, csak a pont egy görbe mentén mozog\dots
+\item Követési hiba
+$$
+e=\sqrt{(x^*-x)^2+(y^*-y)^2}-d^*
+$$
+\item PI (arányos-integráló) sebességszabályozó
+$$
+v^*=\alert{K_v}e+\alert{K_i}\int e\,\textnormal{d}t
+$$
+\item A cél $\theta^*$ szög alatt látszik
+$$
+\theta^*=\tan^{-1}\frac{y^*-y}{x^*-x}
+$$
+\item Arányos kormányszög szabályozó
+$$
+\alpha=\alert{K_h}(\theta^*\ominus\theta),~~ K_h>0
+$$
+\end{itemize}
+\end{column}
+\begin{column}{0.4\textwidth}
+\includegraphics[width=\textwidth]{pictures/drunkbike.jpg}
+\end{column}
+\end{columns}
+\note{$d^*$ a követési távolság\\Az integráló szabályozó miatt nulla $e$ esetén is lesz valamekkora sebesség!}
+\end{frame}
+%
+
+
+%\begin{frame}\frametitle{Biciklimodell - pozíció és orientáció felvétele}
+%\begin{itemize}
+%\item A feladat egy adott pozíció és orientáció $(x^*,y^*,\theta^*)$ felvétele
+%\item Kinematikai modell mátrixos alakban
+%$$
+%\left[\begin{array}{c}\dot{x}\\ \dot{y}\\ \dot{\theta}\end{array}\right]=\left[\begin{array}{cc}\cos\theta&0\\ \sin\theta&0\\0&1 \end{array} \right]\left[\begin{array}{c}v\\ \gamma \end{array}\right]
+%$$
+%\item Változócsere (polár koordináták)
+%\begin{align*}
+%\rho&=\sqrt{\Delta_x^2+\Delta_y^2}\\
+%\alpha&=\tan^{-1}\frac{\Delta_y}{\Delta_x}-\theta\\
+%\beta&=-\theta-\alpha
+%\end{align*}
+%\item Mátrixos alakban
+%$$
+%\left[\begin{array}{c}\dot{\rho}\\ \dot{\alpha}\\ \dot{\beta}\end{array}\right]=\left[\begin{array}{cc}-\cos\alpha &0\\ \frac{\sin\alpha}{\rho}&-1\\ -\frac{\sin\alpha}{\rho}&0\end{array}\right]\left[\begin{array}{c}v\\ \gamma\end{array}\right],\quad\alpha\in\left(-\frac{\pi}{2},\frac{\pi}{2}\right]
+%$$
+%\end{itemize}
+%\end{frame}
+%%
+%\begin{frame}\frametitle{Biciklimodell - pozíció és orientáció felvétele}
+%\begin{center}
+%\includegraphics[scale= .45]{pictures/bicycle_polar.png}
+%\end{center}
+%\end{frame}
+%%
+%\begin{frame}\frametitle{Biciklimodell - pozíció és orientáció felvétele}
+%\begin{columns}
+%\begin{column}{0.4\textwidth}
+%\begin{center}
+%\includegraphics[scale= .45]{pictures/follow_a_pose.png}
+%\end{center}
+%\end{column}
+%\begin{column}{0.6\textwidth}
+%\begin{itemize}
+%\item Feltétel, hogy a cél $\textcolor{blue}{\{G\}}$ a jármû elõtt van
+%\item Szabályozó (regulátor)
+%\begin{align*}
+%v&=\alert{K_{\rho}}\rho\\
+%\gamma&=\alert{K_{\alpha}}\alpha+\alert{K_{\beta}}\beta
+%\end{align*}
+%$(\rho,\alpha,\beta)\rightarrow(0,0,0)$ (origóba vezeti a robotot)
+%\end{itemize}
+%\end{column}
+%\end{columns}
+%\begin{itemize}
+%\item \emph{Stabilitás} feltétele: $K_{\rho}>0,\quad K_{\beta}<0,\quad K_{\alpha}>K_{\rho}$
+%\item Tetszõleges $(x^*,y^*,\theta^*)$ pozíció és orientáció esetén \alert{változócsere}\vspace*{-2mm}
+%$$
+%x'=x-x^*,~~y'=y-y^*,~~\theta'=\theta,~~\beta'=\beta+\theta^*
+%$$
+%\end{itemize}
+%\note{A szabályozó mûkõdésének a lényege, hogy a $\alert{K_{\rho}}\rho$ és a $\alert{K_{\alpha}}\alpha$ tagok végigvezetik a robotot $\{G\}$-hez húzott vonal mentén, a $\alert{K_{\beta}}\beta$ tag pedig "elforgatja" ezt a vonalat, hogy az orientáció is megfelelõ legyen.
+%\bigskip
+%
+%A zárt rendszer:
+%$$
+%\left[\begin{array}{c}\dot{\rho}\\ \dot{\alpha}\\ \dot{\beta}\end{array}\right]=\left[\begin{array}{c}-K_{\rho}\cos\alpha\\ K_{\rho}\sin\alpha-K_{\alpha}-K_{\beta}\beta\\ -K_{\rho}\sin\alpha\end{array}\right]
+%$$
+%\bigskip
+%
+%A céltól mért $(\rho,\alpha)$ távolság és irány mérhetõ egy kamerával, vagy lézeres távolságmérõvel. A $\beta$ szög pedig számolható $\alpha$-ból és az iránytûvel mérhetõ $\theta$-ból.
+%\bigskip
+%
+%Abban az esetben, ha a cél a robot mögött van, azaz $\alpha\notin\left(-\frac{\pi}{2},\frac{\pi}{2}\right]$, a robot tolaoni fog, meg kell fordítani $v$ és $\gamma$ elõjelét a szabályozóban. \\ $v$ elõjele állandó, és $\alpha$ kezdeti értékétõl függ.
+%}
+%\end{frame}
+%
+\subsection{Repülõ robotok}
+\begin{frame}\frametitle{Repülõ robotok}
+\begin{center}
+\includegraphics[scale= .45]{pictures/flying_robots.png}
+\end{center}
+\note{
+\begin{itemize}
+\item[a] Global Hawk pilótanélküli légi jármû unmanned aerial vehicle (UAV)\\ - NASA
+\item[b] a micro air vehicle (MAV)
+\item[c] a 1 gramm tömegû co-axial helikopter 70 mm rotor átmérõvel
+\item[d] X4 kvadrokopter négy rotorral érzékelõ/irányító elektronikával a közepén
+\end{itemize}
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Példák}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\includemedia[
+width=0.9\textwidth,height=0.675\textwidth, % 16:9
+activate=pageopen,
+flashvars={
+modestbranding=1 % no YT logo in control bar
+&autohide=1 % controlbar autohide
+&showinfo=0 % no title and other info before start
+&rel=0 % no related videos after end
+}
+]{}{http://www.youtube.com/v/gyty_kb0Peg}
+\end{column}
+\begin{column}{0.5\textwidth}
+\includemedia[
+width=0.9\textwidth,height=0.675\textwidth, % 16:9
+activate=pageopen,
+flashvars={
+modestbranding=1 % no YT logo in control bar
+&autohide=1 % controlbar autohide
+&showinfo=0 % no title and other info before start
+&rel=0 % no related videos after end
+}
+]{}{http://www.youtube.com/v/w2itwFJCgFQ}
+\end{column}
+\end{columns}
+\end{frame}
+%
+\begin{frame}\frametitle{Repülõ robotok}
+\begin{itemize}
+\item Alapvetõ típusok
+\begin{itemize}
+\item Merevszárnyú
+\item Rotoros
+\begin{itemize}
+\item Helikopter
+\item Koaxiális
+\item Tandem
+\item Twin
+\item Kvadro-, oktokopter
+\end{itemize}
+\end{itemize}
+\item Fõ különbségek a szárazföldi robotokkal szemben
+\begin{itemize}
+\item 6 szabadsági fok $\boldsymbol{q}\in SE(3)$
+\item Mozgási modellben a sebességek helyett \alert{erõk és nyomatékok}
+\end{itemize}
+\item Víz alatti robotok hasonlóak
+\end{itemize}
+\note{A merevszárnyú megoldásnál a szárny biztosítja a felhajtóerõt,  a propeller, vagy hajtómû adja a tolóerõt, illetve a vezérsíkokkal lehet manõverezni.
+\bigskip
+
+A hagyományos helikopterek bonyolult kardánkereszt-mechanizmuson keresztül képesek a manõverezésre.
+\bigskip
+
+A víz alatti robotok a víz alatt "repülnek".}
+\end{frame}
+%
+\begin{frame}\frametitle{Kvadrokopter}
+\begin{columns}
+\begin{column}{0.45\textwidth}
+\begin{center}
+\includegraphics[scale= .45]{pictures/quadrocopter.png}
+\end{center}
+\end{column}
+\begin{column}{0.55\textwidth}
+\begin{itemize}
+\item Robothoz rögzített $\textcolor{red}{\{B\}}$ koordinátarendszer
+\item Rotorok hajtása villanymotorokkal
+\item Egy rotor tolóereje
+$$
+T_i=b\omega_i^2,~~i=1,2,3,4,~~b>0
+$$
+\end{itemize}
+\end{column}
+\end{columns}
+\begin{itemize}
+\item Egyenes vonalú mozgás a referencia koordinátarendszerben
+\begin{itemize}
+\item  Newton második törvényébõl:
+$$
+m\dot{\boldsymbol{v}}=\left[\begin{array}{c}0\\0\\mg\end{array}\right]-{^{0}\boldsymbol{R}_{B}}\left[\begin{array}{c}0\\0\\T\end{array}\right],\quad T=\sum_iT_i
+$$
+\end{itemize}
+\end{itemize}
+\note{Robothoz rögzített $\textcolor{red}{\{B\}}$ koordinátarendszerben a z tengely lefelé mutat, ez a repülésben használt konvenció.
+\bigskip
+
+$b>0$ emelési konstans, függ a levegõ sûrûségétõl, rotorlapáok számától, azok geometriájától, stb. $\omega_i$ az egyes rotorok forgási sebessége.
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Kvadrokopter}
+\begin{itemize}
+\item Szemközti rotorok sebességkülönbsége forgatónyomatékot ébreszt
+\begin{itemize}
+\item $x$-tengely körül (roll)\vspace*{-1mm}
+$$\vspace*{-1mm}
+\tau_x=dT_4-dT_2
+$$
+rotorsebességgek kifejezve\vspace*{-1mm}
+$$\vspace*{-1mm}
+\tau_x=db(\omega_4^2-\omega_2^2)
+$$
+\item $y$-tengely körül (pitch)\vspace*{-1mm}
+$$\vspace*{-1mm}
+\tau_y=db(\omega_1^2-\omega_3^2)
+$$
+\end{itemize}
+\end{itemize}
+\begin{columns}
+\begin{column}{0.45\textwidth}
+\begin{center}
+\includegraphics[scale= .45]{pictures/quadrocopter.png}
+\end{center}
+\end{column}
+\begin{column}{0.55\textwidth}
+\begin{itemize}
+\item Rotorokra ható légellenállás\vspace*{-2mm}
+$$\vspace*{-2mm}
+Q_i=k\omega_i^2
+$$
+\item A belõle fakadó eredõ ($z$-tengely körüli) forgatónyomaték\vspace*{-2mm}
+\begin{align*}
+\tau_z&=Q_1-Q_2+Q_3-Q_4\\
+&=k(\omega_1^2+\omega_3^2-\omega_2^2-\omega_4^2)
+\end{align*}
+\end{itemize}
+\end{column}
+\end{columns}
+\note{
+$k$ ugyanazoktól a tényezõktõl függ, mint $b$. A légellenállás a rotorlapátokra a motorok által kifejtett forgatónyomatékkal ellentétes irányú, így a forgásiránnyal ellentétes irányban forgatná el a teljes jármûvet!
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Kvadrokopter mozgásegyenletei}
+\begin{itemize}
+\item A kvadrokopter szöggyorsulás Euler mozgásegyenleteibõl
+$$
+\boldsymbol{J}\dot{\omega}=-\omega\times\boldsymbol{J}\omega+\boldsymbol{\Gamma}
+$$
+\item Erõk és nyomatékok a rotorsebességek függvényében
+$$
+\left[\begin{array}{c}T\\ \boldsymbol{\Gamma}\end{array}\right]=\left[\begin{array}{cccc}-b & -b & -b & -b\\ 0 & -db & 0 & db\\db & 0 & -db & 0 \\k & -k & k & -k\end{array}\right]\left[\begin{array}{c}\omega_1^2\\ \omega_2^2 \\ \omega_3^2\\ \omega_4^2\end{array}\right]=\boldsymbol{A}\left[\begin{array}{c}\omega_1^2\\ \omega_2^2 \\ \omega_3^2\\ \omega_4^2\end{array}\right]
+$$
+\item Ha $b,k,d>0$, akkor $\boldsymbol{A}$ teljes rangú, azaz invertálható
+$$
+\left[\begin{array}{c}\omega_1^2\\ \omega_2^2 \\ \omega_3^2\\ \omega_4^2\end{array}\right]=\boldsymbol{A}^{-1}\left[\begin{array}{c}T\\ \tau_x \\ \tau_y\\ \tau_z\end{array}\right]
+$$
+\end{itemize}
+\end{frame}
+%
+\begin{frame}\frametitle{Kvadrokopter irányítása}
+\begin{itemize}
+\item Több szabályozókör
+\begin{itemize}
+\item Dõlés szabályozó
+$$
+\tau_y=\textcolor{red}{K_p}(\theta^*_p-\theta_p)+\textcolor{red}{K_d}(\dot{\theta}^*_p-\dot{\theta}_p)
+$$
+\item Pozíció szabályozó ($x$-irányú kitérés)
+\begin{itemize}
+\item $x$-irányú döntésbõl származó erõ
+$$
+\boldsymbol{f}=\boldsymbol{R}_y(\theta_p)\left[\begin{array}{c}0\\0\\T\end{array}\right]=\left[\begin{array}{c}T\,\sin(\theta_p)\\0\\T\,\cos(\theta_p)\end{array}\right]\quad\rightarrow\quad \boldsymbol{f}_x\approx T\,\theta_p
+$$
+\item Ezt szabályozhatjuk: $\{V\}$ $x-y$ síkja a világkoordinátarendszerrel párhuzamos
+$$
+\boldsymbol{f}_x=m\textcolor{red}{K_f}({}^{V}\boldsymbol{v}_x^*-{}^{V}\boldsymbol{v}_x),\quad\textnormal{azaz}\quad \theta_p^*=\frac{m}{T}\textcolor{red}{K_f}({}^{V}\boldsymbol{v}_x^*-{}^{V}\boldsymbol{v}_x)
+$$
+\item A kívánt és az aktuális pozícióból határozzuk meg a sebesség referenciát
+$$
+\boldsymbol{v}^*=\textcolor{red}{K_p}(\boldsymbol{p^*}-\boldsymbol{p})
+$$
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\note{
+\begin{itemize}
+\item Több szabályozókör
+\begin{itemize}
+\item Dõlés szabályozó
+$$
+\tau_y=\textcolor{red}{K_p}(\theta^*_p-\theta_p)+\textcolor{red}{K_d}(\dot{\theta}^*_p-\dot{\theta}_p)
+$$
+Az aktuális $\theta_p$-t az IMU adja meg
+\item Pozíció szabályozó - $x$-irányú elmozdulást vizsgálva döntsük meg a kvadrokoptert $x$-iráynban!
+A sebességet az IMU, vagy egy GPS vevõ adja. Föggõleges egyensúlban $\frac{m}{T}=\frac{1}{g}$
+\end{itemize}
+\end{itemize}
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Kvadrokopter irányítása}
+\begin{itemize}
+\item Pozíció szabályozó ($x$-irányú kitérés)
+\begin{itemize}
+\item Sebesség referencia a $\{V\}$ koordinátarendszerben
+$$
+{}^{V}\boldsymbol{v}={}^{V}\boldsymbol{R}_0(\theta_y)\boldsymbol{v}={}^{0}\boldsymbol{R}^T_V(\theta_y)\boldsymbol{v},\quad\textnormal{azaz}\quad\left[\begin{array}{c}{}^{V}v_x\\{}^{V}v_y\end{array}\right]={}^{0}\boldsymbol{R}^T_V(\theta_y)\left[\begin{array}{c}v_x\\v_y\end{array}\right]
+$$
+\item Dõlés ($x$-irányú)referencia
+$$
+\theta_p^*=\textcolor{red}{K_1}({}^{V}p^*_x-{}^{V}p_x-\textcolor{red}{K_2}{}^{V}v_x)
+$$
+\end{itemize}
+\item Magasságszabályozó
+$$
+T=\textcolor{red}{K_p}(z^*-z)+\textcolor{red}{K_d}(\dot{z}^*-\dot{z})+\omega_0
+$$
+$\omega_0=\sqrt{\frac{mg}{4b}}$ súlykompenzáció
+\end{itemize}
+\note{
+\begin{itemize}
+\item Több szabályozókör
+
+\end{itemize}
+}
+\end{frame}
+%
+\subsection{Összefoglalás}
+\begin{frame}\frametitle{Összefoglalás}
+\begin{itemize}
+\item Mobilitás
+\item Konfigurációs tér
+\item Munkatér
+\item Szárazföldi robotok
+\begin{itemize}
+\item kinematikai modell
+\item különbözõ szabályozók a különbözõ feladatokra
+\end{itemize}
+\item Repülõ robotok
+\begin{itemize}
+\item kvadrokopter
+\item Többhurkú szabályozórendszer
+\end{itemize}
+\end{itemize}
+\end{frame}
+%
+
+\lecture{Navigáció}{week 4}
+\section{Navigáció}
+%
+\begin{frame}\frametitle{Navigáció}
+\begin{itemize}
+\item \emph{"Az a folyamat, melynek során egy adott jármûvet a kívánt célba irányítunk." (172-1983 IEEE szabvány)}
+\item Típusai
+\begin{itemize}
+\item Reaktív navigáció (vonalkövetés, véletlen bejárás, \dots)
+\item Térkép alapú navigáció (az aktuális pozíció mindig ismert)
+\end{itemize}
+\end{itemize}
+\begin{center}
+\includegraphics[scale= .45]{pictures/roomba.png}
+\end{center}
+\note{Reaktív pl, ha úgy jutunk ki egy labirintusból, ha a falat követjük.}
+\end{frame}
+
+
+\subsection{Reaktív navigáció}
+\begin{frame}\frametitle{Reaktív navigáció}
+\begin{itemize}
+\item A robot nem tudja, hol van
+\item Így is komplex feladatok oldhatók meg
+\begin{itemize}
+\item Roomba
+\item hangya, méh, egysejtûek
+\end{itemize}
+\end{itemize}
+\begin{definition}[Robot]
+Célorientált gép, ami érzékel és cselekszik (de nem tervez!)
+\end{definition}
+\begin{itemize}
+\item Braitenberg jármû
+\item Egyszerû automata
+\end{itemize}
+\end{frame}
+%
+\begin{frame}\frametitle{Braitenberg jármûvek}
+\begin{itemize}
+\item Direkt kapcsolat a szenzorok és a motorok között
+\item Semmiféle belsõ reprezentációja nincs a környezetérõl, nem tervez
+\item Pl. biciklimodell
+\begin{itemize}
+\item egy skalárértékû mezõ (fény, hõmérséklet, pH)
+\item a jármû jobb és bal oldalán két szenzor ($s_R$ és $s_L$, ahol $s_{R,L}(x,y)\in[0,1]$)
+\end{itemize}
+\end{itemize}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[scale= .45]{pictures/braitenberg_path.png}
+\end{center}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+\item Jármûsebesség $v=2-s_R-s_L$,
+\item Kormányszög $\gamma=k(s_R-s_L)$\bigskip
+\item Szenzor-beavatkozó szabályozó egy specifikus viselkedésre
+\item Több viselkedésmintázat $\rightarrow$ \alert{viselkedés alapú robotika}
+\end{itemize}
+\end{column}
+\end{columns}
+\note{Ha $s_{R-L}(x,y)=1$, akkor elértük a célt
+\bigskip
+
+A viselkedés alapú megközelítéssel komplex, intelligensnnek tûnõ viselkedés is létrehozható, de a viselkedési mintázatok számával gyorsan elbonyolódik a dolog.
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Egyszerû automata (bogár)}
+\begin{itemize}
+\item Célkeresés akadályok jelenlétében
+\item Szenzorokat és a motorokat állapotgép köti össze
+\begin{itemize}
+\item Van memóriája
+\end{itemize}
+\item Többféle algoritmus létezik
+\end{itemize}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[scale= .45]{pictures/bug_path.png}
+\end{center}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+\item A célhoz húzott képzeletbeli vonal mentén mozog
+\item Akadályt pozitív irányban kerüli ki
+\end{itemize}
+\end{column}
+\end{columns}
+\note{
+\begin{itemize}
+\item Foglaltsági háló alapú a térkép, majd késõbb lesz szó róla.
+\item Feltétel, hogy a robot nem rendelkezik nem holonomikus korlátozással (tetszõleges szomszédos cellábe át tud menni)
+\item Meg tudja határozni a pozícióját a síkon (nem triviális)
+\end{itemize}
+
+\bigskip
+Természetesen egy csomó szempontból nem optimális az út, de ez a térképhasználat hiányának átka. A robotnak nincs "rálátása" a környezetre.
+}
+\end{frame}
+%
+\subsection{Térkép alapú navigáció}
+\begin{frame}\frametitle{Térkép alapú navigáció}
+\begin{itemize}
+\item \alert{Legjobb} út megtalálása $A$ és $B$ között $\rightarrow$ térkép használata
+\item Robot = célorientált gép, ami érzékel, \alert{tervez,} és cselekszik
+\item Térkép és pozíció többféle módon reprezentálható
+\begin{itemize}
+\item Síkgeometria alapú reprezentáció\\
+Pozíció: $(x,y)\in\mathbb{R}^2$\\
+Akadályok: síkidomok (csúcspontokat tároljuk)
+\item \alert{Foglaltsági háló} (occupancy grid)\\
+Mátrix reprezentáció, mátrix elemek = cellák\\
+Feltételezések
+\begin{itemize}
+\item a robot egy cellát foglal el
+\item a robot tetszõleges szomszédos cellába átmehet (nincsenek nemholonomikus korlátozások)
+\item képes meghatározni a pozícióját a síkban
+\item a térkép alapján meg tudja tervezni az útját
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\begin{center}
+\includegraphics[scale= .35]{pictures/occgrid.png}
+\end{center}
+\note{
+Általában a \emph{legjobb} a \emph{legrövidebb}et jelenti, de lehet, hogy a legrövidebb út nehezebben járható és a hoszab úton hamarabb odaérünk.\\
+Egy komolyabb tervezõalgoritmus a jármû kinematikai és dinamikus tulajdonságait is figyelembe veszi (pl. kiküszöböl olyan útvonalakat, amiben élesebb kanyarok vannak, mint amit a jármû be tud venni\dots)
+
+\bigskip
+
+A síkgeometrián alapuló térkép használata során folyamatosan koordinátageometriai feladatokat kell megoldani, illetve a csúcsok koordinátáit kell tárolni.
+
+\bigskip
+
+A foglaltsági háló gyakorlatilag egy mátrix (számítógépen jól kezelhetõ). Az egyszerûbb esetben bináris cellák (0 = üres, 1 = foglalt), de lehet bonyolítani, és valószínûségeket rendelni a cella foglaltságához $p\in[0,1]$.\\
+A kifeszített terület méretével nõ a memóriaigény, a cellák méretével pedig csökken.
+
+\bigskip
+
+A továbbiakban a foglaltsági háló alapú reprezentációt használjuk
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Távolság transzformáció}
+\begin{itemize}
+\item Egyetlen nem nulla elem reprezentálja a célt
+$$
+\left[\begin{array}{ccccc}0&0&0&0&0\\0&0&0&0&0\\0&0&\alert{\otimes}&0&0\\0&0&0&0&0\end{array}\right]
+$$
+\item Transzformált mátrix: az elemek értéke a céltól mért \alert{távolság}
+$$
+\left[\begin{array}{ccccc}2\sqrt{2}&\sqrt{5}&2&\sqrt{5}&2\sqrt{2}\\ \sqrt{5}&\sqrt{2}&1&\sqrt{2}&\sqrt{5}\\2&1&\alert{0}&1&2\\ \sqrt{5}&\sqrt{2}&1&\sqrt{2}&\sqrt{5}\end{array}\right]_{\textnormal{Euklidesz}}\quad \left[\begin{array}{ccccc}4&3&2&3&4\\3&2&1&2&3\\2&1&\alert{0}&1&2\\3&2&1&2&3\end{array}\right]_{\textnormal{Manhattan}}
+$$
+\item Navigáció: minimumkeresés a térképen (transzformációs mátrix)
+\end{itemize}
+\note{A távolság transzdormáció a képfeldolgozásban is használatos.}
+\end{frame}
+%
+%
+\begin{frame}\frametitle{Távolság transzformáció}
+\begin{itemize}
+\item A valóságban akadályok is lehetnek
+$$
+\left[\begin{array}{ccccc}0&0&0&0&0\\0&\alert{\blacksquare} &0&0&0\\0&0&\textcolor{blue}{\otimes}&0&0\\0&0&0&0&0\end{array}\right]
+$$
+\item Transzformált mátrix: az elemek értéke a céltól mért távolság az \alert{akadályt kikerülve}
+$$\hspace*{-7mm}
+\left[\begin{array}{ccccc}\alert{2+\sqrt{2}}&\alert{1+\sqrt{2}}&2&\sqrt{5}&2\sqrt{2}\\ \alert{1+\sqrt{2}}&\sqrt{2}&1&\sqrt{2}&\sqrt{5}\\2&1&\textcolor{blue}{0}&1&2\\ \sqrt{5}&\sqrt{2}&1&\sqrt{2}&\sqrt{5}\end{array}\right]_{\textnormal{Euklidesz}}\quad \left[\begin{array}{ccccc}4&3&2&3&4\\3&2&1&2&3\\2&1&\textcolor{blue}{0}&1&2\\3&2&1&2&3\end{array}\right]_{\textnormal{Manhattan}}
+$$
+\item Navigáció: minimumkeresés a térképen (transzformációs mátrix)
+\end{itemize}
+\end{frame}
+%
+\begin{frame}\frametitle{Távolság transzformáció}
+\begin{center}
+\includegraphics[scale= .4]{pictures/distance_transform_joint.png}
+\end{center}
+\end{frame}
+%
+\begin{frame}\frametitle{D$^{*}$ algoritmus}
+\begin{itemize}
+\item Az A$^{*}$ algoritmus kiterjesztése
+\item Távolság helyett \alert{költség}et minimalizál
+\begin{itemize}
+\item Foglaltsági háló egy költségtérkép $c\in\mathbb{R},~c>0$ költségekkel
+\item Költség: idõ, távolság, kényelem, táj szépsége,\dots
+\end{itemize}
+\item Inkrementális újratervezés
+\begin{itemize}
+\item Menet közben újratervezhetõ az útvonal
+\item Menet közben változtatható a költségtérkép
+\end{itemize}
+\end{itemize}
+\begin{center}
+\includegraphics[scale= .45]{pictures/d_star.png}
+\end{center}
+\note{Az A$^{*}$ algoritmus a gráfelméletben használatos, minimális költségû utak keresésére gráfokon.}
+\end{frame}
+%
+\begin{frame}\frametitle{Voronoj úthálózat módszer}
+\begin{itemize}
+\item A navigáció kétfázisú folyamat
+\begin{description}
+\item[Tervezési fázis:] a térkép készítése
+\item[Lekérdezési fázis:] a térkép alapján az út megtervezése
+\end{description}
+\item Távolság transzformáció, D$^{*}$
+\begin{itemize}
+\item tervezési fázis számításigényes
+\item lekérdezési fázis nagyon egyszerû
+\item ha változik a cél, a tervezési fázist ismételni kell
+\end{itemize}
+\item Szkeletonizációs módszereknél megoszlik a bonyolultság
+\begin{itemize}
+\item tervezés: szkeleton (Voronoj-gráf) létrehozása
+\item lekérdezés: a Voronoj-gráfon útvonaltervezés
+\end{itemize}
+\end{itemize}
+\note{
+Jó hasonlat a vonatozás: elõször eljutunk a legközelebbi vasútállomásra, elvonatozunk a célhoz legközelebb levõ állomásra, és onnét megyünk a célig. A vasúthálózat változatlan, és az útvonaltervezés könnyen megy benne. A kiindulóponttól a vasútállomásig, illetve a vasútállomstól a célig viszonylag rövid utat kell megtenni, így annak a megtervezése nem bonyolult. A robot navigáció gyakorlatilag annyi, hogy egy akadálymentes úthálózatot tervezzünk a kérdéses környezetben, ami a vasúthálózat szerepét fogja játszani. nagy elõnye, hogy egyszer kell megtervezni.}
+\end{frame}
+%
+\begin{frame}\frametitle{Voronoj diagram}
+\begin{center}
+\includegraphics[scale= .35]{pictures/coloured_voronoi.png}
+\end{center}
+\end{frame}
+%
+\begin{frame}\frametitle{Voronoj úthálózat módszer}
+\begin{center}
+\includegraphics[scale= .43]{pictures/voronoi_roadmap.png}
+\end{center}
+\note{
+Voronoj úthálózat létrehozásának lépései (szkeletonizációs módszer)
+\begin{itemize}
+\item[a)] A szabad teret fehér cellák jelölik
+\item[b)] A szabad tér szkeletonja (\alert{Voronoj-gráf}) egymás melletti szabad cellák hálózata,\\ ami nem szélesebb, mint egy cella, és \alert{egyenlõ távolságra van}\\ az akadályok szélétõl
+\item[c)] A szabad tér szkeletonja a foglalt térrel (piros)\\ és az elágazási pontokkal (kék)
+\item[d)] Távolság transzformáció, ahol az egyes cella értéke\\ a legközelebbi akadálytól való távolsággal egyezik meg\\ hasonló eredményre vezet
+\end{itemize}
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Valószínûségi úthálózat módszer}
+\begin{itemize}
+\item Probléma a szkeletonizációs módszerekkel
+\begin{itemize}
+\item nagy számításigény
+\item nagy térképek esetén nem használható
+\end{itemize}
+\item Megoldás - \alert{valószínûszégi úthálózat módszer} (PRM)
+\begin{description}
+\item[Tervezési fázis:]
+\begin{itemize}
+\item \alert{véletlenszerûen} felveszünk $N$ pontot a térképen
+\item mindegyiket összekötjük a legközelebbi szomszédjával
+\end{itemize}
+\item[Lekérdezési fázis:]
+\begin{itemize}
+\item útvonal tervezése a starttól a legközelebbi pontig
+\item mozgás a gráfon
+\item útvonaltervezés a célig
+\end{itemize}
+\end{description}
+\item Hátrányok
+\begin{itemize}
+\item A megtalált út \alert{szuboptimális}
+\item A tervezõ minden futásakor új pontok jönnek létre
+\item Elõfordulhat, hogy az úthálózat \alert{nem összefüggõ gráf}
+\item Hosszú keskeny átjárók kihasználása nem valószínû
+\end{itemize}
+\end{itemize}
+\end{frame}
+%
+\begin{frame}\frametitle{Valószínûségi úthálózat módszer}
+\begin{center}
+\includegraphics[scale= .44]{pictures/prm_1.png}\includegraphics[scale= .44]{pictures/prm_2.png}
+\end{center}\vspace*{-5mm}
+\begin{center}
+\includegraphics[scale= .44]{pictures/prm_3.png}
+\end{center}
+\end{frame}
+%
+\begin{frame}\frametitle{Rapidly-exploring Random Tree (RRT)}
+\begin{itemize}
+\item Mi van, ha a robot nem képes omnidirekcionális mozgásra (pl. bicikli)?
+\end{itemize}
+\begin{center}
+\includegraphics[scale= .44]{pictures/RRT.png}
+\end{center}\vspace*{-5mm}
+\begin{itemize}
+\item Biciklimodell lehetséges útvonalai
+\begin{itemize}
+\item Diszkrét felbontás ($v=\pm 1\,\frac{\textrm{m}}{\textrm{s}}$, $\alpha\in[-1,1]$, $t=2\,\textrm{s}$)
+\end{itemize}
+\end{itemize}
+
+\note{
+Az ábrán a korábban megismert biciklimodell 22 lehetséges útvonalát láthatjuk, a kiindulópont
+$(0,0,0)$, $v=\pm1$, $\alpha\in[-1, 1]$, az idõtartam $2$\,s. A piros vonalal $v<0$-t jelentik.
+
+\bigskip
+
+A 22 lehetséges pozíció mindegyikébõl újabb 22 pozíció érhetõ el, stb\dots Hasonlóan épül fel, minta az úthálózat módszerek, de a lehetséges pozíciók számának exponenciális növekedése miatt nehezen kezelhetõ.
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Rapidly-exploring Random Tree (RRT)}
+\begin{itemize}
+\item Térkép: gráf, csomópontjai a robot lehetséges $\xi=(x,y,\theta)$ konfigurációi
+\end{itemize}
+\begin{block}{Algoritmus}
+\begin{enumerate}
+\item Az elsõ csomópont a kiinduló konfiguráció $(0,0,0)$
+\item Egy $\xi_{\textrm{véletlen}}$ véletlen konfiguráció választása
+\item $\xi_{\textrm{véletlen}}$-hez legközelebbi $\xi_{\textrm{szomszéd}}$ csúcs kiválasztása a térképben
+\item Vezérlés meghatározása, ami $\xi_{\textrm{szomszéd}}$-ból $\xi_{\textrm{véletlen}}$ felé vezeti a robotot adott ideig. $\xi_{\textrm{új}}$ az új konfiguráció, amibe elért.
+\item $\xi_{\textrm{új}}$ hozzáadása a gráfhoz, ugrás a 2. pontra
+\end{enumerate}
+\textcolor{blue}{Akadályok kezelése}
+\begin{itemize}
+\item $\xi_{\textrm{véletlen}}$-ot eldobjuk, ha akadályban helyezkedik el
+\item $\xi_{\textrm{szomszéd}}$-t nem adjuk a gráfhoz, ha az oda vezetõ út akadályon halad keresztül
+\end{itemize}
+\end{block}
+\note{
+Az RRT algoritmus egy fontos lépése, hogy kiszámítja a vezérlést, ami a $\xi_{\textrm{new}}$ konfigurációba viszi a robotot. Korábbiakból tudjuk, hogy ez nem egyszerû, mivel egy nem holonomikus jármûvet kell vezérelniegy adott konfigurációba. A bonyolult nemlineáris szabályozási feladat megoldása helyett egy véletlenszerû kereséssel oldjuk meg a problémát (ez jobban illeszkedik a tervezõ véletlen viselkedéséhez is).
+
+\bigskip
+
+Véletlenszerûen választhaladási irányt és kormányszöget, az adott ideig szimulálja a biciklimodellt, és kiszámolja az elért konfiguráció és $\xi_{\textrm{rand}}$ távolságát, a legjobbat választja ki.
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Rapidly-exploring Random Tree (RRT)}
+\begin{center}
+\includegraphics[scale= .44]{pictures/RRT_tree.png}
+\end{center}
+\note{Látható a gráfon, hogy jól kitölti a konfigurációs teret (az odientációs diemnziót is!)}
+\end{frame}
+%
+\begin{frame}\frametitle{Rapidly-exploring Random Tree (RRT)}
+\begin{example}{Oldalirányú elmozdulás biciklivel}
+\begin{itemize}
+\item Feladat: elmozdulás oldalirányba $2\,\textrm{m}$-t
+\end{itemize}
+\begin{center}
+\includegraphics[scale= .44]{pictures/RRT_parallel.png}
+\end{center}
+\end{example}
+\note{
+Az ábrán a kapott folytonos út  látható, amin végig tudmenni a bicikli.
+
+\bigskip
+
+A kezdeti szög $0\,\textrm{rad}$, ami az $x$-tengely irányát jelenti, azaz a biciklivel tolatva haladunk a cél felé.
+Látható, hogy a mozgás nem a célban, hanem az ahhoz legközelebb levõ gráf csúcsban ér véget.
+Ezen a pontatlanságon úgy lehet javítani, hogy sûrûbb felbontását vesszük a konfigurációs térnek.}
+\end{frame}
+%
+\subsection{Összefoglalás}
+\begin{frame}\frametitle{Összefoglalás}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+\item Navigáció: a robot eljuttatása a célba
+\item Egyszerûbb módszerek
+\begin{itemize}
+\item Braitenberg jármûvek
+\item Állapotgép alapú algoritmusok
+\end{itemize}
+\item Térkép alapú módszerek
+\begin{itemize}
+\item Távolság transzformáció
+\item D$^*$
+\item Valószínûségi úthálózat
+\item RRT
+\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/roadmap3.jpg}
+\end{center}
+\end{column}
+\end{columns}
+\note{
+Különbözõ megközelítéseket vizsgáltunk. A legegyszerûbb, a reaktív navigáció volt. Ha memóriával is rendelkezik a robot, akkor egyszerû automataként írható le, ami már tud kezelni akadályokat, bár a megtalált út nem optimális.
+
+Aztán többféle térkép alapú algoritmust néztünk meg
+\begin{description}
+\item[\textbf{távolság trafó}] egy számításigényes megközelítés, ami optimális utat ad
+\item[\textbf{D$^*$}] is optimális, but accounts for traversibility of individual cells\\ rather than considering them as either free space or obstacle.  Továbbá támogatja a kevésbé számításigényes újratervezést, ha változások vannak a térképben.
+\item[\textbf{valószínûségi úthálózat}] a keresési tér véletlenszerû mintavételezésévsel csökkenti a számításigényt, szuboptimális megoldás árán
+\item[\textbf{RRT}] a robot kinematikai modelljét is kihasználja, így valóban\\ bejárható utakat tervez, és az orientációt is figyelembe veszi
+\end{description}
+Az összes térkép alapú megközelítés igényli két dolog ismeretét:
+\begin{itemize}
+\item térkép
+\item robot aktuális pozíciója
+\end{itemize}
+}
+\end{frame}
+%
+\lecture{Lokalizáció}{week 5}
+\section{Lokalizáció}
+\subsection{Bevezetés}
+%
+\begin{frame}\frametitle{Lokalizáció}
+\begin{itemize}
+\item Térkép alapú navigáció: \alert{ismerni kell a pozíciót}
+\item Kézenfekvõ megoldás: GPS
+\end{itemize}
+\begin{center}
+\includegraphics[scale= .5]{pictures/GPS2.jpg}
+\end{center}
+\end{frame}
+%
+\begin{frame}\frametitle{GPS alapú lokalizáció}
+\begin{itemize}
+\item $24$ mûhold $6$ pályán, naponta kétszer kerüli a Földet $20200\,\textrm{km}$ magasságban
+\item  A Föld minden pontjáról egyszerre legalább $4$ látszik
+\item  $3$-ból helymeghatározás
+\item $4$-bõl tengerszint feletti magasság is
+\item  Idõmérésre visszavezetett távolság-mérésen alapul
+\item Analitikai geometriai módszerek (háromszögelés)
+\item \alert{Hátrányok}
+\begin{itemize}
+\item csak olyan helyeken használható, ahonnan jó a rálátás a mûholdakra
+\item nagyon gyenge jelek
+\item könnyû zavarni
+\end{itemize}
+\end{itemize}
+\note{
+Igazából nem \emph{háromszögelés}, mivel általában több mint 3 mûhold látható, de az eljárás hasonló. Elméletileg 3 mûhold is elég lenne ehhez, ha mindegyik órája tökéletesen járna, a gyakorlatban azonban legalább 4 mûholdat használnak a pozíció meghatározásához. A mûholdaktól való távolság kiszámításához ugyanazt a módszert használja a vevõ, mint a pontos idõ szinkronizálásánál: a mûholdról sugárzott és a vevõben meglévõ idõk eltérését állapítja meg. Az idõbeli különbség szorozva a rádióhullámok terjedési sebességével kiadja a vevõ és az adott mûhold távolságát.
+Az elsõ mûholdtól való $r_1$ távolság azt jelenti, hogy a megfigyelõ olyan $r_1$ sugarú gömbön helyezkedik el, aminek a középpontja az elsõ mûhold. A második mûholdtól való $r_2$ távolság azt jelenti, hogy a megfigyelõ ezen a második a gömbön is rajta van, tehát a két gömb metszésvonalán, azaz egy körön helyezkedik el. A harmadik mûholdtól való távolságot felhasználva tehát a megfigyelõ az $r_1$, $r_2$ és $r_3$ sugarú gömbök metszéspontján helyezkedik el. Az elõbbiek szerint az $r_3$ gömb az $r_1$, $r_2$ gömbök metszõkörét két pontban fogja elmetszeni, amelyek közül a rendszer ki tudja választani a valóságosat illetve a hamisat: a másik ugyanis vagy nagyon a Föld belsejében vagy a világûrben lesz.\\
+Ámde a fenti eljárás csak akkor ad pontos eredményt, ha a vevõ órája szinkronban jár a mûholdakéval. Ezt a 4. mûhold segítségével oldják meg: ha az óra szinkronban jár, akkor a 4., az $r_4$ sugarú gömb pontosan a három gömb metszéspontján megy át, ha viszont nem áll fenn a szinkron, akkor minden gömbhármas más és más metszéspontot ad. Ezért a vevõberendezés úgy korrigálja a saját órájának a beállítását, hogy a négy metszéspont végül egy pontba kerüljön. Ezért kell legalább 4 mûholdat figyelni, és ezért nem kell atomórát építeni a vevõkészülékbe.
+GALILEO projekt (A GPS-el ellentétben ez tisztán polgári).
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Lokalizáció}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+\item Klasszikus módszerek
+\begin{itemize}
+\item Dead Reckoning
+\item Tereppontok alapján történõ lokalizáció
+\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[scale= .44]{pictures/DR.png}
+\end{center}
+\end{column}
+\end{columns}
+\begin{center}
+\includegraphics[scale= .44]{pictures/tereppont.png}\includegraphics[scale= .35]{pictures/sextant.jpg}
+\end{center}
+\note{
+\begin{description}
+\item[\textbf{Dead Reckoning}] (ded. reckoning, deduced reckoning) pozíció becslése a\\ becsült sebesség, irány és a menetidõ alapján az elõzõ\\ becslésbõl kiindulva. Hajókon az átlag irányt vették figyelembe, a mérések szisztematikus és véletlen hibábal is voltak terhelve (500 évvel ezelõtti órák, iránytûk, sebességmérés)\\ A módszer rekurzív volta a hiba felgyülemlését is jelenti, ami egy több hónapos tengeri út során megengedhetetlen
+\item[\textbf{Tereppontok}] A fõníciaiak  már 4000 évvel ezelõtt is hajóztak, méghozzá irányû nélkül (azt csak Kr.e.2000-ben találták fel a kínaiak), õk\\ \alert{kiegészítõ információt} használtak. Ismert pozíciójú tereppontok alapján (Sarkcsillag, Nap, szigetek, stb.) korrigálták a pozícióbecslést, a késõbbi idõkben világítótornyokat használtak erre a célra. Itt azonban kulcsfontosságú, hogy azonosítani tudjuk a tornyokat, ezért különbözõ villogási mintázat alapján mûködtek.
+\item[\textbf{Égitestek alapján történõ navigáció}] Az égitestek pozíciója az égbolton az aktuális idõ, illetve a szélesség és hosszúság függyvénye, amit táblázatops formában 1767 óta kiadtak \emph{Tengerészeti Almanach} címen. A horizonthoz képesti szögmagasság mérése \emph{szextáns}sal.
+\end{description}
+A hajózás veszélyes munka volt, a térképeket államtitokként kezelték. (Magellán 1519: $237\mapsto18$ ember, $5\mapsto1$ hajó)
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Lokalizáció a mobil robotikában}
+\begin{itemize}
+\item GPS-t nem használó mobil robotok
+\begin{itemize}
+\item ugyanazok a feladatok, mint a korabeli navigátoroknál
+\item ugyanazok a stratégiák
+\end{itemize}
+\item Lokalizációs hiba kezelése
+\begin{itemize}
+\item ismeretlen valódi pozíció: $\boldsymbol{x}$
+\item a pozíció legjobb becslése: $\boldsymbol{\hat{x}}$
+\item A becslés \alert{bizonytalanságát} statisztikailag a \alert{szórás, ill. a kovariancia mátrix} írja le
+\end{itemize}
+\end{itemize}
+\begin{definition}[Becslés]
+Következtetés egy számunkra fontos $\boldsymbol{x}$ mennyiség értékére valamely, $\boldsymbol{x}$-tõl függõ adathalmaz feldolgozása alapján.
+\end{definition}
+\begin{itemize}
+\item Robot pozíciója \alert{valószínûségi sûrûségfüggvénnyel} írható le (pl. normális eloszlású)
+\end{itemize}
+\note{Egy kis valszám emlékezetfrissítés\dots}
+\end{frame}
+%
+\begin{frame}\frametitle{Lokalizáció a mobil robotikában}
+\begin{center}
+\includegraphics[scale= .44]{pictures/position_pdf.png}
+\end{center}
+\note{
+Bizonytalan jármû pozíció az $xy$ síkban,
+a függõleges tengelyen annak a relatív valószínûsége van ábrázolva, hogy a jármû az $(x,y)$ pozícióban van.
+\begin{enumerate}
+\item kis bizonytalanság,
+$\sigma=1$;
+\item jóval nagyobb bizonytalanság a pozícióra nézve, $\sigma=20$;
+\item több hipotézis van a pozícióra vonatkozólag, mindegyik $\sigma=1$ (pl. a robot egy kávéautomata mellett van, és tudjuk, hogy az épületben 4 helyen van kávéautomata)
+\end{enumerate}
+}
+\end{frame}
+%
+\subsection{Dead Reckoning}
+%
+\begin{frame}\frametitle{Dead Reckoning}
+\begin{block}{Dead Reckoning}
+A robot pozíciójának becslése a becsült sebesség, irány, és menetidõ, valamint az elõzõ pozícióbecslés alapján.
+\end{block}
+\begin{center}
+\includegraphics[scale= .4]{pictures/DR_ex.png}
+\end{center}
+\end{frame}
+%
+\begin{frame}\frametitle{Jármûmodell}
+\begin{itemize}
+\item Odometria
+\begin{itemize}
+\item megtett távolság mérése (kerékelfordulás)
+\item irány mérése (iránytû, giroszkóp, differenciális odometria)
+\end{itemize}
+\item Kell egy $\boldsymbol{f(\cdot)}$ modell, amely leírja a robot konfigurációjának megváltozását az idõben
+\begin{itemize}
+\item pl. Bicikli kinematikai modell
+\begin{align*}
+\dot{x}&=v\cos\theta\\
+\dot{y}&=v\sin\theta\\
+\dot{\theta}&=\frac{v}{L}\tan\gamma
+\end{align*}
+\end{itemize}
+\item Kezdeti pozíció és orientáció (diszkrét idõben):
+$$
+\xi[k]\sim\left[\begin{array}{ccc}\cos\theta[k] & -\sin\theta[k]&x[k]\\\sin\theta[k]&\cos\theta[k]&y[k]\\0&0&1\end{array}\right]
+$$
+\end{itemize}
+\note{
+Odométernek nevezzük a megtett távolság mérésére alkalmas szenzorokat, amik általában a kerék elfordulásából számolnak.\\ A haladás iránya mérhetõ elektronikus iránytûvel, az irány változása mérhetõ giroszkóppel, vagy differenciális odomertia alapján (két kerék közti sebesség különbségbõl számol).
+
+Ezek a szenzorok mind szisztematikus hibával (pontatlan kerékátmérõ, giroszkóp bias), mind pedig véletlen (kerékcsúszás, fordulás) terheltek. Odometria alatt mind a távolság, mind pedig az irány mérését értjük.
+
+\bigskip
+
+A pozíciót és orientációt homogén transzformációként reprezentáljuk.
+}
+\end{frame}
+%
+\begin{frame}\frametitle{Jármûmodell}
+\begin{itemize}
+\item Odometriai adatok: $\delta[k]=(\delta_d[k],\delta_{\theta}[k])$
+\item Pozíció és orientáció a következõ idõpontban:
+\begin{scriptsize}
+\begin{align*}\hspace*{-5mm}
+\xi[k+1]&\sim\left[\begin{array}{ccc}\cos\theta[k] & -\sin\theta[k]&x[k]\\\sin\theta[k]&\cos\theta[k]&y[k]\\0&0&1\end{array}\right]\left[\begin{array}{ccc}1&0&\delta_d[k]\\0&1&0\\0&0&1\end{array}\right]\left[\begin{array}{ccc}\cos\delta_{\theta}[k] & -\sin\delta_{\theta}[k] & 0\\ \sin\delta_{\theta}[k] &\cos\delta_{\theta}[k] & 0\\0&0&1 \end{array}\right]\\
+&\sim\left[\begin{array}{ccc}\cos(\theta[k]+\delta_{\theta}[k]) & -\sin(\theta[k]+\delta_{\theta}[k]) & x[k]+\delta_d[k]\cos\theta[k]\\
+\sin(\theta[k]+\delta_{\theta}[k]) & \cos(\theta[k]+\delta_{\theta}[k]) & y[k]+\delta_d[k]\sin\theta[k]\\0&0&1\end{array}\right]
+\end{align*}
+\end{scriptsize}
+\item $(x,y,\theta)$ reprezentációban:
+\begin{scriptsize}
+$$
+\xi[k+1]\sim\left[\begin{array}{c}x[k]+\delta_d[k]\cos(\theta[k]+\delta_{\theta}[k])\\
+y[k]+\delta_d[k]\sin(\theta[k]+\delta_{\theta}[k])\\
+\theta[k]+\delta_{\theta}[k]\end{array}\right]
+$$
+\end{scriptsize}
+\end{itemize}
+\end{frame}
+%
+\begin{frame}\frametitle{Jármûmodell}
+\begin{itemize}
+\item A valóságban az odometria zajjal terhelt
+\begin{itemize}
+\item $\boldsymbol{v}=(v_d, v_{\theta})$ folytonos valószínûségi változók
+\end{itemize}
+\end{itemize}
+\begin{block}{A keresett $\boldsymbol{f(\cdot)}$ modell}
+\begin{align*}
+\xi[k+1]&=\left[\begin{array}{c}x[k]+(\delta_d[k]+v_d)\cos(\theta[k]+\delta_{\theta}[k]+v_{\theta})\\
+y[k]+(\delta_d[k]+v_d)\sin(\theta[k]+\delta_{\theta}[k]+v_{\theta})\\
+\theta[k]+\delta_{\theta}[k]+v_{\theta}\end{array}\right],\\
+&\textnormal{azaz}\\
+\boldsymbol{x}[k+1]&=\boldsymbol{f}(\boldsymbol{x}[k],\delta[k],\boldsymbol{v}[k])
+\end{align*}
+\end{block}\vspace*{-3mm}
+\begin{columns}
+\begin{column}{0.65\textwidth}
+\begin{itemize}
+\item $\boldsymbol{v}=(v_d,v_{\theta})\sim\mathcal{N}(0,\boldsymbol{V})$ \alert{normális eloszlású}
+$$
+\boldsymbol{V}=\left[\begin{array}{cc}\sigma_d^2&0\\0&\sigma_{\theta}^2\end{array}\right]~~\textnormal{kovariancia mátrix}
+$$
+\end{itemize}
+\end{column}
+\begin{column}{0.35\textwidth}
+\begin{center}
+\includegraphics[scale= .3]{pictures/gaussian.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+%
+\begin{frame}\frametitle{Pozíció és orientáció becslése}
+\begin{columns}
+\begin{column}{0.65\textwidth}
+\begin{itemize}
+\item Alkalmazott matematikai eszköz:\\ \alert{Kalman szûrõ}
+\item A konfiguráció optimális becslését adja
+\item Alkalmazási feltételek
+\begin{itemize}
+\item \alert{lineáris} modell
+\item nulla várható értékû \alert{normális eloszlású zaj}
+\end{itemize}
+%\item A jármûmodell  \alert{nemlineáris}
+%\begin{itemize}
+%\item \textcolor{blue}{kiterjesztett Kálmán szûrõ} (EKF)
+%\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.35\textwidth}
+\begin{block}{Rudolf E. Kálmán (1930-)}
+\begin{center}
+\includegraphics[scale= 1]{pictures/kalman.jpg}
+\end{center}
+\end{block}
+\end{column}
+\end{columns}
+\begin{block}{Kálmán szûrõ - problémakitûzés}
+\begin{itemize}
+\item Adott
+\begin{itemize}
+\item jármûmodell ($\boldsymbol{f(\cdot)}$)
+\item bemeneti jelek ($\boldsymbol{u}$ )
+\item zajos szenzoradatok ($\boldsymbol{z}$)
+\end{itemize}
+\item Keressük a modell $\xi[k]$ konfigurációjának becsült $\hat{\xi}[k]$ értékét
+\end{itemize}
+\end{block}
+\end{frame}
+%
+\begin{frame}\frametitle{Pozíció és orientáció becslése}
+%\item A jármûmodell  \alert{nemlineáris}
+%\begin{itemize}
+%\item \textcolor{blue}{kiterjesztett Kálmán szûrõ} (EKF)
+%\end{itemize}
+\begin{block}{Kalman szûrõ}
+\begin{itemize}
+\item Diszkrét idejû \alert{lineáris} idõinvariáns rendszer\vspace*{-2mm}
+\begin{align*}
+\boldsymbol{x}[k+1]&=\boldsymbol{F}\boldsymbol{x}[k]+\boldsymbol{G\,u}[k]+\boldsymbol{v}[k]&&\textnormal{állapot egyenlet}\\
+\boldsymbol{z}[k+1]&=\boldsymbol{H}\boldsymbol{x}[k]+\boldsymbol{w}[k]&&\textnormal{szenzor egyenlet}
+\end{align*}
+\item Kalman szûrõ
+\begin{enumerate}
+\item Predikciós lépés\vspace*{-2mm}
+\begin{align*}
+\boldsymbol{\hat{x}}[k+1|k]&=\boldsymbol{F}\boldsymbol{\hat{x}}[k]+\boldsymbol{Gu}[k]&&\textnormal{Dead Reckoning!}\\
+\boldsymbol{\hat{P}}[k+1|k]&=\boldsymbol{F\hat{P}}[k|k]\boldsymbol{F}^T+\boldsymbol{\hat{V}}&&\textnormal{kovariancia mátrix}
+\end{align*}
+\item Korrekciós lépés\vspace*{-2mm}
+\begin{align*}\vspace*{-2mm}
+\boldsymbol{\hat{x}}[k+1|k+1]&=\boldsymbol{\hat{x}}[k+1|k]+\alert{\boldsymbol{K}[k+1]}\left(\boldsymbol{z}[k+1]-\boldsymbol{H\hat{x}}[k+1|k]\right)\\
+\boldsymbol{\hat{P}}[k+1|k+1]&=\boldsymbol{\hat{P}}[k+1|k]-\alert{\boldsymbol{K}[k+1]}\boldsymbol{H\hat{P}}[k+1|k]
+\end{align*}
+ahol $\boldsymbol{K}[k+1]=\boldsymbol{\hat{P}}[k+1|k]\boldsymbol{H}^T\left(\boldsymbol{H\hat{P}}[k+1|k]\boldsymbol{H}^T+\boldsymbol{W}^T\right)^{-1}$ az ún. Kalman erõsítés
+\end{enumerate}
+\end{itemize}
+\end{block}
+\end{frame}
+%
+\begin{frame}\frametitle{Pozíció és orientáció becslése}
+\begin{itemize}
+\item A jármûmodell  \alert{nemlineáris\ldots}
+$$
+\boldsymbol{x}[k+1]=\boldsymbol{f}(\boldsymbol{x}[k],\delta[k],\boldsymbol{v}[k])
+$$
+\begin{itemize}
+\item \textcolor{blue}{kiterjesztett Kálmán szûrõ} (EKF): ahol kell, linearizáljuk a modellt
+$$
+\boldsymbol{\hat{x}}[k+1]=\boldsymbol{\hat{x}}[k]+\boldsymbol{F_x}(\boldsymbol{x}[k]-\boldsymbol{\hat{x}}[k])+\boldsymbol{F_vv}[k]
+$$
+ahol
+\begin{align*}
+\boldsymbol{F_x}&=\left.\frac{\partial\boldsymbol{f}}{\partial\boldsymbol{x}}\right|_{\boldsymbol{v}=\boldsymbol{0}}=\left[\begin{array}{ccc}1&0&-\delta_d[k]-\sin(\theta[k]+\delta_{\theta}[k])\\
+0&1&\delta_d[k]\cos(\theta[k]+\delta_{\theta}[k])\\0&0&1\end{array}\right]\\
+\boldsymbol{F_v}&=\left.\frac{\partial\boldsymbol{f}}{\partial\boldsymbol{v}}\right|_{\boldsymbol{v}=\boldsymbol{0}}=\left[\begin{array}{cc}\cos(\theta[k]+\delta_{\theta}[k]) & -\delta_d[k]\cos(\theta[k]+\delta_{\theta}[k])\\0&1\end{array}\right]
+\end{align*}
+\end{itemize}
+\end{itemize}
+\end{frame}
+%
+\begin{frame}\frametitle{Bizonytalanság}
+\begin{block}{Dead Reckoning a Kalman szûrõ predikciós lépésével}
+\begin{align*}
+\boldsymbol{\hat{x}}[k+1|k]&=\boldsymbol{f}(\boldsymbol{\hat{x}}[k],\delta[k],0)\\
+\boldsymbol{\hat{P}}[k+1|k]&=\boldsymbol{F_x}[k]\boldsymbol{\hat{P}}[k|k]\boldsymbol{F_x}[k]^T+\alert{\boldsymbol{F_v}[k]\boldsymbol{\hat{V}F_v}[k]^T}
+\end{align*}
+ahol $\boldsymbol{x}=(\hat{x},\hat{y},\hat{\theta})$, $\boldsymbol{\hat{P}}\in\mathbb{R}^{3\times 3}$, és $\boldsymbol{\hat{V}}\in\mathbb{R}^{3\times 3}$ a kovariancia közelítése
+\end{block}
+\begin{itemize}
+\item $\alert{\boldsymbol{F_v}[k]\boldsymbol{\hat{V}F_v}[k]^T}$ pozitív definit = a bizonytalanság \alert{nem csökkenhet}
+\item Bizonytalanság reprezentálása
+\begin{itemize}
+\item Hiba ellipszisek: valõszínûségi sûrûségfüggvény szintvonalai (két dimenzióban)
+\item $\sqrt{\det(\boldsymbol{\hat{P}})}$ (skalár mérték)
+\end{itemize}
+\end{itemize}
+\end{frame}
+%
+\begin{frame}\frametitle{Bizonytalanság}
+\begin{center}
+\includegraphics[scale= .44]{pictures/error_ellipse_EKF.png}\includegraphics[scale= .44]{pictures/EKF_uncertain.png}
+\end{center}
+\begin{itemize}
+\item A $\boldsymbol{v}=(v_d,v_{\theta})$ zaj valódi $\boldsymbol{V}$ kovariancia mátrixa nem ismert, mérésekbõl becsülhetõ
+\begin{itemize}
+\item $\boldsymbol{\hat{V}}>\boldsymbol{V}$: pesszimista becslés
+\item $\boldsymbol{\hat{V}}<\boldsymbol{V}$: túlságosan optimista becslés
+\end{itemize}
+\end{itemize}
+\end{frame}
+%
+\subsection{Térkép alapú lokalizáció}
+%
+\begin{frame}\frametitle{Térkép használata}
+\begin{itemize}
+\item Dead Reckoning hosszú távon bizonytalan eredményt ad
+\item Megoldás: ismert pozíciójú tereppontok figyelése robotra rögzített szenzorral
+\end{itemize}
+\begin{columns}
+\begin{column}{0.25\textwidth}
+\begin{center}
+\includegraphics[scale= .44]{pictures/laser_rangefinder.png}
+\end{center}
+\end{column}
+\begin{column}{0.75\textwidth}
+\begin{itemize}
+\item szenzoregyenlet\vspace*{-2mm}
+$$
+\boldsymbol{z}=\boldsymbol{h}(\boldsymbol{x}_v,\boldsymbol{x}_f,\boldsymbol{w})
+$$
+\begin{description}
+\item[$\boldsymbol{x}_v$:] robot helyzete
+\item[$\boldsymbol{x}_f$:] tereppont helyzete a világ koordináta rendszerben
+\item[$\boldsymbol{w}$:] szenzorzaj
+\end{description}
+\item radar, lézeres távolságmérõ: távolság és szög információ a tereppontról
+\end{itemize}
+\end{column}
+\end{columns}
+\begin{itemize}
+\item $i$-edik tereppontra ($\boldsymbol{x}_{fi}=(x_i,y_i)$) vonatkozó megfigyelés :
+$$
+\boldsymbol{z}=\left[\begin{array}{c}\sqrt{(y_i-y_v)/(x_i-x_v)}\\ \arctan(y_i-y_v)/(x_i-x_v)-\theta_v\end{array}\right]+\left[\begin{array}{c}w_r\\w_{\beta}\end{array}\right],\quad \boldsymbol{z}=\left[\begin{array}{c}r\\ \beta\end{array}\right]
+$$
+\end{itemize}
+\end{frame}
+%
+\begin{frame}\frametitle{Térkép használata}
+\begin{itemize}
+\item Mérési zaj statisztikája
+$$
+\left[\begin{array}{c}w_r\\w_{\beta}\end{array}\right]\in\mathcal{N}(0,\boldsymbol{W}),\quad \boldsymbol{W}=\left[\begin{array}{cc}\sigma_r^2 & 0\\ 0 & \sigma_{\beta}^2\end{array}\right]
+$$
+\item Pontatlan becslés esetén különbség van a méréstõl
+$$
+\boldsymbol{\nu}[k+1]=\boldsymbol{z}[k+1]-\boldsymbol{h}(\boldsymbol{\hat{x}}[k+1|k],\boldsymbol{x}_f,0)
+$$
+\item De $\boldsymbol{h}$ nemlineáris...
+$$
+\boldsymbol{z}[k]=\boldsymbol{\hat{h}}+\boldsymbol{H_x}(\boldsymbol{x}[k]-\boldsymbol{\hat{x}}[k]) +\boldsymbol{H_w w}[k]
+$$
+a megfelelõ Jacobi mátrixok
+$$
+\boldsymbol{H_{x_i}}=\left.\frac{\partial \boldsymbol{h}}{\partial \boldsymbol{x_v}}\right|_{\boldsymbol{w}=0}=\left[\begin{array}{ccc}-\frac{x_i-x_v[k]}{r} & -\frac{y_i-y_v[k]}{r} &0\\ \frac{x_i-x_v[k]}{r^2} & -\frac{y_i-y_v[k]}{r^2} &-1 \end{array}\right]\quad \boldsymbol{H_w}=\left[\begin{array}{cc}1&0\\0&1\end{array}\right]
+$$
+\end{itemize}
+\note{
+\begin{itemize}
+\item It also indicates that covariance is independent
+of range but in reality covariance
+may increase with range since the
+strength of the return signal, laser or
+radar, drops rapidly ($\frac{1}{d^4}$) with distance
+($d$) to the target.
+\item ez a mérési hiba fogja az új információt reprezentálni, ez lesz a kulcs a KF frissítési lépésénél.
+\end{itemize}}
+\end{frame}
+
+\begin{frame}\frametitle{Pozíció és orientáció becslése}
+%\item A jármûmodell  \alert{nemlineáris}
+%\begin{itemize}
+%\item \textcolor{blue}{kiterjesztett Kálmán szûrõ} (EKF)
+%\end{itemize}
+\begin{block}{Térkép alapú lokalizáció a Kalman szûrõ korrekciós lépésével}
+\begin{align*}
+\boldsymbol{\hat{x}}[k+1|k+1]&=\boldsymbol{\hat{x}}[k+1|k]+\boldsymbol{K}(k+1)\boldsymbol{\nu}[k+1]\\
+\boldsymbol{\hat{P}}[k+1|k+1]&=\boldsymbol{F_x}[k]\boldsymbol{\hat{P}}[k+1|k]\boldsymbol{F_x}[k]^T-\alert{\boldsymbol{K}[k+1]\boldsymbol{H_x}[k+1]\boldsymbol{\hat{P}}[k+1|k]}
+\end{align*}
+ahol $\boldsymbol{K}[k+1]$ a Kalman-erõsítés.
+\begin{small}
+\begin{align*}
+\boldsymbol{S}[k+1]&=\boldsymbol{H_x}[k+1]\boldsymbol{\hat{P}}[k+1|k]\boldsymbol{H_x}[k+1]^T+\boldsymbol{H_w}[k+1]\boldsymbol{\hat{W}}[k+1]\boldsymbol{H_w}[k+1]^T\\
+\boldsymbol{K}[k+1]&=\boldsymbol{\hat{P}}[k+1|k]\boldsymbol{H_x}[k+1]^T\boldsymbol{S}[k+1]^{-1}
+\end{align*}
+\end{small}
+\end{block}
+\note{Itt csökkenteni tudjuk a kovariancia mátrixot, tehát a térkép használatával csökken a bizonytalanság!}
+\end{frame}
+%
+%
+\begin{frame}\frametitle{Eredmény}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{pictures/EKF_localization.png}
+\end{center}
+\end{frame}
+\end{document} 

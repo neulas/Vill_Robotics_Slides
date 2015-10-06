@@ -44,7 +44,7 @@
   \insertnote%
   }
 
-\includeonlylecture{week 1}
+\includeonlylecture{week 3}
 
 \pgfplotsset{width=7cm,compat=1.7}
 
@@ -58,7 +58,7 @@ Robottechnika:\\
 \end{beamercolorbox}
 \smallskip
 %\today
-2015. szeptember 
+2015. szeptember
 %\vspace*{3cm}
 %\includegraphics[height=2cm]{pictures/MIK_cimer_szines.jpg}
 \end{center}
@@ -102,12 +102,12 @@ Robottechnika:\\
 \selectlanguage{magyar}
 
 \title[Robotika]{Robottechnika}
-\author[Magyar Attila]{Magyar Attila}
+\author[Magyar A.,Neukirchner L.]{Magyar Attila\\Neukirchner László}
 \titlegraphic{\includegraphics[height=2.5cm]{pictures/MIK_cimer_szines.jpg}}
 \institute[PE]{Pannon Egyetem\\
   Mûszaki Informatikai Kar\\
   Villamosmérnöki és Információs Rendszerek Tanszék\\[1ex]
-  \texttt{magyar.attila@virt.uni-pannon.hu}
+  \texttt{magyar.attila@virt.uni-pannon.hu\\neukirchner.laszlo@virt.uni-pannon.hu}
 }
 \date{}
 %\date{\today}
@@ -3282,8 +3282,131 @@ $$
 \note{\vspace*{-0.5mm}\hspace*{-10.5mm}\insertslideintonotes{1.0}}
 \end{frame}
 
+\part{Adatfeldolgozás}
+\lecture{Adatfeldolgozás}{week 3}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Abszolút szöghelyzet adók}
+\begin{frame}\frametitle{Abszolút szöghelyzet adók}
+\begin{columns}
+\begin{column}{0.7\textwidth}
+\begin{itemize}
+\item Pozíció (szögelfordulás, szöghelyzet) mérésére 
+\item Kódadók forgó üvegtárcsáira 13-18 sorban olyan rácsszerkezetet, amely az ugyanennyi fotodiódát tartalmazó érzékelõ soron egymástól függetlennek tekintett impulzussorozat
+\item A körülfordulás minden egyes pontját meg tudjuk különböztetni a másiktól
+\item Kódolásra a szomszédos átmenetek során a bitek változásának számát minimalizáló Gray-kódot használják
+\end{itemize}
+\end{column}
+\begin{column}{0.3\textwidth}
+\begin{center}
+\includegraphics[width=\columnwidth]{pictures/absolute.jpg}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{Grey kód}
+A Gray-kód olyan bináris kód sorozat, amelynél az egymás után következõ kódszavak csak egy karakterben térhetnek el egymástól. Más kifejezéssel élve a Hamming-távolságuk egy.
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/grey.png}
+\end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Abszolút szöghelyzet adók folyt.}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+\item ennek alapján egyetlen körülforduláson belül 8192 (13bit) - 262144 (18bit) pozíció különböztethetõ meg
+\item Az adókat gyártják:
+\begin{itemize}
+\item egyfordulatú (singleturn)
+\item többfordulatú (multiturn)
+\item utóbbiakban a több körülforduláson  keresztül történõ abszolút kódolást, tehát az abszolút szöghelyzet adó méréstartománya kiterjesztõdik pl. 13+12 = 25 bitre
+\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[width=\columnwidth]{pictures/rotary.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Inkrementális jeladók}
+\begin{frame}\frametitle{Inkrementális jeladó}
+\begin{itemize}
+\item A legelterjedtebb jeladókat, 
+\item  Szemben az egy körülforduláson belül
+abszolút pozíció információt szolgáltató érzékelõkkel (pl. potenciométerekkel, vagy az
+abszolút szöghelyzet adókkal) ezek az érzékelõk csak egy-egy "továbbléptetõ impulzust"
+szolgáltatnak egy, az érzékelõket követõ számláló számára.
+\item Ezek az impulzusok végzik a számláló inkrementálását/dekrementálását.
+\end{itemize}
+\begin{center}
+\includegraphics[width=.6\textwidth]{pictures/incremental.jpg}
+\end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Inkrementális jeladó mûködése}
+\begin{itemize}
+\item 2, egymáshoz képest fázisban eltolt jelsorozatot szolgáltat (A és B). 
+\item Az információ a jelek frekvenciája és a 2 jel egymáshoz mért fázisszöge, ami csak 
+$\pm90^{\circ}$-os érték lehet 
+\item A frekvencia az adó tengelyének szögsebességével arányos, 
+\item A fázisszög a tengely forgásirányát adja meg. 
+\item \alert{A sebességinformációt hordozó impulzussorozat irányhelyes számlálásával nyerhetjük a pozíció-információt} 
+\end{itemize}
+\begin{center}
+\includegraphics[width=.8\textwidth]{pictures/incsquare.png}
+\end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Inkrementális jeladó felépítése}
+\begin{itemize}
+\item Optikai:
+\begin{itemize}
+\item Zárt házba épített néhány cm átmérõjû lyuktárcsa és a hozzá kapcsolódó elektronika 
+\item A lyuktárcsa valójában egy üvegtárcsa, amire vákuumgõzöléssel krómot hordanak fel amely optikailag váltakozva átlátszó, ill. átláthatatlan.
+\end{itemize} 
+\item Mágneses:
+\begin{itemize}
+\item Fém forgótárcsa kerülete vagy fogazott, vagy a kerületét sûrûn váltakozó mágneses polaritással
+látják el, és magnetorezisztív (elektromos tulajdonságait a mágneses tér hatására változtató)
+érzékelõvel álítják elõ az elfordulási adatot. 
+\end{itemize}
+\end{itemize}
+\begin{center}
+\includegraphics[width=.4\textwidth]{pictures/incr_image.jpg}
+\end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Összefoglalás}
+Impulzus jeladók elõnyei:
+\begin{itemize}
+\item igen nagy pontosság (kb. 100 ... 50.000 impulzus/fordulat) 
+\item tökéletes reprodukálhatóság
+\item nagy megbízhatóság (zárt dobozban optikai vagy mágneses elven alapuló megoldás, csak a tengely és a jelvezetékek vannak kivezetve)
+\item a kiszolgáló elektronika biztosíthatja a jelvezetékek terhelhetõségét és zavarérzéketlenségét
+\end{itemize}
+Impulzus jeladók hátrányai:
+\begin{itemize}
+\item a jelekbõl nem nyerhetõ abszolút pozíció információ
+\item  impulzusvesztés végzetes a pontosság szempontjából
+\item  járulékos (hardware-es) számláló szükséges 
+\item  bekapcsolás után nincs pozíció információ
+\item  bármely információ nyeréséhez a tengely mozgatása szükséges
+\item  járulékos probléma a kihelyezett elektronika tápenergiával történõ ellátása
+\end{itemize}
+\end{frame}
+
+\part{Szervószabályozás}
+\lecture{Szervószabályozás}{week 4}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Szervó szabályozás}
+
+
 \part{Mobil robotok}
-\lecture{Mobil robotok}{week 3}
+\lecture{Mobil robotok}{week 5}
 \section{Mobil robotok}
 
 \subsection{Mobilitás}

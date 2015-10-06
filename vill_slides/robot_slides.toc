@@ -1,6 +1,3 @@
 \select@language {magyar} \beamer@endinputifotherversion {3.36pt}
-\select@language {magyar} \beamer@sectionintoc {1}{Poz\IeC {\'\i }ci\'o \'es orient\'aci\'o}{6}{1}{1}
-\select@language {magyar} \beamer@subsectionintoc {1}{1}{Bevezet\'es}{7}{1}{1}
-\select@language {magyar} \beamer@subsectionintoc {1}{2}{2D reprezent\'aci\'ok}{14}{1}{1}
-\select@language {magyar} \beamer@subsectionintoc {1}{3}{3D reprezent\'aci\'ok}{20}{1}{1}
-\select@language {magyar} \beamer@subsectionintoc {1}{4}{\"Osszefoglal\'as}{34}{1}{1}
+\select@language {magyar} \beamer@sectionintoc {1}{Abszol\'ut sz\"oghelyzet ad\'ok}{3}{1}{1}
+\select@language {magyar} \beamer@sectionintoc {2}{Inkrement\'alis jelad\'ok}{7}{1}{2}

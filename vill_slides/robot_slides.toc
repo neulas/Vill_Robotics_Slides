@@ -1,3 +1,9 @@
 \select@language {magyar} \beamer@endinputifotherversion {3.36pt}
-\select@language {magyar} \beamer@sectionintoc {1}{Abszol\'ut sz\"oghelyzet ad\'ok}{3}{1}{1}
-\select@language {magyar} \beamer@sectionintoc {2}{Inkrement\'alis jelad\'ok}{7}{1}{2}
+\select@language {magyar} \beamer@sectionintoc {1}{Alapvet\H o szab\'alyoz\'asok (ism\'etl\'es)}{3}{1}{1}
+\select@language {magyar} \beamer@sectionintoc {2}{Szerv\'omotorok}{7}{1}{2}
+\select@language {magyar} \beamer@sectionintoc {3}{Nemlinearit\'asok}{11}{1}{3}
+\select@language {magyar} \beamer@sectionintoc {4}{Szab\'alyoz\'asi feladatok robotokban}{18}{1}{4}
+\select@language {magyar} \beamer@sectionintoc {5}{Navig\'aci\'o}{24}{2}{5}
+\select@language {magyar} \beamer@subsectionintoc {5}{1}{Reakt\IeC {\'\i }v navig\'aci\'o}{26}{2}{5}
+\select@language {magyar} \beamer@subsectionintoc {5}{2}{T\'erk\'ep alap\'u navig\'aci\'o}{29}{2}{5}
+\select@language {magyar} \beamer@subsectionintoc {5}{3}{\"Osszefoglal\'as}{43}{2}{5}

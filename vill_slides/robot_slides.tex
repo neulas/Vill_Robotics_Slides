@@ -44,7 +44,7 @@
   \insertnote%
   }
 
-\includeonlylecture{week 3}
+\includeonlylecture{week 4}
 
 \pgfplotsset{width=7cm,compat=1.7}
 
@@ -3290,7 +3290,7 @@ $$
 \begin{columns}
 \begin{column}{0.7\textwidth}
 \begin{itemize}
-\item Pozíció (szögelfordulás, szöghelyzet) mérésére 
+\item Pozíció (szögelfordulás, szöghelyzet) mérésére
 \item Kódadók forgó üvegtárcsáira 13-18 sorban olyan rácsszerkezetet, amely az ugyanennyi fotodiódát tartalmazó érzékelõ soron egymástól függetlennek tekintett impulzussorozat
 \item A körülfordulás minden egyes pontját meg tudjuk különböztetni a másiktól
 \item Kódolásra a szomszédos átmenetek során a bitek változásának számát minimalizáló Gray-kódot használják
@@ -3335,7 +3335,7 @@ A Gray-kód olyan bináris kód sorozat, amelynél az egymás után következõ kódszava
 \section{Inkrementális jeladók}
 \begin{frame}\frametitle{Inkrementális jeladó}
 \begin{itemize}
-\item A legelterjedtebb jeladókat, 
+\item A legelterjedtebb jeladókat,
 \item  Szemben az egy körülforduláson belül
 abszolút pozíció információt szolgáltató érzékelõkkel (pl. potenciométerekkel, vagy az
 abszolút szöghelyzet adókkal) ezek az érzékelõk csak egy-egy "továbbléptetõ impulzust"
@@ -3349,12 +3349,12 @@ szolgáltatnak egy, az érzékelõket követõ számláló számára.
 
 \begin{frame}\frametitle{Inkrementális jeladó mûködése}
 \begin{itemize}
-\item 2, egymáshoz képest fázisban eltolt jelsorozatot szolgáltat (A és B). 
-\item Az információ a jelek frekvenciája és a 2 jel egymáshoz mért fázisszöge, ami csak 
-$\pm90^{\circ}$-os érték lehet 
-\item A frekvencia az adó tengelyének szögsebességével arányos, 
-\item A fázisszög a tengely forgásirányát adja meg. 
-\item \alert{A sebességinformációt hordozó impulzussorozat irányhelyes számlálásával nyerhetjük a pozíció-információt} 
+\item 2, egymáshoz képest fázisban eltolt jelsorozatot szolgáltat (A és B).
+\item Az információ a jelek frekvenciája és a 2 jel egymáshoz mért fázisszöge, ami csak
+$\pm90^{\circ}$-os érték lehet
+\item A frekvencia az adó tengelyének szögsebességével arányos,
+\item A fázisszög a tengely forgásirányát adja meg.
+\item \alert{A sebességinformációt hordozó impulzussorozat irányhelyes számlálásával nyerhetjük a pozíció-információt}
 \end{itemize}
 \begin{center}
 \includegraphics[width=.8\textwidth]{pictures/incsquare.png}
@@ -3365,14 +3365,14 @@ $\pm90^{\circ}$-os érték lehet
 \begin{itemize}
 \item Optikai:
 \begin{itemize}
-\item Zárt házba épített néhány cm átmérõjû lyuktárcsa és a hozzá kapcsolódó elektronika 
+\item Zárt házba épített néhány cm átmérõjû lyuktárcsa és a hozzá kapcsolódó elektronika
 \item A lyuktárcsa valójában egy üvegtárcsa, amire vákuumgõzöléssel krómot hordanak fel amely optikailag váltakozva átlátszó, ill. átláthatatlan.
-\end{itemize} 
+\end{itemize}
 \item Mágneses:
 \begin{itemize}
 \item Fém forgótárcsa kerülete vagy fogazott, vagy a kerületét sûrûn váltakozó mágneses polaritással
 látják el, és magnetorezisztív (elektromos tulajdonságait a mágneses tér hatására változtató)
-érzékelõvel álítják elõ az elfordulási adatot. 
+érzékelõvel álítják elõ az elfordulási adatot.
 \end{itemize}
 \end{itemize}
 \begin{center}
@@ -3383,7 +3383,7 @@ látják el, és magnetorezisztív (elektromos tulajdonságait a mágneses tér hatásár
 \begin{frame}\frametitle{Összefoglalás}
 Impulzus jeladók elõnyei:
 \begin{itemize}
-\item igen nagy pontosság (kb. 100 ... 50.000 impulzus/fordulat) 
+\item igen nagy pontosság (kb. 100 ... 50.000 impulzus/fordulat)
 \item tökéletes reprodukálhatóság
 \item nagy megbízhatóság (zárt dobozban optikai vagy mágneses elven alapuló megoldás, csak a tengely és a jelvezetékek vannak kivezetve)
 \item a kiszolgáló elektronika biztosíthatja a jelvezetékek terhelhetõségét és zavarérzéketlenségét
@@ -3392,7 +3392,7 @@ Impulzus jeladók hátrányai:
 \begin{itemize}
 \item a jelekbõl nem nyerhetõ abszolút pozíció információ
 \item  impulzusvesztés végzetes a pontosság szempontjából
-\item  járulékos (hardware-es) számláló szükséges 
+\item  járulékos (hardware-es) számláló szükséges
 \item  bekapcsolás után nincs pozíció információ
 \item  bármely információ nyeréséhez a tengely mozgatása szükséges
 \item  járulékos probléma a kihelyezett elektronika tápenergiával történõ ellátása
@@ -3402,11 +3402,305 @@ Impulzus jeladók hátrányai:
 \part{Szervószabályozás}
 \lecture{Szervószabályozás}{week 4}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Szervó szabályozás}
+\section{Alapvetõ szabályozások (ismétlés)}
 
+\begin{frame}\frametitle{Szabályozók feladatai}
+\begin{itemize}
+\item \textbf{Értéktartó szabályozás:}\\
+    Az értéktartó szabályozás jellemzõje az, hogy a szabályozott jellemzõ alapjele hosszú idõtartam alatt állandó. Feladata a szabályozott jellemzõnek az alapértéken tartása és a határozatlan módon és idõben jelentkezõ zavarások hatásának elhárítása. Az értéktartó szabályozások vizsgálatában elégséges, ha az állandó nagyságú alapjel mellett a zavarást egységugrás-függvény szerint változónak tételezzük fel.
+\item \textbf{Követõ szabályozás:}\\
+    A követõ szabályozás jellemzõje, hogy a szabályozott jellemzõ alapértéke idõben üzemszerûen változik. Feladata, hogy a különbözõ módon változó alapjelet a szabályozott jellemzõ alakhûen kövesse és az esetleges zavarásokat elhárítsa. Az elsõrendû kérdés a követõképesség pontosságának a vizsgálata. A zavarás elhárítás itt másodrendû feladat. Így itt a szabályozási eltérés helyett a követés pontossága a minõségi kritérium.
+\end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Szabályozók típusai}
+\begin{itemize}
+\item \textbf{Állásos szabályozó}\\
+\begin{footnotesize}
+    kimenõ jele diszkrét értékeket vehet fel. Az állásos szabályozók elõnye, hogy a kimenõ jelüket szolgáltató teljesítményfokozat
+    kapcsolóüzemû. A folytonos erõsítõkhöz viszonyítva a megoldás olcsóbb, egyszerûbb, jobb
+    hatásfokú. Az állásos szabályozók hátránya, hogy sohasem szabályoznak zérus maradó hibára. A
+    kétállású szabályozás állandósult lengésben van.
+\end{footnotesize}
+\item \textbf{Idõarányos szabályozó}\\
+\begin{footnotesize}
+    kimenõ jele impulzusszélesség modulált (PWM). A kapcsolóüzemû mûködtetés révén elõnyeik megegyeznek az állásos
+    szabályozók elõnyeivel. Az impulzusszélesség modulátor kapcsolási frekvenciáját a táplált
+    folyamat jellemzõ (legnagyobb) idõállandójához képest nagyra választják. Ekkor a szabályozás viselkedése megegyezik egy folytonos
+    szabályozáséval. Szabályozhat zérus maradó hibára.
+\end{footnotesize}
+\item \textbf{Folytonos és diszkrét szabályozó}\\
+\begin{footnotesize}
+    két megvalósítási módja lehetséges. Az analóg szabályozók
+    folytonos idejûek, azaz kimenõ jelük bármely idõpillanatban változhat. A számítógéppel
+    realizált szabályozók diszkrét idejûek, kimenetüket csak mintavételi idõnként változtatják.
+\end{footnotesize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Szabályozók funkcionális egységei}
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/control_struct.png}
+\end{center}
+\textbf{Elvárások:} \footnotesize{szabályozási idõ csökkentése, statikus hiba minimalizálása, lengési hajlam minimalizálása.}
+\end{frame}
+
+\section{Szervómotorok}
+
+\begin{frame}\frametitle{Legfontosabb szervómotorok}
+\begin{footnotesize}
+\begin{itemize}
+\item \textbf{Állandómágneses egyenáramú szervomotor:} jó közelítéssel lineáris, ezért
+matematikailag a legegyszerûbben tárgyalható motor. Vezérlése is viszonylag egyszerû. Hátránya a kommutátor.
+\item \textbf{Állandómágneses szinkron szervomotor:} kefenélküli kivitelû, kisebb a súrlódás és a
+karbantartási igény. A kis tehetetlenségi nyomaték eléréséhez a forgórészben
+mágnest kell alkalmazni. Vezérlése az egyenáramú motornál bonyolultabb, inverterrel PWM
+elven változtatható frekvenciájú jelet állítanak elõ.
+\item \textbf{Háromfázisú aszinkron motor: }elõnyei megegyeznek a szinkron motoréval. Alumínium
+kalickával kis tehetetlenségi nyomatékú, olcsó. Vezérlésére PWM inverteres frekvenciaváltó
+szolgál.
+\item \textbf{Léptetõ motor:} kis teljesítmény igény esetén használják. Két fajtájuk van, a szinkron
+gép elvén mûködõ állandómágneses forgórészû és a lágyvasas forgórészû motor. Mindkét
+típus kefenélküli kivitelû annak minden elõnyével. Hátrányuk, hogy nyomatékuk lüktet és lépést
+téveszthetnek.
+\item \textbf{Reluktancia motor:} néven a lágyvasas forgórészû léptetõ
+motorhoz hasonló elven mûködõ motort forgalmaznak a hozzá tartozó vezérlõ elektronikával
+együtt. Az állórész és a forgórész is kiálló pólusú (fogazott). Az
+állórész egy-egy pólusát gerjesztve a forgórész a fogszám különbségnek megfelelõen fordul
+el. A lüktetésmentes nyomaték elérése érdekében a motor táplálása illesztett.
+\end{itemize}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}\frametitle{Egyenáramú szervomotor egyszerûsített egyenletei}
+\begin{footnotesize}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\textbf{Aramtúrafeszültség egyenlete:}
+$$
+\begin{array}{rcl}
+U_a&=&I_aR_a+L_a\frac{dI_a}{dt}\\
+\end{array}
+$$
+\textbf{Indukált feszültség:}
+$$
+\begin{array}{rcl}
+U_i&=&k_1\phi\omega\\
+\end{array}
+$$
+\textbf{Elektromágneses nyomaték:}
+$$
+\begin{array}{rcl}
+M&=&k_2\phi I_a\\
+\end{array}
+$$
+\textbf{gyorsító nyomaték:}
+$$
+\begin{array}{rcl}
+M-M_t&=&\Theta\frac{d\omega}{dt}\\
+\end{array}
+$$
+\end{column}
+\begin{column}{0.5\textwidth}
+\textbf{Ahol:}
+\begin{itemize}
+\item $U_a$ armatúrára kapcsolt feszültség
+\item $I_a$ armatúra árama
+\item $R_a$ armatúra ellenállása
+\item $L_a$ armatúra induktivitása
+\item $k_1, k_2$ gépállandók
+\item $\phi$ fluxus
+\item $\omega$ forgórész szögsebesség
+\item $M$ elektromágneses nyomaték
+\item $M_t$ terhelõ nyomaték
+\item $\Theta$ forgórész és terhelés együttes tehetetlenségi nyomatéka
+\end{itemize}
+\end{column}
+\end{columns}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}\frametitle{Egyenáramú szervomotor hatásvázlata}
+\begin{center}
+\includegraphics[width=.8\textwidth]{pictures/egyen_hatas.png}
+\end{center}
+\begin{footnotesize}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{small}
+\textbf{Egy. motor átviteli függvényei:}
+$$
+\begin{array}{rcl}
+\frac{\omega(s)}{U_a(s)}&=&\frac{A_M}{1+sT_M+s^2T_VT_M}\\
+\\
+\frac{\omega(s)}{M_t(s)}&=&\frac{A_T(1+sT_V)}{1+sT_M+s^2T_VT_M}\\
+\end{array}
+$$
+\end{small}
+\end{column}
+\begin{column}{0.5\textwidth}
+Ahol:
+\begin{itemize}
+\item $A_M=\frac{1}{k_1\phi}$ motor átviteli tényezõ
+\item $T_M=\frac{\Theta R_a}{k_1k_2\phi^2}$ mechanikai idõállandó
+\item $T_V=\frac{L_a}{R_a}$ villamos idõállandó
+\item $A_T=\frac{-R_a}{k_1k_2\phi^2}$ terhelésre vonatkozó átviteli tényezõ
+\end{itemize}
+\end{column}
+\end{columns}
+\end{footnotesize}
+\end{frame}
+
+\section{Nemlinearitások}
+\begin{frame}\frametitle{Fogaskerék kotyogás}
+\begin{footnotesize}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\textbf{Kotyogás jelleggörbéje:}
+\begin{center}
+\includegraphics[width=.6\columnwidth]{pictures/kotyogas2.png}\\
+\includegraphics[width=.6\columnwidth]{pictures/kotyogas.png}
+\end{center}
+\textbf{Ahol:} $\delta$ annak az elmozdulásnak az értéke amihez a kiement megváltozása szükséges; $u$ a bemenet; $v$ a kimenet.
+\end{column}
+\begin{column}{0.5\textwidth}
+\textbf{Megoldás: Hullámhajtómû}
+\begin{center}
+\includegraphics[width=\columnwidth]{pictures/hullam.jpg}
+\end{center}
+\end{column}
+\end{columns}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}\frametitle{Érzéketlenség}
+\begin{footnotesize}
+Az érzéketlenségi sáv (dead zone) maradó hibát okoz. Oka legtöbbször a súrlódás, ami teljes mértékben nem küszöbölhetõ ki.\\
+Kiküszöbölése:
+\begin{itemize}
+\item kis súrlódású mechanikai áttétel 
+\item kefe nélküli motorok 
+\item a motor nagy hurokerõsítéssel, vagy tachométerrel való visszacsatolása
+\end{itemize}
+\begin{center}
+\includegraphics[width=.4\textwidth]{pictures/erzeketlen.png}
+\end{center}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}\frametitle{Telítõdés és elintegrálódás fogalmai}
+\begin{footnotesize}
+\begin{columns}
+\begin{column}{0.8\textwidth}
+\textbf{A telítõdés (szaturáció):}\\
+szinte minden rendszerben elõfordul. Tipikusan a szabályozó kimenetén a D/A átalakítónál és a motorokat tápláló teljesítményerõsítõnél tapasztalhatjuk hatását. Hatása képpen a deriváló hatás nem kellõképpen érvényesül.
+\end{column}
+\begin{column}{0.2\textwidth}
+\begin{center}
+\includegraphics[width=\columnwidth]{pictures/saturation.png}
+\end{center}
+\end{column}
+\end{columns}
+\vspace{1em}
+\textbf{Elintegrálódás:}\\
+Az a jelenség, hogy korlátozás elõtt az irányítójel a határon túlhalad, túlvezérlés van. Majd miután korlátozzuk a szabályozó jelét, a túlvezérlés megszûnni ugyan, de az irányítójel késõbb kezd el csökkenni, mint kéne. Emiatt a szabályozás késni fog, lassabb lesz. Kiküszöbölése
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}\frametitle{Telítõdés és elintegrálódás fogalmai}
+\begin{footnotesize}
+\begin{center}
+\includegraphics[width=.9\textwidth]{pictures/wind_up_graph.png}
+\end{center}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}\frametitle{Foxboro struktúra}
+\begin{small}
+\begin{columns}
+\begin{column}{0.6\textwidth}
+A PI tagot szaturáció segítségével realizálja. A szaturációt össze kell kell hozni a külsõ szaturációkkal.\\
+Átviteli függvénye:
+$$
+\begin{array}{rcl}
+W&=&k_c\frac{1}{1-\frac{1}{1+sT}}=\\
+ &=&k_c\left(\frac{1}{sT}+1\right)\\
+\end{array}
+$$
+\end{column}
+\begin{column}{0.4\textwidth}
+\begin{center}
+\includegraphics[width=\columnwidth]{pictures/foxboro.png}
+\end{center}
+\end{column}
+\end{columns}
+Matlab példa:
+\begin{center}
+\includegraphics[width=\textwidth]{pictures/foxboro_matlab.png}
+\end{center}
+\end{small}
+\end{frame}
+
+\begin{frame}\frametitle{Foxboro szabályozás eredménye}
+\begin{center}
+\includegraphics[width=.7\textwidth]{pictures/foxboro_graph.png}
+\end{center}
+\end{frame}
+
+\section{Szabályozási feladatok robotokban}
+
+\begin{frame}\frametitle{Áramkorlátozás}
+\begin{footnotesize}
+A feszültségvezérelt szervomotor armatúra árama ugrás alakú bemenõ jel hatására nagy értéket vehet fel. Hatásai:
+\begin{itemize}
+\item Kefeszikrázás 
+\item Túlzottan nagy indító nyomaték (tekercselés, mechanika károsodik)
+\item Tartósan nagy áram (leégetheti a motort) 
+\end{itemize}
+Áramkotrát hatásvázlata:
+\begin{center}
+\includegraphics[width=.9\textwidth]{pictures/aramkorlat.png}
+\end{center}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}\frametitle{Áram szabályozás}
+\begin{footnotesize}
+Sokszor nyomatékszabályozásnak mondják azt az esetet is, amikor nem a motor tengelyén fellépõ nyomatékot mérik, hanem a motor elektromágneses nyomatékát szabályozzák. Ez a eset az \textbf{áramszabályozás}. Az áramszabályozás fölöslegessé teszi a külön megépített áramkorlátozást. 
+Áramszabályozás hatásvázlata:
+\begin{center}
+\includegraphics[width=.9\textwidth]{pictures/aramszab.png}
+\end{center}
+A hatásvázlatban a $C_i$ áramszabályozó magában foglalja a feszültséggenerátoros jellegû teljesítményerõsítõt.
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}\frametitle{Fordulatszám szabályozás}
+\begin{footnotesize}
+A feszültségvezérelt motor fordulatszám szabályozása megoldható a szögsebesség mérésével megvalósított egyhurkos szabályozással. Gyakoribb a kaszkád szabályozás, szögsebesség szabályozás alkalmazása alárendelt áramszabályozással
+Fordulatszám szabályozás hatásvázlata:
+\begin{center}
+\includegraphics[width=.9\textwidth]{pictures/szogszab.png}
+\end{center}
+ Az áramszabályozás eredõje egytárolós arányos tag. A külsõ kör szempontjából a folyamat egytárolós integráló, az indukált feszültség által okozott zavarással.
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}\frametitle{Pozíció szabályozás}
+\begin{footnotesize}
+A kaszkád szabályozások egyik lehetõsége a pozíciószabályozás alárendelt
+áramszabályozással. Ekkor a folyamat kétszeresen integráló. Használják a belsõ áramszabályozó kört a motor nyomatékába való beavatkozásra és áramkorlátozásra. 
+Pozíció szabályozás hatásvázlata:
+\begin{center}
+\includegraphics[width=.9\textwidth]{pictures/pozszab.png}
+\end{center}
+  A $C_\omega$ szögsebesség szabályozó alapjelénél korlátozzuk a forgás sebességét. A külsõ pozíciószabályozás szempontjából a folyamat többtárolós integráló. A $C_\alpha$ pozíciószabályozó rendszerint PD típusú, mert a legtöbb pozícionáló motor esetében követelmény a pozíció lengés mentes beállása.
+\end{footnotesize}
+\end{frame}
 
 \part{Mobil robotok}
 \lecture{Mobil robotok}{week 5}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Mobil robotok}
 
 \subsection{Mobilitás}
